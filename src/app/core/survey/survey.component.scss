@@ -1,0 +1,54 @@
+.table .form-check,
+.table .form-check.form-check-radio {
+  width: auto;
+}
+
+.section {
+  padding: 0px 0;
+}
+
+.form-label,
+.form-check-label {
+  color: black;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}
+
+rating {
+  color: gold;
+  font-size: 1.6rem;
+}
+
+.form-control[readonly] {
+  background-color: #e9ecef !important;
+}
+
+.nav-tabs > .nav-item > .nav-link {
+  background-color: gainsboro;
+  border-radius: 0px;
+  color: black;
+  font-size: .8rem;
+  font-weight: bold;
+  margin-right: 0px;
+}
+
+.nav-tabs > .nav-item > .nav-link:hover {
+  background-color: #354675;
+  border-radius: 0px;
+  font-size: .8rem;
+  font-weight: bold;
+  margin-right: 0px;
+
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}
+
+.nav-tabs > .nav-item > .nav-link.active {
+  border-radius: 0px;
+  background-color: #354675;
+  color: white;
+  font-size: .8rem;
+}

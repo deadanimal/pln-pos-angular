@@ -1,0 +1,38 @@
+.main-content {
+  margin-top: 5px;
+  width: 100%;
+  height: 100%;
+  color: black !important;
+}
+
+p {
+  font-family: Lato;
+}
+
+::ng-deep .customClass > a {
+  background-color: #364df4 !important;
+  border-bottom: none !important;
+  outline: 0 !important;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+::ng-deep .customClass {
+  border-radius: 0px !important;
+}
+
+::ng-deep .customClass > a[aria-selected="true"] span{
+    color: gainsboro;
+    font-weight: bold;
+}
+
+
+th, td {
+  color: black !important;
+  text-align: center;
+}
+
+.cursor-change {
+  cursor: pointer;
+}
+

@@ -1,0 +1,314 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Laporan Harian" | translate }}
+</h3>
+<div class="main-content">  
+  <div class="row mt-3">
+  
+    <div class="col-6 text-left">
+  
+      <div class="row">
+        <div class="col-6">
+          <h4><b>Jumlah Tunai Permulaan: </b></h4>
+          <h3><b>{{ initial_cash | currency: 'RM '}}</b></h3>
+        </div>
+  
+        <div class="col-6">
+          <h4><b>Jumlah Tunai Akhir: </b></h4>
+          <h3><b>{{ netCash | currency: 'RM '}}</b></h3>
+        </div>
+      </div>
+      
+    </div>
+  
+    <div class="col-6 text-right">
+      <button class="btn btn-md btn-info" (click)="openModal(closeCounterModal)">Tutup Kaunter</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-md btn-info" (click)="printReport()">Cetak Laporan</button>
+  
+    </div>
+    
+  </div>
+  
+  <hr>
+  
+  <div class="row text-left ml-1 mr-1">
+    <h4><b>Pembayaran Tunai</b></h4>
+  
+    <table class="text-dark table table-striped" >
+      <thead>
+        <tr>
+  
+          <th scope="col">Jualan Kasar</th>          
+          <th scope="col">Jumlah Transaksi</th>          
+          <th scope="col">Bayaran Balik</th>          
+          <th scope="col">Jumlah Transaksi Bayaran Balik</th>          
+          <th scope="col">Jualan Bersih</th>          
+  
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr>
+  
+  
+          <td scope="col">{{ grossCash|currency: 'RM ' }}</td>          
+          <td scope="col">{{ transactions }}</td>          
+          <td scope="col">{{ refund|currency: 'RM ' }}</td>          
+          <td scope="col">{{ refundTransactions }}</td>          
+          <td scope="col">{{ netCash|currency: 'RM ' }}</td>          
+  
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  
+  <div class="row text-left ml-1 mr-1 mt-3">
+    <h4><b>Pilihan Pembayaran</b></h4>
+  
+    <table class="text-dark table table-striped" >
+      <thead>
+        <tr>
+  
+          <th scope="col">Jenis Bayaran</th>          
+          <th scope="col">Jumlah Jualan(RM)</th>          
+          <th scope="col">Jumlah Transaksi</th>          
+          <th scope="col">Jumlah Bayaran Balik</th>          
+  
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr>
+          <td scope="col">Kredit</td>          
+  
+          <td scope="col">{{ credit }}</td>          
+          <td scope="col">{{ credit_transactions }}</td>          
+          <td scope="col">{{ credit_refund }}</td>          
+        </tr>
+  
+        <tr>
+          <td scope="col">Debit</td>          
+          <td scope="col">{{  debit }}</td>          
+          <td scope="col">{{ debit_transactions }}</td>          
+          <td scope="col">{{ debit_refund }}</td>          
+        </tr>
+  
+        <tr>
+          <td scope="col">Qr</td>          
+          <td scope="col">{{ qr }}</td>          
+          <td scope="col">{{ qr_transactions }}</td>          
+          <td scope="col">{{ qr_refund }}</td>          
+        </tr>
+  
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+  
+  <h4 class="mt-3"><b>Pembelian Tayangan</b></h4>
+  <div class="row">
+  
+    <div class="col-6 text-left">
+      <h5>Warganegara</h5>
+  
+      <table class="text-dark table table-striped" >
+        <thead>
+          <tr>
+  
+            <th scope="col">Kategori Tiket</th>          
+            <th scope="col">Jumlah Tiket</th>          
+  
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr>
+            <td scope="col">Dewasa</td>          
+            <td scope="col">{{ show_cz_adult }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">Pelajar</td>          
+            <td scope="col">{{ show_cz_student }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">Kanak-kanak</td>          
+            <td scope="col">{{ show_cz_kid }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">Warga emas</td>          
+            <td scope="col">{{ show_cz_old_folk }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">OKU</td>          
+            <td scope="col">{{ show_cz_oku }}</td>          
+          </tr>
+  
+  
+  
+  
+        </tbody>
+      </table>
+  
+    </div>
+  
+    <div class="col-6 text-left">
+      <h5>Bukan Warganegara</h5>
+  
+      <table class="text-dark table table-striped" >
+        <thead>
+          <tr>
+  
+            <th scope="col">Kategori Tiket</th>          
+            <th scope="col">Jumlah Tiket</th>          
+  
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr>
+  
+            <td scope="col">Dewasa</td>          
+            <td scope="col">{{ show_nz_adult }}</td>          
+  
+          </tr>
+  
+          <tr>
+            <td scope="col">Pelajar</td>          
+            <td scope="col">{{ show_nz_student }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">Kanak-kanak</td>          
+            <td scope="col">{{ show_nz_kid }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">Warga emas</td>          
+            <td scope="col">{{ show_nz_old_folk }}</td>          
+          </tr>
+  
+          <tr>
+            <td scope="col">OKU</td>          
+            <td scope="col">{{ show_nz_oku }}</td>          
+          </tr>
+  
+  
+        </tbody>
+      </table>
+  
+    </div>
+  
+  </div>
+  <hr>
+  
+  <h4 class="mt-3"><b>Pembelian Kembara Simulasi</b></h4>
+  <div class="row">
+  
+    <div class="col-6 text-left">
+      <h5>Warganegara</h5>
+  
+      <table class="text-dark table table-striped" >
+        <thead>
+          <tr>
+  
+            <th scope="col">Kategori Tiket</th>          
+            <th scope="col">Jumlah Tiket</th>          
+  
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr>
+            <td scope="col">Dewasa</td>          
+            <td scope="col">{{ space_cz_adult }}</td>          
+          </tr>
+  
+  
+          <tr>
+            <td scope="col">Kanak-kanak</td>          
+            <td scope="col">{{ space_cz_kid }}</td>          
+          </tr>
+  
+        </tbody>
+      </table>
+  
+    </div>
+  
+    <div class="col-6 text-left">
+      <h5>Bukan Warganegara</h5>
+  
+      <table class="text-dark table table-striped" >
+        <thead>
+          <tr>
+  
+            <th scope="col">Kategori Tiket</th>          
+            <th scope="col">Jumlah Tiket</th>          
+  
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr>
+  
+            <td scope="col">Dewasa</td>          
+            <td scope="col">{{ space_nz_adult }}</td>          
+  
+          </tr>
+  
+          <tr>
+            <td scope="col">Kanak-kanak</td>          
+            <td scope="col">{{ space_nz_kid }}</td>          
+          </tr>
+  
+          </tbody>
+      </table>
+  
+    </div>
+  
+  </div>
+</div>  
+
+<hr>
+
+<div class="mt-3 ml-1">  
+  <h4><b>Jumlah Bayaran Fasiliti: </b></h4>
+  <h3><b>{{ total_facility_paid | currency: 'RM '}}</b></h3>
+</div>
+<hr>
+
+
+<ng-template #closeCounterModal>
+  <div class="modal-header justify-content-center">
+    <button
+      aria-hidden="true"
+      class="close"
+      data-dismiss="modal"
+      (click)="closeModal()"
+      type="button"
+    >
+      <i class="tim-icons icon-simple-remove text-dark"> </i>
+    </button>
+    <div class="text-dark text-center ml-auto mr-auto">
+      <h3 class="title mb-0">
+       Bersedia untuk tutup kaunter? 
+      </h3>
+      <hr style="width: 100%">
+    </div>
+  </div>
+  <div class="modal-body">
+  </div>
+
+  <div class="modal-footer">
+    <a class="btn text-white btn-md btn-danger" (click)="closeModal()">Tidak</a>
+    <a class="btn text-white btn-md btn-info" (click)="closeCounter()">Ya</a>
+  </div>
+</ng-template>
+

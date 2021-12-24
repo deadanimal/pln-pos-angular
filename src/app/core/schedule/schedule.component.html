@@ -1,0 +1,96 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Jadual" | translate }}
+</h3>
+
+<div class="main-content">
+  <tabset>
+    <tab customClass="customClass" heading="Tayangan" id="tab1">
+  
+      <div class="ml-2 pb-3">
+        <input class="form-control text-dark" type="search" placeholder="carian" style="width: 30%;" (keyup)="filterTableShowings($event)">
+      </div>
+
+      <div class="text-dark">
+        <table class="text-dark table table-striped">
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Tajuk</th>          
+              <th scope="col">Tarikh</th>          
+              <th scope="col">Waktu</th>          
+              <th scope="col">Tempoh</th>          
+              <th scope="col">Status</th>          
+              <th scope="col">Baki Seat</th>          
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let show of showingTimesTemp; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+
+              <td><a class="cursor-change" (click)="redirectToPageTayangan()"><b>{{ show.title_ms }}</b></a></td>
+              <td>{{ show.show_date }}</td>
+              <td>{{ show.show_time }}</td>
+              <td>{{ show.duration_hours }} Jam {{ show.duration_minutes }} Minit</td>
+              <td>{{ show.status }}</td>
+              <td>{{ show.available_ticket }}</td>
+
+
+              <!--
+              <td>
+                <a class="btn btn-sm btn-danger text-white" (click)="batalTempahan(facility)">Batal</a>
+                &nbsp;&nbsp;
+                <a class="btn btn-sm btn-info text-white" (click)="tambahTempahanKeTroli(facility)">Tambah</a>
+              </td>
+              -->
+
+
+            </tr>
+          </tbody>
+         </table>
+      </div>
+
+    </tab>
+    <tab customClass="customClass" heading="Kembara Simulasi">
+
+      <div class="ml-2 pb-3">
+        <input class="form-control text-dark" type="search" placeholder="carian" style="width: 30%;" (keyup)="filterTableSimulatorRides($event)">
+      </div>
+
+      <div class="text-dark">
+        <table class="text-dark table table-striped">
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Tarikh</th>          
+              <th scope="col">Masa</th>          
+              <th scope="col">Hari</th>          
+              <th scope="col">Pusingan</th>          
+              <th scope="col">Tempahan</th>          
+              <th scope="col">Status</th>          
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sim of simulatorrideTimesTemp; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+
+              <td>{{ sim.date }}</td>
+              <td><a class="cursor-change" (click)="redirectToPageSimulasi()"><b>{{sim.day}}</b></a></td>
+              <td>{{ sim.time }}</td>
+              <td>{{ sim.round }}</td>
+              <td>{{ sim.booking }}</td>
+              <td>{{ sim.status }}</td>
+
+            </tr>
+          </tbody>
+         </table>
+
+
+      </div>
+    </tab>
+  </tabset>
+</div>

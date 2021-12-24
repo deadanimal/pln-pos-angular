@@ -1,0 +1,201 @@
+p {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+.navigator {
+  width: 100%;
+  height: 90%;
+  margin-bottom: 2px;
+  background-color: white;
+  box-shadow: inset 0px 0px 0px 2px rgba(0,0,0,1);
+}
+
+.left {
+  height: 100%;
+  width: 80%;
+}
+
+.navigator > h3 {
+  color: black;
+  margin: auto;
+}
+
+
+.navigator:hover {
+  background-color: #ebedeb;
+  color: red;
+}
+
+.top {
+ height: 50%;
+}
+
+.btm {
+ width: 100%;
+ height: 50%;
+}
+
+.btm-card {
+ width: 100%;
+}
+
+.top-card {
+ width: 100%;
+}
+
+
+.main-content {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+.card {
+  height: 80%;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+
+.card > h2 {
+  margin: auto;
+}
+
+.row {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+.right {
+  background-color: white;
+  height: 40%;
+}
+
+.right-sub {
+}
+
+.right-sub > h3 {
+  color: black;
+}
+
+.card {
+  background-color: gainsboro;
+  opacity: 1 !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.cash {
+  border-right: 10px;
+}
+
+//.btn, .btn-info {
+//  width: 50%;
+//  height: 100%;
+//  background-color: white !important;
+//}
+//
+//.btn-group {
+//  margin-top: 0px;
+//  width: 100%;
+//  border-radius: 3px;
+//  text-align: center;
+//  background-color: white !important;
+//
+//}
+.btn-group {
+  margin: auto;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.btn-group > button {
+  margin-left: 2px;
+  margin-top: 4px;
+}
+
+h1 {
+  margin: auto;
+  padding-top: 25%;
+  color: #1266f1;
+
+}
+
+.col-4 {
+  height: 100px;
+}
+
+.h-60 {
+  height: 70%;
+}
+
+.h-40 {
+  height: 30%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.g2 {
+  margin: auto;
+  background-image: none;
+  width: 100%;
+  border: solid 2px;
+  background-color: white;
+  color: #1266f1;
+  font-size: 20px;
+  text-align: center;
+}
+
+.g2:hover {
+  background-color: gainsboro !important;
+  cursor: pointer;
+}
+
+.g3 {
+  margin: auto;
+  background-image: none;
+  width: 100%;
+  border: solid 2px;
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.g3:hover {
+  background-color: gainsboro !important;
+  cursor: pointer;
+}
+
+.g4 {
+  margin: auto;
+  background-image: none;
+  width: 100%;
+  border: solid 2px;
+  color: white;
+  background-color: #00b74a;
+  font-size: 20px;
+  text-align: center;
+}
+
+.g4:hover {
+  background-color: gainsboro !important;
+  cursor: pointer;
+}
+
+.btn-info {
+  height: 100%;
+}
+

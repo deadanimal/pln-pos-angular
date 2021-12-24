@@ -1,0 +1,44 @@
+video {
+  // filter: opacity(70%);
+
+  h1 {
+    filter: opacity(10%);
+    color: black;
+  }
+}
+
+.section {
+  padding: 100px 0;
+}
+
+::ng-deep .inner-html {
+  .ql-align-center {
+    text-align: center;
+  }
+
+  .ql-align-justify {
+    text-align: justify;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    color: black;
+  }
+
+  ol,
+  ul {
+    li {
+      color: black;
+    }
+  }
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}

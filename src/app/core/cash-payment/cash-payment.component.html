@@ -1,0 +1,156 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Pembayaran" | translate }}
+</h3>
+
+<div class="h-100 main-content">
+  <div class="h-60 text-dark text-center mt-4">
+    <div class="row">
+      <div class="col-6">
+      <div class="left">
+        <div class="row">
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(1)" ><b>1</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(2)" ><b>2</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(3)" ><b>3</b></div>
+          </div>
+
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(4)" ><b>4</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(5)" ><b>5</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(6)" ><b>6</b></div>
+          </div>
+
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(7)" ><b>7</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(8)" ><b>8</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(9)" ><b>9</b></div>
+          </div>
+
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" style="text-align: center;" (click)="inputRegister('del')" ><b>DEL</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister(0)" ><b>0</b></div>
+          </div>
+
+          <div class="col-4 text-center">
+            <div class="btn-lg g2" (click)="inputRegister('.')" ><b>.</b></div>
+          </div>
+
+
+        </div>
+      </div>
+      </div>
+      <div class="col-6">
+        <input type="text"
+           class="text-center"
+           style="width: 95%; height: 10%; font-size: 20px;"
+           [(ngModel)]="numberStr">
+        <div class="mt-4 row">
+          <div class="text-center col-6">
+            <div class="g3 btn-lg" (click)="cancelPayment()"><b>BATAL</b></div>
+          </div>
+
+          <div class="text-center col-6">
+            <div class="g4 btn-lg" (click)="submitPayment('cash')"><b>HANTAR</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+
+    <hr class="w-100">
+    <div class="row">
+      <div class="text-center col-4">
+        <div class="g2 btn-lg" (click)="openModal(qrPay)"><b>QR PAY</b></div>
+      </div>
+
+      <div class="text-center col-4">
+        <div class="g2 btn-lg"><b>CREDIT CARD</b></div>
+      </div>
+
+      <div class="text-center col-4">
+        <div class="g2 btn-lg"><b>DEBIT CARD</b></div>
+      </div>
+    </div>
+    <hr class="w-100">
+  </div>
+
+</div>
+
+<ng-template #qrPay>
+  <div class="modal-header justify-content-center mt-0">
+    <button
+      aria-hidden="true"
+      class="close"
+      data-dismiss="modal"
+      (click)="closeModal()"
+      type="button"
+    >
+      <i class="tim-icons icon-simple-remove text-dark"> </i>
+    </button>
+    <div class="text-dark text-center ml-auto mr-auto">
+      <h3 class="title mb-0">
+        Pembayaran Melalui QR
+      </h3>
+    </div>
+  </div>
+  <div class="modal-body">
+      <alert [type]="'danger'">
+        <b>{{ "ShowStep6Label" | translate }}</b>
+      </alert>
+      <form [formGroup]="qrFormGroup">
+      <div class="form-group mb-3">
+        <div
+          class="input-group input-group-alternative"
+          [ngClass]="{ 'input-group-focus': focus1 === true }"
+        >
+          <input
+            class="form-control text-dark"
+            placeholder="{{ 'Catatan' | translate }}"
+            type="text"
+            (focus)="focus1 = true"
+            (blur)="focus1 = false"
+            formControlName="qr_notes"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fas fa-at fa-lg" style="color: gainsboro"> </i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+
+  <div class="modal-footer text-white">
+    <a class="btn btn-md btn-danger" (click)="closeModal()"><b>BATAL</b></a>
+    <a class="btn btn-md btn-info" (click)="submitPayment('qr')"><b>HANTAR</b></a>
+  </div>
+</ng-template>

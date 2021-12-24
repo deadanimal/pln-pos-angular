@@ -1,0 +1,158 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="section">
+    <div class="container">
+      <div class="row pt-5">
+        <div class="col-lg-8 col-sm-12 mx-auto">
+          <div class="card" style="background-color: #ffffff">
+            <div class="card-body">
+              <form class="js-validate" [formGroup]="paymentdetailFormGroup">
+                <div class="container">
+                  <div class="row">
+                    <div class="col">
+                      <h3 class="title text-dark">
+                        {{ "HalamanDaftarKeluar" | translate }}
+                      </h3>
+                    </div>
+                    <div class="col-auto text-right">
+                      <h3 class="title text-danger">
+                        <countdown [config]="{ leftTime: timeout }"></countdown>
+                      </h3>
+                    </div>
+                  </div>
+                  <alert [type]="'danger'">
+                    <b>{{ "PaymentNote" | translate }}</b>
+                  </alert>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label class="labels text-dark required-field">
+                        {{ "NamaPenuh" | translate }}
+                      </label>
+                      <input
+                        class="form-control text-dark"
+                        formControlName="full_name"
+                        placeholder=""
+                        readonly="true"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="js-form-message mb-6">
+                        <label class="labels text-dark required-field">
+                          {{ "AlamatEmel" | translate }}
+                        </label>
+                        <input
+                          class="form-control text-dark"
+                          formControlName="email"
+                          placeholder=""
+                          readonly="true"
+                          type="email"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="js-form-message mb-6">
+                        <label class="labels text-dark required-field">
+                          {{ "NomborTelefon" | translate }}
+                        </label>
+                        <input
+                          class="form-control text-dark"
+                          formControlName="phone"
+                          placeholder=""
+                          readonly="true"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 class="title text-dark">
+                    {{ "PilihCaraPembayaran" | translate }}
+                  </h4>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                      <div
+                        class="card bg-transparent mt-0"
+                        (click)="selectPaymentMethod('fpx')"
+                        [ngClass]="{
+                          'card-selected':
+                            paymentdetailFormGroup.value.payment_method == 'fpx'
+                        }"
+                      >
+                        <div class="card-body">
+                          <div class="card-image">
+                            <img
+                              src="../../../assets/img/fpx_logo.png"
+                              alt="FPX"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12"></div>
+                  </div>
+
+                  <h4 class="title text-dark">
+                    {{ "PilihPerbankanInternet" | translate }}
+                  </h4>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <select
+                          class="form-control text-dark"
+                          formControlName="bank_selected"
+                        >
+                          <option value="" selected>
+                            {{ "Silapilih" | translate }}
+                          </option>
+                          <option
+                            *ngFor="let banklist of banklists"
+                            [value]="banklist.bank_id"
+                          >
+                            {{ banklist.bank_display_name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row pt-3">
+                    <div class="col text-right">
+                      <p
+                        class="text-dark"
+                        [innerHtml]="'FPXAgreement' | translate"
+                      ></p>
+                      <p>
+                        <a
+                          class="font-weight-bold"
+                          style="color: #1d8cf8"
+                          href="https://www.mepsfpx.com.my/FPXMain/termsAndConditions.jsp"
+                          target="_blank"
+                          >{{ "FPXTermAndCondition" | translate }}</a
+                        >
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="pt-3 pb-3 text-right">
+                    <button
+                      class="btn btn-info"
+                      (click)="submitPayment()"
+                      [disabled]="
+                        !paymentdetailFormGroup.valid || totalprice == 0
+                      "
+                    >
+                      {{ "Seterusnya" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

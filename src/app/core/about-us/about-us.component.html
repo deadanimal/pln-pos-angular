@@ -1,0 +1,249 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <!-- <h2 class="title text-center text-dark">Mengenai Kami</h2> -->
+
+        <div class="row pb-3" *ngFor="let dynamiccontent of dynamiccontents">
+          <div class="col" *ngIf="translate.currentLang == 'en'">
+            <h2 class="title text-center text-dark">
+              {{ dynamiccontent.title_en }}
+            </h2>
+            <div
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_en | safe: 'html'"
+            ></div>
+          </div>
+          <div class="col" *ngIf="translate.currentLang == 'ms'">
+            <h2 class="title text-center text-dark">
+              {{ dynamiccontent.title_ms }}
+            </h2>
+            <div
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_ms | safe: 'html'"
+            ></div>
+          </div>
+        </div>
+        <!-- <div class="row pb-3">
+          <div class="col">
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Planetarium Negara bermula sebagai Bahagian Planetarium dalam
+              Jabatan Perdana Menteri pada 1989. Pembinaan kompleks Planetarium
+              Negara bermula pada 1990 dan disiapkan pada 1993. Pelancaran tidak
+              rasmi bermula pada bulan Mei 1993 dan pembukaan rasmi telah
+              dilancarkan oleh Perdana Menteri ke-4, Tun Dr. Mahathir Mohamad,
+              pada 7 Februari 1994. Setelah setahun setengah beroperasi dengan
+              lancar, pada bulan Julai 1995, bahagian ini telah dipindah alih ke
+              Kementerian Sains, Teknologi, dan Alam Sekitar, Malaysia (kini
+              dikenali sebagai Kementerian Sains, Teknologi dan Inovasi (MOSTI).
+              Peristiwa tersebut bukan sekadar memberikan tumpuan kepada
+              keseluruh reka bentuk dan seni bina serta keunikan kemudahan
+              Planetarium bahkan juga menggambarkan kesungguhan Kerajaan ke atas
+              pembangunan sains dan teknologi angkasa.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Ia mengambil masa tiga tahun untuk dibina, kompleks Planetarium
+              Negara menempatkan sebuah teater berkubah di tengah-tengahnya.
+              Keunikan reka bentuk teater tersebut telah memberikan cabaran yang
+              hebat kepada jurubina projek, jurutera dan kontraktor bangunan.
+              Ketelitian dan ketepatan yang diperlukan bagi projektor bintang
+              dan filem berformat besar juga memberikan cabaran yang tidak
+              kurang hebatnya. Banyak kesukaran terpaksa diatasi dan tempoh
+              pameran selesai dipasang ya.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Memandangkan kerumitan menyelaras sebegitu banyak oleh pembekal
+              luar negara, ditambah dengan ketiadaan pakar yang berpengalaman
+              dalam kerja-kerja yang perlu disiapkan, kejayaan penyiapan
+              kompleks dan pemasangan kesemua peralatan dengan kelewatan yang
+              minimum sebenarnya merupakan kejayaan yang membanggakan.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Di sebalik kesukaran yang dihadapi, Planetarium Negara berjaya
+              mengadakan beberapa projek pendidikan untuk sekolah-sekolah dan
+              orang awam. Planetarium Negara kini memainkan peranan yang penting
+              dalam menghidupkan kesedaran kepentingan bidang sains angkasa di
+              kalangan masyarakat dan menggorak langkah pertama dalam membawa
+              Malaysia menceburi bidang sains angkasa.
+            </p>
+          </div>
+        </div>
+
+        <h2 class="title text-center text-dark">Sejarah Dan Latar Belakang</h2>
+        <div class="row pb-3">
+          <div class="col">
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Planetarium Negara telah ditubuhkan di bawah Jabatan Perdana
+              Menteri pada tahun 1989 dan kompleks Planetarium Negara telah
+              dirasmikan oleh YAB Dato’ Seri Dr. Mahathir Mohamad, Perdana
+              Menteri Malaysia pada 7 Februari 1994.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Penubuhan Planetarium Negara merupakan langkah pertama Malaysia
+              untuk menceburi bidang sains angkasa melalui pembangunan sebuah
+              institusi pendidikan tidak formal dalam bidang Astronomi dan sains
+              Angkasa. Keunikan rekabentuk bangunannya dengan motif-motif
+              Mukharnas di sudut-sudut tertentu pada bangunan menggambarkan
+              kecemerlangan pengetahuan, idea, kehebatan arkitek, jurutera,
+              pereka dan perancang projek.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Bangunan yang dibina dengan penuh ketelitian dan ketepatan itu
+              telah dilengkapi dengan sistem projektor Full Dome Immersive
+              System untuk tayangan filem di atas skrin berbentuk kubah
+              berdiameter 20 meter, dilengkapi dengan sistem bunyi digital
+              6-saluran serta mempunyai kapasiti untuk menempatkan 200 orang
+              dalam satu-satu masa.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Planetarium Negara berperanan untuk mempromosikan kepentingan
+              menguasai bidang sains angkasa di kalangan masyarakat bagi
+              memastikan negara dapat membangun secara menyeluruh dan lestari
+              (sustainable) pada masa hadapan.
+            </p>
+          </div>
+        </div>
+
+        <h2 class="title text-center text-dark">
+          Sambutan Jubli Perak 25 Tahun Planetarium Negara
+        </h2>
+        <div class="row pb-3">
+          <div class="col">
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Planetarium Negara telah memainkan peranannya mempromosikan bidang
+              Astronomi dan Sains Angkasa kepada masyarakat sejak ianya
+              dirasmikan dan  kini, usianya telah pun menjangkau 25 tahun (1994
+              – 2019). Dengan tema ‘Terukir di Bintang’, Majlis Sambutan Jubli
+              Perak 25 Tahun Planetarium Negara telah diadakan pada 25 April
+              2019 di Hotel Istana, Kuala Lumpur sebagai tanda
+              penghargaan kepada warganya yang telah memastikan Planetarium
+              Negara menyumbang dan memberi impak kepada bidang Astronomi dan
+              Sains Angkasa di Malaysia.
+            </p>
+
+            <p class="text-justify text-dark pb-3" style="font-size: 1rem">
+              Majlis Sambutan Jubli Perak ini telah dirasmikan oleh YAB Dato’
+              Seri Dr. Wan Azizah Dr. Wan Ismail, Timbalan Perdana Menteri
+              Malaysia. Naskhah “25 Tahun Planetarium Negara” telah diterbitkan
+              bagi menarik minat masyarakat khususnya para pelajar untuk
+              mendekati bidang Astronomi dan Sains Angkasa.
+            </p>
+          </div>
+        </div> -->
+
+        <h2 class="title text-center text-dark">
+          {{ "FaktaMenarik" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <div class="col-md-4 col-sm-12">
+            <div class="card card-pricing">
+              <div class="card-header bg-white p-3">
+                <h1 class="card-title font-weight-bolder text-dark">20</h1>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold">
+                  {{ "Saizkubahplanetarium" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <div class="card card-pricing">
+              <div class="card-header bg-white p-3">
+                <h1 class="card-title font-weight-bolder text-dark">
+                  {{ year }}
+                </h1>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold">
+                  {{ "TahunusiapenubuhanPlanetariumNegara" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <div class="card card-pricing">
+              <div class="card-header bg-white p-3">
+                <h1 class="card-title font-weight-bolder text-dark">1994</h1>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold">
+                  {{ "TahunPenubuhan" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pb-3">
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-pricing">
+              <div class="card-header bg-white p-3">
+                <h1 class="card-title font-weight-bolder text-dark">11,000</h1>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold">
+                  {{ "Keluasankawasan" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-6 col-sm-12">
+            <div class="card card-pricing">
+              <div class="card-header bg-white p-3">
+                <h1 class="card-title font-weight-bolder text-dark">14</h1>
+              </div>
+              <div class="card-body">
+                <p
+                  class="font-weight-bold"
+                  [innerHtml]="'BukaanAperture' | translate"
+                ></p>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-pricing">
+              <div class="card-header bg-white p-3">
+                <h1 class="card-title font-weight-bolder text-dark">110</h1>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold">{{ "Anaktangga" | translate }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

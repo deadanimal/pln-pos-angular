@@ -1,0 +1,79 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">{{ "PautanPantas" | translate }}</h2>
+        <div class="row pb-3">
+          <!-- <div class="col-md-1 col-sm-12"></div> -->
+          <!-- <div class="col">
+            <div class="row"> -->
+          <div class="col-md-3 col-sm-12" *ngFor="let category of categories; let i = index">
+            <div class="card">
+              <div class="card-header bg-white text-center">
+                <h3 class="title text-info font-weight-bold" *ngIf="translate.currentLang == 'en'">
+                  {{ category.name_en }}
+                </h3>
+                <h3 class="title text-info font-weight-bold" *ngIf="translate.currentLang == 'ms'">
+                  {{ category.name_ms }}
+                </h3>
+              </div>
+              <div class="card-body bg-white text-center pb-3">
+                <div *ngFor="let quicklink of quicklinks; let j = index">
+                  <div *ngIf="quicklink.category == category.id && j + 1 <= 5">
+                    <p class="pt-3">
+                      <a *ngIf="translate.currentLang == 'en'" [href]="quicklink.link">{{ quicklink.name_en }}</a>
+                      <a *ngIf="translate.currentLang == 'ms'" [href]="quicklink.link">{{ quicklink.name_ms }}</a>
+                    </p>
+                  </div>
+
+                  <div *ngIf="quicklink.category == category.id && j + 1 > 5 && category.show">
+                    <p class="pt-3">
+                      <a *ngIf="translate.currentLang == 'en'" [href]="quicklink.link">{{ quicklink.name_en }}</a>
+                      <a *ngIf="translate.currentLang == 'ms'" [href]="quicklink.link">{{ quicklink.name_ms }}</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-center p-3 bg-white mt-0">
+                <a
+                  style="color: #ba54f5; font-weight: bold"
+                  (click)="showMore(i)"
+                  >{{ "Bacaselanjutnya" | translate }}</a
+                >
+              </div>
+            </div>
+          </div>
+          <!-- </div>
+          </div> -->
+          <!-- <div class="col-md-1 col-sm-12"></div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

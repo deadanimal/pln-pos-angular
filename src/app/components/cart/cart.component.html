@@ -1,0 +1,200 @@
+    <h3 class="title text-dark m-3 text-center">
+      {{ "Daftar Keluar" | translate }}
+    </h3>
+    <!-- <div class="text-center">
+      <img
+        src="../../../assets/icon/tickets.svg"
+        style="width: 50%"
+      />
+    </div> -->
+
+    <div class="table-responsive fixed_header" >
+      <table class="table">
+        <thead>
+          <tr>
+            <td class="text-dark text-center">
+              <b>{{ "Item" | translate }}</b>
+            </td>
+            <td class="text-dark text-center">
+              <b>{{ "Kuantiti" | translate }}</b>
+            </td>
+            <td class="text-dark text-center">
+              <b>{{ "Jumlah" | translate }}</b>
+            </td>
+
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cart of carts; let i = index">
+            <td>
+              <!-- Booking Detail -->
+              <div
+                class="row"
+                *ngIf="summarycarts[i][0].type == 'showing'"
+              >
+              <div class="col-auto">
+                      <h5
+                    *ngIf="summarycarts[i][0].type == 'showing'"
+                    class="title text-dark mt-0 mb-3"
+                  >
+                    <span *ngIf="translate.currentLang == 'en'"
+                      >{{ summarycarts[i][0].showing_title_en }},
+                      {{ summarycarts[i][0].showtime_show_date }},
+                      </span
+                    >
+                    <span *ngIf="translate.currentLang == 'ms'"
+                      >{{ summarycarts[i][0].showing_title_ms }},
+                      {{ summarycarts[i][0].showtime_show_date }},
+                      </span
+                    >
+                  </h5>
+                  <p
+                    class="text-dark m-0"
+                    *ngFor="let summary of summarycarts[i]"
+                  >
+                    <span *ngIf="translate.currentLang == 'en'"
+                      >{{ summary.ticket_seat }}
+                      {{ summary.ticket_category_en }} 
+                    </span
+                    >
+                    <span *ngIf="translate.currentLang == 'ms'"
+                      >{{ summary.ticket_seat }}
+                      {{ summary.ticket_category_ms }}
+                    </span
+                    >
+                  </p>
+                </div>
+              </div>
+              <div
+                *ngIf="summarycarts[i][0].type == 'simulator-ride'"
+              >
+                <h5
+                  *ngIf="summarycarts[i][0].type == 'simulator-ride'"
+                  class="title text-dark mt-0 mb-3"
+                >
+                  <span *ngIf="translate.currentLang == 'en'"
+                    >{{ summarycarts[i][0].simulator_ride_day_en }},
+                    {{ summarycarts[i][0].simulator_ride_time }} ({{
+                      summarycarts[i][0].simulator_ride_round_en
+                    }})</span
+                  >
+                  <span *ngIf="translate.currentLang == 'ms'"
+                    >{{ summarycarts[i][0].simulator_ride_day_ms }},
+                    {{ summarycarts[i][0].simulator_ride_time }} ({{
+                      summarycarts[i][0].simulator_ride_round_ms
+                    }})</span
+                  >
+                </h5>
+                <p
+                  class="text-dark m-0"
+                  *ngFor="let summary of summarycarts[i]"
+                >
+                  <span *ngIf="translate.currentLang == 'en'"
+                    >{{ summary.ticket_seat }}
+                    {{ summary.ticket_category_en }} 
+                  </span
+                  >
+                  <span *ngIf="translate.currentLang == 'ms'"
+                    >{{ summary.ticket_seat }}
+                    {{ summary.ticket_category_ms }}
+                  </span
+                  >
+                </p>
+              </div>
+              <div
+                *ngIf="summarycarts[i][0].type == 'facilities'"
+              >
+                <h5
+                  *ngIf="summarycarts[i][0].type == 'facilities'"
+                  class="title text-dark mt-0 mb-3"
+                >
+                <span>
+                  {{ summarycarts[i][0].organisation_name }} <br>
+                  {{ summarycarts[i][0].facility_name }} <br>
+                  {{ summarycarts[i][0].booking_date }} <br>
+                </span
+                  >
+                </h5>
+              </div>
+
+            </td>
+            <td class="text-center">
+              <!-- Booking Quantity -->
+              <h4 class="title text-dark m-0">
+                {{ summarycarts[i].length }}
+              </h4>
+            </td>
+            <td class="text-center">
+              <!-- Booking Price -->
+              <h4 class="title text-default m-0">
+                {{ calculatoPriceEachCart(summarycarts[i]) }}
+              </h4>
+            </td>
+            <td class="text-left">
+              <!-- Delete Button -->
+              <a
+                (click)="clickDeleteCart(cart)"
+              >
+                <i style="cursor: pointer;" class="text-dark fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div style="position: absolute; bottom: 0;" class="pr-2 pl-2 row mb-3">
+        <div class="col-12 text-right">
+        <h4 class="title text-dark m-0">
+          {{ "Jumlah" | translate }}
+        </h4>
+        <h3 class="font-weight-bold text-default m-0">
+          RM {{ totalprice | number: "1.2-2" }}
+        </h3>
+      </div>
+
+      <div class="col-12 text-left pt-3">
+        <h5
+          class="title text-dark m-0"
+          [innerHtml]="'BaucarNota' | translate"
+        ></h5>
+        <p class="text-danger font-weight-bold" *ngIf="done_voucher_verify">
+          {{ "BaucarNilai" | translate: voucher_amount }}
+        </p>
+      </div>
+      <div class="col-12 d-flex align-items-center">
+        <input
+          class="form-control text-dark"
+          type="text"
+          maxlength="10"
+          [(ngModel)]="voucher_code"
+          style="text-transform: uppercase"
+        />
+      </div>
+      <div class="col d-flex align-items-center">
+        <button
+          type="button"
+          class="mb-2 mt-2 vouch-btn btn-lg"
+          style="width: 100%; font-size: 20px"
+          (click)="checkVoucherCode()"
+        >
+        <b>
+          {{ "Semak" | translate }}
+        </b>
+        </button>
+      </div>
+            <div class="col-12 text-right text-white d-flex align-items-center">
+        <button
+          type="button"
+          class="pay-btn btn-lg"
+          style="font-size: 20px;"
+          (click)="clickMakePayment()"
+        >
+        <b>
+          {{ "Bayar" | translate }}
+        </b>
+        </button>
+      </div>
+    </div>

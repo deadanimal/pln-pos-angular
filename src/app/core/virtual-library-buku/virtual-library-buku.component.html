@@ -1,0 +1,107 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KutubkhanahMiniBukuTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              {{ "KutubkhanahMiniBukuDeskripsi" | translate }}
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="submodule?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="submodule?.description_ms | safe: 'html'"
+            ></p>
+          </div>
+        </div>
+        <div class="row pb-5" *ngFor="let vl_buku of vl_bukus">
+          <div class="col-md-1 col-sm-12"></div>
+          <div class="col-md-4 col-sm-12">
+            <div class="card bg-transparent">
+              <div class="card-image"><img [src]="vl_buku.image_link" /></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <h2 class="title text-dark" *ngIf="translate.currentLang == 'en'">
+              {{ vl_buku.title_en }}
+            </h2>
+            <h2 class="title text-dark" *ngIf="translate.currentLang == 'ms'">
+              {{ vl_buku.title_ms }}
+            </h2>
+            <p class="text-dark">Call Number: {{ vl_buku.call_number }}</p>
+            <p class="text-dark">
+              {{ "Penulis" | translate }}/Editor: {{ vl_buku.author }}/{{
+                vl_buku.editor
+              }}
+            </p>
+            <p class="text-dark">
+              ISBN/ISSN: {{ vl_buku.isbn }}/{{ vl_buku.issn }}
+            </p>
+            <p class="text-dark">
+              {{ "Tahun" | translate }}: {{ vl_buku.year }}
+            </p>
+            <p class="text-dark">
+              {{ "Penerbit" | translate }}: {{ vl_buku.publisher_name }}
+            </p>
+            <p class="text-dark">
+              {{ "DeskripsiBahan" | translate }}:
+              <span
+                *ngIf="translate.currentLang == 'en'"
+                [innerHtml]="vl_buku.description_en | safe: 'html'"
+              ></span>
+              <span
+                *ngIf="translate.currentLang == 'ms'"
+                [innerHtml]="vl_buku.description_ms | safe: 'html'"
+              ></span>
+            </p>
+
+            <div class="row">
+              <div class="col text-right">
+                <a [href]="vl_buku.pdf_link" download class="btn btn-danger">{{
+                  "MuatTurunPDF" | translate
+                }}</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1 col-sm-12"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

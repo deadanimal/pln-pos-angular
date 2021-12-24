@@ -1,0 +1,140 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KutubkhanahMiniArkibTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              {{ "KutubkhanahMiniArkibDeskripsi" | translate }}
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="submodule?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="submodule?.description_ms | safe: 'html'"
+            ></p>
+          </div>
+        </div>
+        <div class="row pb-5">
+          <div
+            class="col-md-4 col-sm-12"
+            *ngFor="let vl_akk_category of vl_akk_categories"
+          >
+            <div class="card">
+              <div class="card-header bg-white p-4 text-center">
+                <i [class]="vl_akk_category.icon + ' fa-7x text-info'"></i>
+              </div>
+              <div class="card-body bg-white text-center pb-3">
+                <h3
+                  class="title text-dark mt-0"
+                  *ngIf="translate.currentLang == 'en'"
+                >
+                  {{ vl_akk_category.name_en }}
+                </h3>
+                <h3
+                  class="title text-dark mt-0"
+                  *ngIf="translate.currentLang == 'ms'"
+                >
+                  {{ vl_akk_category.name_ms }}
+                </h3>
+
+                <div *ngIf="vl_akk_category.archive_from == 'NAV'">
+                  <p
+                    *ngFor="
+                      let vl_akk of vl_akks
+                        | arkibkutubkhanahfilter
+                          : {
+                              virtual_library_archivekutubkhanah_category_id:
+                                vl_akk_category.id
+                            }
+                    "
+                  >
+                    <a [href]="vl_akk.link" class="font-weight-bold">
+                      <span *ngIf="translate.currentLang == 'en'">{{
+                        vl_akk.name_en
+                      }}</span>
+                      <span *ngIf="translate.currentLang == 'ms'">{{
+                        vl_akk.name_ms
+                      }}</span>
+                    </a>
+                  </p>
+                </div>
+
+                <div *ngIf="vl_akk_category.archive_from == 'KBK'">
+                  <p *ngFor="let archive_book of archive_books">
+                    <a
+                      download
+                      [href]="archive_book.pdf_link"
+                      class="font-weight-bold"
+                      ><span *ngIf="translate.currentLang == 'en'">{{
+                        archive_book.title_en
+                      }}</span>
+                      <span *ngIf="translate.currentLang == 'ms'">{{
+                        archive_book.title_ms
+                      }}</span></a
+                    >
+                  </p>
+                </div>
+
+                <div *ngIf="vl_akk_category.archive_from == 'KTB'">
+                  <p
+                    *ngFor="
+                      let archive_serialpublication of archive_serialpublications
+                    "
+                  >
+                    <a
+                      download
+                      [href]="archive_serialpublication.pdf_link"
+                      class="font-weight-bold"
+                      ><span *ngIf="translate.currentLang == 'en'">{{
+                        archive_serialpublication.title_en
+                      }}</span>
+                      <span *ngIf="translate.currentLang == 'ms'">{{
+                        archive_serialpublication.title_ms
+                      }}</span></a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

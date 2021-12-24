@@ -1,0 +1,32 @@
+
+
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Tayangan" | translate }}
+</h3>
+<div class="row">
+  <div
+    class="col-lg-3 col-md-6 col-sm-12"
+    *ngFor="let showing of showings; let i = index"
+  >
+    <div class="card card-blog card-plain" (click)="makeBooking(showing.id, showing.title)">
+      <div class="card-image">
+        <img class="img rounded" [src]="showing.poster_link" />
+      </div>
+      <div class="card-body">
+        <!-- <h6 class="category text-primary">Features</h6> -->
+        <h4
+          class="card-title text-info"
+          *ngIf="translate.currentLang == 'en'"
+        >
+          {{ showing.title_en }}
+        </h4>
+        <h4
+          class="card-title text-info"
+          *ngIf="translate.currentLang == 'ms'"
+        >
+          {{ showing.title_ms }}
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>

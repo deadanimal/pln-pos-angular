@@ -1,0 +1,152 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <!-- <div
+      class="page-header-image rellax"
+      data-parallax="true"
+      style="background-image: url('assets/img/show/nasa.jpg')"
+    ></div>
+    <div class="content-center">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto text-center">
+          <h1 class="title">Kembara Simulasi</h1>
+          <h2 class="description">
+            Alamilah pengalaman sebagai Angkasawan di dalam Space Pod menuju ke
+            ISS.
+          </h2>
+        </div>
+      </div>
+    </div> -->
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container pb-3">
+        <h2 class="title text-center text-dark">
+          {{ "KembaraSimulasiTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              {{ "KembaraSimulasiDeskripsi" | translate }}
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="module?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="module?.description_ms | safe: 'html'"
+            ></p>
+            <h3 class="text-dark text-center">
+              <b>{{ "Penumpang" | translate }}</b>
+            </h3>
+          </div>
+        </div>
+        <div class="row pb-3">
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-blog card-background" data-animation="true">
+              <div
+                class="full-background"
+                style="
+                  background-image: url('assets/img/space-pod/SPACEPOD 3.jpg');
+                "
+              ></div>
+              <div class="card-body">
+                <div class="content-bottom">
+                  <h4 class="card-category">Space Pod</h4>
+                  <a href="javascript:void(0)"
+                    ><h3 class="card-title">
+                      {{ "KembaraSimulasi1Gambar" | translate }}
+                    </h3></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-blog card-background" data-animation="true">
+              <div
+                class="full-background"
+                style="
+                  background-image: url('assets/img/space-pod/SPACEPOD 4.jpg');
+                "
+              ></div>
+              <div class="card-body">
+                <div class="content-bottom">
+                  <h4 class="card-category">Space Pod</h4>
+                  <a href="javascript:void(0)"
+                    ><h3 class="card-title">
+                      {{ "KembaraSimulasi2Gambar" | translate }}
+                    </h3></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <button
+              class="btn btn-default btn-round"
+              data-target="#myModal"
+              (click)="clickBook()"
+            >
+              <h2 class="m-0 title">{{ "Tempah" | translate }}</h2>
+            </button>
+          </div>
+        </div>
+        <h2 class="title text-center text-dark">
+          {{ "MaklumBalasKembaraSimulasi" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <div class="col-md-12">
+            <carousel>
+              <slide
+                *ngFor="let simulatorridefeedback of simulatorridefeedbacks"
+              >
+                <div class="text-center py-5 bg-white text-dark">
+                  <h2 class="text-dark">
+                    {{ simulatorridefeedback.user_id.full_name }}
+                  </h2>
+                  <div>
+                    <!-- <h3 class="text-dark">Sangat menarik</h3> -->
+                    <p class="text-dark">
+                      {{ simulatorridefeedback.comment_user }}
+                    </p>
+                  </div>
+                </div>
+              </slide>
+            </carousel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

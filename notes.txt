@@ -1,0 +1,93 @@
+Planetarium POS
+
+1. Standalone Features 
+    1.1 Pos Reporting
+    1.2 Ticket Generation
+    1.3 Voucher Validation 
+    1.4 Dual window -> customer display
+    1.5 Receipt Invoice generation - add type data
+
+2. Hardware integration
+    2.1 Posbank A11 thermal printer
+        - setup printer driver to print ticket size/receipt size
+
+3. Bugs
+    3.1 Atomicity when adding item to cart -> when response late, item added to cart twice.
+    3.2 Pagination on tables -> refer creative tim blk design
+    3.3 Receipt creation
+    3.4 Payment component and voucher component not sync - fixed
+    3.5 Cart voucher status alert not hiding after payment done 
+    3.6 Electron second window not working - wtf
+    3.7 Ticket more than one not detected
+    3.8 Simulasi price not double when bought two tickets
+
+4. UI Enhancement
+    3.1 Implement changes based on wireframe (Nik icons)
+
+
+A Mere Puzzle:
+  Validating refund 
+  - where to get the penyelia id
+  
+  Multiple ticket does not recognize
+  - Fuck the bug
+  
+  On closing flow?
+  - client want to close
+  - click close counter?
+  - should be directed to another page or just a popup ??
+  - give logout button ?? 
+
+  On login flow?
+  - when to set initial cash amount
+
+  Session Control?
+  - read a bit on jwt, we never read that thing
+
+  Dual Window?
+  - how to communicate between window 1, window2 via event emitter
+
+  Admin Layout?
+  - Re do 
+
+  Waktu rehat?
+  - clock in, break - waiter status
+
+  Bugs on facility, suddenly missing
+  - booking data
+
+
+gameplan:
+
+29/3/2021
+- reporting pdf generation
+- pdf print integration - report printing
+- dual window setup
+
+30/3/2021
+- improvise UI
+- the whole day
+- payment page
+- product page
+- all the frickin tables
+ 
+Cash payment page
+Reporting print page
+done Product page
+no need Auxilliary page
+
+31/3/2021
+TODO
+- receipt integration with BE #done no issue
+- ticket integration with BE 
+-- how to get show id for that transaction?
+-- lookup cart
+
+- improve datatable
+
+
+#########
+7/4/2021
+- child window fix
+- child window auto open in next screen
+- printer integration thermal printer

@@ -1,0 +1,98 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "MaklumatNOC" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <div class="col">
+            <ngx-org-chart [nodes]="nodes" direction="vertical"></ngx-org-chart>
+          </div>
+        </div>
+        <div class="row pb-3" *ngFor="let dynamiccontent of dynamiccontents">
+          <div class="col">
+            <div
+              *ngIf="translate.currentLang == 'en'"
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_en | safe: 'html'"
+            ></div>
+            <div
+              *ngIf="translate.currentLang == 'ms'"
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_ms | safe: 'html'"
+            ></div>
+          </div>
+        </div>
+        <!-- <div class="row pb-3">
+          <div class="col">
+            <p>
+              Planetarium Negara telah dilantik sebagai
+              <i>National Outreach Coordinator</i> Malaysia (NOC) pada 23
+              Oktober 2018 bagi meraikan sambutan ulang tahun ke-100
+              <i>International Astronomical Union</i> (IAU) pada tahun 2019. NOC
+              berperanan sebagai pengurus tadbir dan perantara antara Malaysia
+              dan IAU bagi perlaksanaan Program Global IAU Peringkat Kebangsaan.
+            </p>
+
+            <p class="pt-3">
+              Penglibatan daripada agensi, jabatan, NGO dan penggiat astronomi
+              sebagai Kolaborator Utama yang merupakan agen pelaksana Program
+              Global IAU Peringkat Kebangsaan. Kolaborator Utama yang dilantik
+              ialah Sabah Stargazers, Pertubuhan Astronomi Pulau Pinang, Pusat
+              GENIUS@pintar Negara UKM, Pusat Sains Kreativiti Terengganu,
+              Universiti Malaya, ApaDiLangit, Planetarium Sultan Iskandar, Star
+              Finder Astronomical Society, Balai Cerap Al Khawarizmi Melaka,
+              Balai Cerap Teluk Kemang, Agensi Angkasa Malaysia, Universiti
+              Teknologi Malaysia, GoSTEM dan Generasi Marikh Academy.
+            </p>
+
+            <p class="pt-3">
+              Pelbagai program telah dianjurkan sepanjang sambutan ulang tahun
+              ke-100 IAU. Program-program tersebut ialah 100 Hours of Astronomy,
+              Sambutan Jubli Perak Planetarium Negara, Pertandingan NameExoWorld
+              Malaysia, SolarFest Program Gerhana Matahari Cincin, Malaysia
+              Einstein School, Pameran IAU100 Above and Beyond dan 50th
+              Anniversary of Moon Landing, Kempen Pencerapan Tapak Pendaratan
+              Apollo Module, IAU Women and Girls in Astronomy Day dan ASEAN
+              Astronomy Workshop for Teachers (AAWT), dan dokumentari televisyen
+              bertajuk Cinta Alam Cakerawala.
+            </p>
+
+            <p class="pt-3">
+              Secara keseluruhan penglibatan seramai 17,665 murid, 715 guru, 274
+              astronomi amatur dan 126,377 orang awam berjaya dicapai sepanjang
+              perlaksanaan program-program tersebut.
+            </p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

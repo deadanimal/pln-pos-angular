@@ -1,0 +1,62 @@
+<div class="container-fluid" style="background-color: white; height: 100vh;">
+  <div class="table-responsive">
+    <table class="table table-borderless">
+      <!-- <tr *ngFor="let row of arrayOne(row); let i = index">
+        <td
+          *ngFor="let column of arrayOne(column); let j = index"
+        >
+          <div
+            *ngFor="let seat of seats; let k = index"
+          >
+            <div
+              *ngIf="seat.column == j && seat.row == i"
+              class="text-center"
+            >
+              <i class="fas fa-chair text-center"></i>
+              <small>{{ seat.name }}</small>
+            </div>
+          </div>
+        </td>
+      </tr> -->
+      <tr>
+        <td colspan="5"></td>
+        <td colspan="22">
+          <h4 class="title text-center text-dark m-0">
+            {{ "SKRINLAYAR" }}
+          </h4>
+          <div class="box"></div>
+        </td>
+      </tr>
+      <br />
+      <tr *ngFor="let row of arrayOne(row); let i = index">
+        <td
+          *ngFor="let column of arrayOne(column); let j = index"
+          (click)="selectSeat(i, j)"
+        >
+          <!-- [ngStyle]="getSelectedSeat(i, j)" -->
+          <button
+            *ngIf="getSeat(i, j)"
+            class="btn btn-fab btn-icon"
+            [ngClass]="getSelectedSeat(i, j)"
+            [disabled]="disableSeat(i, j)"
+          >
+            <small>{{ getSeat(i, j) }}</small>
+          </button>
+          <div
+            *ngIf="getColor(i, j)"
+            [style.background-color]="
+              seats[i].columns[j].color != undefined
+                ? seats[i].columns[j].color
+                : '#ffffff'
+            "
+            style="height: 30px"
+          ></div>
+          <!-- <div *ngIf="getSeat(i, j)" class="text-center">
+            <i class="fas fa-chair fa-2x"></i>
+            <small>{{ getSeat(i, j) }}</small>
+          </div> -->
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> 

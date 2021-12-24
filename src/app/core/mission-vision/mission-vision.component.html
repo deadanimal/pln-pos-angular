@@ -1,0 +1,110 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center">
+          {{ "VisiMisi" | translate }}
+        </h2>
+
+        <div class="row pb-3" *ngFor="let dynamiccontent of dynamiccontents">
+          <div class="col mx-auto">
+            <div
+              *ngIf="translate.currentLang == 'en'"
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_en | safe: 'html'"
+            ></div>
+            <div
+              *ngIf="translate.currentLang == 'ms'"
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_ms | safe: 'html'"
+            ></div>
+          </div>
+        </div>
+        <!-- <div class="row pb-3">
+          <div class="col-md-1 col-sm-12">
+            <h2 class="text-dark title m-0">Visi</h2>
+          </div>
+          <div class="col-md-11 col-sm-12">
+            <h3 class="text-dark text-justify">
+              Pusat pendidikan tidak formal dan pembudayaan sains angkasa
+              terunggul di Malaysia.
+            </h3>
+          </div>
+        </div>
+
+        <div class="row pb-3">
+          <div class="col-md-1 col-sm-12">
+            <h2 class="text-dark title m-0">Misi</h2>
+          </div>
+          <div class="col-md-11 col-sm-12">
+            <h3 class="text-dark text-justify">
+              Menyediakan prasarana dan perkhidmatan yang berkualiti kepada
+              masyarakat berkaitan aktiviti astronomi dan sains angkasa.
+            </h3>
+          </div>
+        </div>
+
+        <div class="row pb-3">
+          <div class="col">
+            <h2 class="text-dark title">Fungsi</h2>
+            <ul style="list-style-type: disc">
+              <li>
+                <p class="text-dark text-justify">
+                  Memperkasakan peranan Planetarium Negara sebagai sebuah
+                  organisasi pembudayaan STEM khususnya dalam bidang astronomi
+                  dan sains angkasa di Malaysia.
+                </p>
+              </li>
+              <li>
+                <p class="text-dark text-justify">
+                  Membudayakan dan meningkatkan kesedaran awam terhadap
+                  kepentingan bidang astronomi dan sains angkasa melalui
+                  tayangan, pameran, program dan media sosial.
+                </p>
+              </li>
+              <li>
+                <p class="text-dark text-justify">
+                  Menyediakan kemahiran dalam pengendalian instrumentasi
+                  tayangan digital astronomi optikal dan radio amatur.
+                </p>
+              </li>
+              <li>
+                <p class="text-dark text-justify">
+                  Memberikan khidmat nasihat, koordinasi dan bimbingan untuk
+                  pembangunan modal insan dalam bidang astronomi dan sains
+                  angkasa di Malaysia.
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

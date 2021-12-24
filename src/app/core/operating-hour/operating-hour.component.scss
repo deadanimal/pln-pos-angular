@@ -1,0 +1,35 @@
+video {
+  // filter: opacity(70%);
+
+  h1 {
+    filter: opacity(10%);
+    color: black;
+  }
+}
+
+.section {
+  padding: 100px 0;
+}
+
+.theadstyle {
+  color: white;
+  background-color: #202251;
+  font-weight: bold;
+  text-align: center;
+}
+
+.theadcategory {
+  color: black;
+  background-color: #5cacee;
+  text-align: center;
+}
+
+.tbodyprice {
+  color: black;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}

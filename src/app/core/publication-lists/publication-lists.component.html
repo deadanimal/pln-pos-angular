@@ -1,0 +1,150 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <!-- <div
+        class="page-header-image rellax"
+        data-parallax="true"
+        style="background-image: url('assets/img/publication/publication.jpeg')"
+      ></div>
+      <div class="content-center">
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto text-center">
+            <h1 class="title">Penerbitan</h1>
+            <h2 class="description">
+              Anda boleh mengakses penerbitan di dalam modul ini.
+            </h2>
+          </div>
+        </div>
+      </div> -->
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "PenerbitanSenarai" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row pb-5" *ngIf="!showSelectedPublication">
+          <div class="col-lg-4 col-sm-12" *ngFor="let pub of publications">
+            <div
+              class="card card-background"
+              [ngStyle]="{ 'background-image': 'url(' + pub.poster_link + ')' }"
+            >
+              <div class="card-body text-center">
+                <h2 class="card-title" *ngIf="translate.currentLang == 'en'">
+                  {{ pub.title_en }}
+                </h2>
+                <h2 class="card-title" *ngIf="translate.currentLang == 'ms'">
+                  {{ pub.title_ms }}
+                </h2>
+                <h5 class="desc">
+                  <span *ngIf="pub.edition"
+                    >{{ "Edisi" | translate }} {{ pub.edition }}, </span
+                  >{{ pub.year }}
+                </h5>
+                <a class="btn btn-danger" [href]="pub.pdf_link" download>
+                  <span class="text-white">{{
+                    "MuatTurunPDF" | translate
+                  }}</span> </a
+                ><!--(click)="downloadPDF(pub)"-->
+                <p class="pt-3">
+                  <a (click)="openPublication(pub)">{{
+                    "LihatSelanjutnya" | translate
+                  }}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pb-5" *ngIf="showSelectedPublication">
+          <div class="col-lg-4 col-sm-12">
+            <div class="card">
+              <img class="card-img" [src]="selectedPublication.poster_link" />
+            </div>
+          </div>
+          <div class="col-lg-8 col-sm-12 publication-detail">
+            <h2 class="title text-dark" *ngIf="translate.currentLang == 'en'">
+              {{ selectedPublication.title_en }}
+            </h2>
+            <h2 class="title text-dark" *ngIf="translate.currentLang == 'ms'">
+              {{ selectedPublication.title_ms }}
+            </h2>
+            <!-- <h4 class="title text-dark mb-0">Abstrak</h4>
+            <p>{{ selectedPublication.abstract }}</p> -->
+            <p class="font-weight-bold pt-3">
+              Call Number: {{ selectedPublication.call_number }}
+            </p>
+            <p class="font-weight-bold">
+              {{ "Penulis" | translate }}/Editor:
+              {{ selectedPublication.author_name }}/{{
+                selectedPublication.editor_name
+              }}
+            </p>
+            <p class="font-weight-bold">
+              ISBN/ISSN: {{ selectedPublication.isbn }}/{{
+                selectedPublication.issn
+              }}
+            </p>
+            <p class="font-weight-bold">
+              {{ "Tahun" | translate }}: {{ selectedPublication.year }}
+            </p>
+            <p class="font-weight-bold">
+              {{ "Penerbit" | translate }}:
+              {{ selectedPublication.publisher_name }}
+            </p>
+            <!-- <p class="font-weight-bold">Tarikh Diterbit: {{ selectedPublication.published_date }}</p> -->
+            <!-- <p class="font-weight-bold">
+              Keluaran:
+              <span *ngIf="selectedPublication.edition"
+                >Edisi {{ selectedPublication.edition }}, </span
+              >{{ selectedPublication.year }}
+            </p> -->
+            <p class="font-weight-bold" *ngIf="translate.currentLang == 'en'">
+              {{ "DeskripsiBahan" | translate }}:
+              {{ selectedPublication.description_en }}
+            </p>
+            <p class="font-weight-bold" *ngIf="translate.currentLang == 'ms'">
+              {{ "DeskripsiBahan" | translate }}:
+              {{ selectedPublication.description_ms }}
+            </p>
+
+            <div class="text-right">
+              <button
+                type="button"
+                class="btn btn-neutral"
+                (click)="backPublication()"
+              >
+                {{ "Kembali" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

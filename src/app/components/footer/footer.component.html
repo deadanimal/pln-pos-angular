@@ -1,0 +1,118 @@
+<footer class="footer" [ngClass]="fontSize">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-12 text-left">
+        <!-- <div class="col text-center"><h3 class="title" style="text-align: center !important;">ePlanetarium</h3></div> -->
+        <div class="row">
+          <div class="col">
+            <h3 class="font-weight-bold">
+              <small class="font-weight-bold">e</small>Planetarium
+            </h3>
+            <img class="brand-img" src="assets/logo/logo-mosti-white.png" />
+            <img class="brand-img" src="assets/logo/planetarium-logo.png" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="mt-3 mb-0 font-weight-bold">
+              {{ "PlanetariumNegara" | translate }}
+            </p>
+            <p class="m-0">{{ "MOSTI" | translate }}</p>
+            <p class="m-0">53, Jalan Perdana,</p>
+            <p class="m-0">50480 Kuala Lumpur, MALAYSIA</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="m-0">Tel: +603-2273 4303, {{ "Faks" | translate }}: +603-2273 5488</p>
+            <br />
+            <p class="m-0">{{ "Emel" | translate }}: info[at]planet.gov.my</p>
+            <p class="m-0">Web: https://www.planetariumnegara.gov.my</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12 text-left">
+        <h3 class="font-weight-bold">{{ "PenyataanUmum" | translate }}</h3>
+
+        <p class="m-0">
+          <a [routerLink]="['/privacy-policy']">{{
+            "Dasarprivasidankeselamatan" | translate
+          }}</a>
+        </p>
+        <p class="m-0">
+          <a [routerLink]="['/copyright-notice']">{{
+            "Notishakcipta" | translate
+          }}</a>
+        </p>
+        <p class="m-0">
+          <a [routerLink]="['/disclaimer']">{{ "Penafian" | translate }}</a>
+        </p>
+
+        <h3 style="font-weight: 600; margin-top: 20px">
+          {{ "Ikutikami" | translate }}:
+        </h3>
+        <div>
+          <div class="btn-wrapper profile">
+            <a
+              class="btn btn-icon btn-facebook btn-round mr-3"
+              href="https://facebook.com/planetarium.negara"
+              target="_blank"
+            >
+              <i class="fab fa-facebook-square"> </i>
+            </a>
+            <a
+              class="btn btn-icon btn-twitter btn-round mr-3"
+              href="https://twitter.com/PlanetariumKL"
+              target="_blank"
+            >
+              <i class="fab fa-twitter"> </i>
+            </a>
+            <a
+              class="btn btn-icon btn-instagram btn-round mr-3"
+              href="https://www.instagram.com/planetarium.negara"
+              target="_blank"
+            >
+              <i class="fab fa-instagram"> </i>
+            </a>
+            <a
+              class="btn btn-icon btn-youtube btn-round"
+              href="https://youtube.com/channel/UCLEA5IFFg30dPpaMo9fKUXQ"
+              target="_blank"
+            >
+              <i class="fab fa-youtube"> </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12 text-left">
+        <h3 class="font-weight-bold">{{ "PautanPantas" | translate }}</h3>
+
+        <p class="m-0">
+          <a href="https://www.mosti.gov.my/">{{ "MOSTI" | translate }} </a>
+        </p>
+        <p class="m-0">
+          <a href="https://www.moe.gov.my/">{{ "MOE" | translate }}</a>
+        </p>
+        <p class="m-0">
+          <a href="http://www.mysa.gov.my/">{{ "MYSA" | translate }}</a>
+        </p>
+        <p class="m-0">
+          <a href="http://www.psn.gov.my/">{{
+            "PusatSainsNegara" | translate
+          }}</a>
+        </p>
+      </div>
+    </div>
+    <div class="row pt-3"></div>
+    <div class="row pt-3">
+      <div class="col-md-8 col-sm-12">
+        <p>
+          {{ "BestView" | translate }}
+        </p>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <p>&#169; {{ "Copyright" | translate }}</p>
+      </div>
+    </div>
+  </div>
+</footer>

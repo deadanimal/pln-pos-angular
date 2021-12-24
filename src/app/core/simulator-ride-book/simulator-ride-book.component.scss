@@ -1,0 +1,27 @@
+.form-check-label {
+  color: #000000 !important;
+}
+
+.form-control {
+  color: #000000 !important;
+}
+
+ol,
+ul {
+  li {
+    color: #000000;
+  }
+}
+
+.section {
+  padding: 0px 0;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}

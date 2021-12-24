@@ -1,0 +1,101 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <!-- <div
+      class="page-header-image rellax"
+      data-parallax="true"
+      style="background-image: url('assets/img/publication/publication.jpeg')"
+    ></div>
+    <div class="content-center">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto text-center">
+          <h1 class="title">Penerbitan</h1>
+          <h2 class="description">
+            Anda boleh mengakses penerbitan di dalam modul ini.
+          </h2>
+        </div>
+      </div>
+    </div> -->
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "PenerbitanPlanetarium" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row">
+          <div class="col">
+            <!-- <p
+              class="text-dark text-justify"
+              [innerHtml]="'PenerbitanPlanetariumDescription' | translate"
+            ></p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="module?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="module?.description_ms | safe: 'html'"
+            ></p>
+          </div>
+        </div>
+        <div class="row pb-5">
+          <div
+            class="col-md-4 col-sm-12"
+            *ngFor="let publicationcategory of publicationcategories"
+          >
+            <div
+              class="card bg-white"
+              [routerLink]="['/publication/lists/', publicationcategory.id]"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-4 text-center">
+                    <i
+                      [class]="publicationcategory.icon + ' fa-4x text-default'"
+                    ></i>
+                  </div>
+                  <div class="col-8 align-self-center">
+                    <p class="font-weight-bold text-default" *ngIf="translate.currentLang == 'en'">
+                      {{ publicationcategory.name_en }}
+                    </p>
+                    <p class="font-weight-bold text-default" *ngIf="translate.currentLang == 'ms'">
+                      {{ publicationcategory.name_ms }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

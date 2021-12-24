@@ -1,0 +1,28 @@
+video {
+  // filter: opacity(70%);
+
+  h1 {
+    filter: opacity(10%);
+    color: black;
+  }
+}
+
+.section {
+  padding: 100px 0;
+}
+
+ul {
+  li {
+    color: black;
+  }
+}
+
+p {
+  color: #000000;
+  // font-size: 1rem;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}

@@ -1,0 +1,21 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Pembayaran QR" | translate }}
+</h3>
+
+<div class="h-100 main-content">
+  <div class="text-center" style="padding-top: 25%; margin: auto; width: 60%">
+      <alert [type]="'danger'">
+        <b>{{ "ShowStep6Label" | translate }}</b>
+      </alert>
+      <div class="mt-4 row">
+          <div class="text-center col-6">
+            <div class="g3 btn-lg" (click)="cancelPayment()"><b>BATAL</b></div>
+          </div>
+
+          <div class="text-center col-6">
+            <div class="g4 btn-lg" (click)="submitPayment()"><b>HANTAR</b></div>
+          </div>
+        </div>
+  </div>
+
+</div>

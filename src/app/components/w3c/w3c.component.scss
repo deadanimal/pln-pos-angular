@@ -1,0 +1,69 @@
+.sidenav {
+  height: 70%;
+  width: 0;
+  position: fixed;
+  z-index: 10000;
+  top: 100px;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  margin-right: 15px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+.sticky-w3c {
+  position: fixed;
+  top: 300px;
+  right: 15px;
+  z-index: 1000;
+}
+
+.btn-one, .btn-one:hover {
+  background: #202251 !important;
+  background-color: #202251 !important;
+}
+
+.btn-two, .btn-two:hover {
+  background: #8f2c2c !important;
+  background-color: #8f2c2c !important;
+}
+
+.btn-three, .btn-three:hover {
+  background: #c96130 !important;
+  background-color: #c96130 !important;
+}
+
+.btn-four, .btn-four:hover {
+  background: #18631b !important;
+  background-color: #18631b !important;
+}

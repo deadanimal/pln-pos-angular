@@ -1,0 +1,122 @@
+
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Cetak Laporan" | translate }}
+</h3>
+
+<div class="main-content">
+    <!--
+    <div class="row text-dark">
+
+    <div style="margin: auto;" class="col-12">
+      <alert [type]="'danger'">
+        <b>{{ "ShowStep5Label" | translate }}</b>
+      </alert>
+
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class=" text-dark far fa-calendar-alt"></i
+            ></span>
+          </div>
+          <input 
+            type="text"
+            placeholder="Hari ini"
+            class="form-control text-dark text-center"
+            [(ngModel)] = "selectedDate"
+            bsDatepicker>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 align-items-center">
+      <button class="btn btn-info" (click)="getData()" type="button">
+       Cetak 
+      </button>
+    </div>
+    </div>
+    -->
+  <tabset>
+    <tab customClass="customClass" heading="Laporan Harian" id="tab1">
+
+    <div class="row">
+
+      <div style="width: 30%;" class="col-3 form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class=" text-dark far fa-calendar-alt"></i
+            ></span>
+          </div>
+          <input 
+            type="text"
+            placeholder="Hari ini"
+            class="form-control text-dark text-center"
+            [(ngModel)] = "selectedDate"
+            bsDatepicker>
+        </div>
+
+      </div>
+
+      <div class="col-6 align-items-center">
+        <button class="btn btn-info btn-sm" (click)="getReport()" type="button">
+         Cari 
+        </button>
+      </div>
+
+    </div>
+
+
+
+      <div class="mt-10 text-dark">
+        <table class="text-dark table table-striped">
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Tarikh</th>          
+              <th scope="col">Waktu Buka</th>          
+              <th scope="col">Waktu Tutup</th>          
+              <th scope="col">Tunai Awal</th>          
+              <th scope="col">Tunai Akhir</th>          
+              <th scope="col">Status</th>          
+              <th scope="col">Tindakan</th>          
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of tableTemp; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+              <td>{{ report.opened_timestamp.slice(0,10)}}</td>
+              <td>{{ report.opened_timestamp.slice(11,19)}}</td>
+
+              <td>
+                <h5 *ngIf="report.closed_timestamp!=null">{{ report.closed_timestamp.slice(11,19)}}</h5>
+                <h5 *ngIf="report.closed_timestamp==null">-</h5>
+              </td>
+
+              <td>RM {{ report.initial_cash}}</td>
+              <td>RM {{ report.expected_cash_at_closing }}</td>
+
+              <td>
+                <h5 *ngIf="report.status=='OP'">Buka</h5>
+                <h5 *ngIf="report.status=='CL'">Tutup</h5>
+              </td>
+
+              <td>
+                <a class="btn btn-sm btn-info text-white" (click)="printPdf(report)">Cetak</a>
+              </td>
+
+
+            </tr>
+          </tbody>
+         </table>
+      </div>
+    </tab>
+  </tabset>
+
+
+
+</div>

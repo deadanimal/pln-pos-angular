@@ -1,0 +1,117 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KutubkhanahMiniTerbitanBersiriTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              {{ "KutubkhanahMiniTerbitanBersiriDeskripsi" | translate }}
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="submodule?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="submodule?.description_ms | safe: 'html'"
+            ></p>
+          </div>
+        </div>
+        <div
+          class="row pb-5"
+          *ngFor="let vl_terbitanbersiri of vl_terbitanbersiris"
+        >
+          <div class="col-md-1 col-sm-12"></div>
+          <div class="col-md-4 col-sm-12">
+            <div class="card bg-transparent">
+              <div class="card-image">
+                <img [src]="vl_terbitanbersiri.image_link" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <h2 class="title text-dark" *ngIf="translate.currentLang == 'en'">
+              {{ vl_terbitanbersiri.title_en }}
+            </h2>
+            <h2 class="title text-dark" *ngIf="translate.currentLang == 'ms'">
+              {{ vl_terbitanbersiri.title_ms }}
+            </h2>
+            <p class="text-dark">
+              Call Number: {{ vl_terbitanbersiri.call_number }}
+            </p>
+            <p class="text-dark">
+              {{ "Penulis" | translate }}/Editor:
+              {{ vl_terbitanbersiri.author }}/{{ vl_terbitanbersiri.editor }}
+            </p>
+            <p class="text-dark">
+              ISBN/ISSN: {{ vl_terbitanbersiri.isbn }}/{{
+                vl_terbitanbersiri.issn
+              }}
+            </p>
+            <p class="text-dark">{{ "Tahun" | translate }}: {{ vl_terbitanbersiri.year }}</p>
+            <p class="text-dark">
+              {{ "Penerbit" | translate }}:
+              {{ vl_terbitanbersiri.publisher_name }}
+            </p>
+            <p class="text-dark">
+              {{ "DeskripsiBahan" | translate }}:
+              <span
+                *ngIf="translate.currentLang == 'en'"
+                [innerHtml]="vl_terbitanbersiri.description_en | safe: 'html'"
+              ></span>
+              <span
+                *ngIf="translate.currentLang == 'ms'"
+                [innerHtml]="vl_terbitanbersiri.description_ms | safe: 'html'"
+              ></span>
+            </p>
+
+            <div class="row">
+              <div class="col text-right" *ngIf="vl_terbitanbersiri.pdf_link">
+                <a
+                  [href]="vl_terbitanbersiri.pdf_link"
+                  download
+                  class="btn btn-danger"
+                  >{{ "MuatTurunPDF" | translate }}</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1 col-sm-12"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

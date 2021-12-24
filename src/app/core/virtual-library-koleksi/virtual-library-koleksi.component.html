@@ -1,0 +1,81 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KutubkhanahMiniKoleksiTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row pb-3">
+          <div class="col-md-2 col-sm-12"></div>
+          <div class="col">
+            <div class="row">
+              <div
+                class="col-md-6 col-sm-12"
+                *ngFor="let vl_collection of vl_collections"
+              >
+                <div
+                  class="card"
+                  [routerLink]="[
+                    '/virtual-library/koleksi/' +
+                      vl_collection.virtual_library_collection_category_id +
+                      '/' +
+                      vl_collection.link +
+                      '/' +
+                      vl_collection.id
+                  ]"
+                >
+                  <div class="card-header bg-white p-3 text-center">
+                    <i [class]="vl_collection.icon + ' fa-10x text-info'"></i>
+                  </div>
+                  <div class="card-body">
+                    <h2
+                      class="title text-center"
+                      *ngIf="translate.currentLang == 'en'"
+                    >
+                      {{ vl_collection.name_en }}
+                    </h2>
+                    <h2
+                      class="title text-center"
+                      *ngIf="translate.currentLang == 'ms'"
+                    >
+                      {{ vl_collection.name_ms }}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-12"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

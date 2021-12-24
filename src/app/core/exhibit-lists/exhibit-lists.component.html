@@ -1,0 +1,86 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <!-- <div
+      class="page-header-image rellax"
+      data-parallax="true"
+      style="background-image: url('assets/img/exhibit/minin.jpg')"
+    ></div>
+    <div class="content-center">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto text-center">
+          <h1 class="title">Pameran</h1>
+          <h2 class="description">
+            Pameran-pameran terbaru yang bakal menggagumkan anda.
+          </h2>
+        </div>
+      </div>
+    </div> -->
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section related-products">
+      <div class="container">
+        <h2 class="title text-dark text-center">
+          {{ "SenaraiPameran" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row pb-3">
+          <div
+            class="col-md-3 col-sm-12"
+            *ngFor="let exhibitlist of exhibitlists"
+          >
+            <div class="card" style="height: auto">
+              <img class="card-img-top" [src]="exhibitlist.image_link" />
+              <div class="card-body text-center">
+                <h2
+                  *ngIf="translate.currentLang == 'en'"
+                  class="card-title title text-uppercase font-weight-bold"
+                >
+                  {{ exhibitlist.name_en }}
+                </h2>
+                <h2
+                  *ngIf="translate.currentLang == 'ms'"
+                  class="card-title title text-uppercase font-weight-bold"
+                >
+                  {{ exhibitlist.name_ms }}
+                </h2>
+              </div>
+              <div class="card-footer text-center p-3">
+                <button
+                  class="btn btn-sm btn-info"
+                  [routerLink]="['/exhibit/lists/', zone, exhibitlist.id]"
+                >
+                  Info
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

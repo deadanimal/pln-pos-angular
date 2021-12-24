@@ -1,0 +1,79 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "DirektoriPegawai" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <!-- <div class="col-md-1 col-sm-12"></div> -->
+          <div class="col-md-12 col-sm-12">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover">
+                <caption>
+                  <b>{{ "PegawaiAktif" | translate: param }}</b>
+                </caption>
+                <thead class="thead-dark">
+                  <tr>
+                    <td class="text-center">{{ "Nama" | translate }}</td>
+                    <td class="text-center">{{ "Bahagian" | translate }}</td>
+                    <td class="text-center">{{ "Jawatan" | translate }}</td>
+                    <td class="text-center">{{ "No.Telefon" | translate }}</td>
+                    <td class="text-center">{{ "Emel[at]" | translate }}</td>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let employeedirectory of employeedirectories">
+                    <td>
+                      <p>{{ employeedirectory.name }}</p>
+                    </td>
+                    <td>
+                      <p>{{ getDepartment(employeedirectory.department) }}</p>
+                    </td>
+                    <td>
+                      <p>{{ employeedirectory.position }}</p>
+                    </td>
+                    <td>
+                      <p>{{ employeedirectory.extension }}</p>
+                    </td>
+                    <td>
+                      <p>{{ employeedirectory.email }}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="col-md-1 col-sm-12"></div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

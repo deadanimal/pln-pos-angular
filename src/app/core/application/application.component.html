@@ -1,0 +1,521 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center"> {{ "Permohonan" | translate }}
+</h3>
+
+<div class="main-content">
+  <tabset>
+    <tab customClass="customClass" heading="Tayangan" id="tab1">
+
+      <div class="row">
+
+      <div style="width: 30%;" class="col-3 form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class=" text-dark far fa-calendar-alt"></i
+            ></span>
+          </div>
+          <input 
+            type="text"
+            placeholder="Hari ini"
+            class="form-control text-dark text-center"
+            [(ngModel)] = "selectedDate1"
+            bsDatepicker>
+        </div>
+
+      </div>
+
+      <div class="col-6 align-items-center">
+        <button class="btn btn-info btn-sm" (click)="getBookingData()" type="button">
+         Cari 
+        </button>
+      </div>
+
+    </div>
+
+
+
+      <div class="text-dark">
+        <!--
+        <div class="dataTables_wrapper py-4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length" id="datatable_length">
+                <label>
+                  Papar
+                  <select
+                    name="datatable_length"
+                    aria-controls="datatable"
+                    class="text-dark form-control form-control-sm"
+                    (change)="entriesChange($event)"
+                  >
+                    <option value="10" [selected]="tableEntries == 5">5</option>
+                    <option value="25" [selected]="tableEntries == 10">
+                      10
+                    </option>
+                    <option value="50" [selected]="tableEntries == 15">
+                      15
+                    </option>
+                    <option value="-1" [selected]="tableEntries == -1">
+                      Semua
+                    </option>
+                  </select>
+                  rekod
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div id="datatable_filter" class="dataTables_filter">
+                <label>
+                  <input
+                    type="search"
+                    class="text-dark form-control form-control-sm"
+                    placeholder="Cari rekod"
+                    aria-controls="datatable"
+                    (keyup)="filterTable($event)"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        -->
+
+
+        <table class="text-dark table table-striped" >
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Nama</th>          
+              <th scope="col">Jenis Tiket</th>          
+              <th scope="col">kategori Tiket</th>          
+              <th scope="col">Tarikh Tempahan</th>          
+              <th scope="col">Masa Tempahan</th>          
+              <th scope="col">Jumlah Harga</th>          
+              <th scope="col">Status</th>          
+              <th scope="col">Tindakan</th>          
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let show of showRows; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+
+              <td>{{ show.user_id.full_name }}</td>
+
+              <!-- ticket type -->
+              <td>
+                <h5>{{ enumArray[show.ticket_type] }}</h5>
+              </td>
+
+              <!-- ticket category -->
+              <td>
+                <h5>{{ enumArray[show.ticket_category] }}</h5>
+              </td>
+
+              <td>{{ show.showtime_id.show_date }}</td>
+              <td>{{ show.showtime_id.show_time }}</td>
+              <td>{{ show.total_price | currency:'MYR':'symbol'}}</td>
+
+              <td>
+                <h5>{{ enumArray[show.status] }}</h5>
+              </td>
+
+              <td>
+                <a *ngIf="show.status == 'SB05'" class="btn btn-sm btn-info text-white" (click)="openModal(confirmRefundModal, show, 'show')">Bayaran Balik</a>
+                <a *ngIf="show.status != 'SB05'" class="btn btn-sm btn-info text-white" disabled="true">Bayaran Balik</a>
+                &nbsp;
+                <a class="btn btn-sm btn-info text-white" (click)="openModalDetail(detailModal, 'show', show)">Butiran</a>
+              </td>
+            </tr>
+          </tbody>
+         </table>
+       </div>
+
+    </tab>
+    <tab customClass="customClass" heading="Kembara Simulasi">
+
+      <div class="row">
+
+      <div style="width: 30%;" class="col-3 form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class=" text-dark far fa-calendar-alt"></i
+            ></span>
+          </div>
+          <input 
+            type="text"
+            placeholder="Hari ini"
+            class="form-control text-dark text-center"
+            [(ngModel)] = "selectedDate"
+            bsDatepicker>
+        </div>
+
+      </div>
+
+      <div class="col-6 align-items-center">
+        <button class="btn btn-info btn-sm" (click)="getBookingData()" type="button">
+         Cari 
+        </button>
+      </div>
+
+    </div>
+
+
+
+      <div class="text-dark">
+        <table class="text-dark table table-striped">
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Nama</th>          
+              <th scope="col">Jenis Tiket</th>          
+              <th scope="col">kategori Tiket</th>          
+              <th scope="col">Tarikh Tempahan</th>          
+              <th scope="col">Masa Tempahan</th>          
+              <th scope="col">Jumlah Harga</th>          
+              <th scope="col">Status</th>          
+              <th scope="col">Tindakan</th>          
+
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let space of spaceRows; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+
+              <td>{{ space.user_id.full_name }}</td>
+              <td>{{ enumArray[space.ticket_type] }}</td>
+              <td>{{ enumArray[space.ticket_category] }}</td>
+              <td>{{ space.booking_date }}</td>
+              <td>{{ space.simulator_ride_time_id.time }}</td>
+              <td>RM {{ space.total_price }}</td>
+              <td>{{ enumArray[space.status] }}</td>
+              <td>
+                <a *ngIf="space.status == 'SRB03'" class="btn btn-sm btn-info text-white" (click)="openModal(confirmRefundModal, space, 'space')">Bayaran Balik</a>
+                <a *ngIf="space.status != 'SRB03'" class="btn btn-sm btn-info text-white" disabled="true">Bayaran Balik</a>
+                 &nbsp;
+                <a class="btn btn-sm btn-info text-white" (click)="openModalDetail(detailModal, 'space', space)">Butiran</a>
+
+              </td>
+            </tr>
+
+          </tbody>
+         </table>
+
+
+      </div>
+    </tab>
+    <tab customClass="customClass" heading="Fasiliti">
+
+      <div class="row">
+
+      <div style="width: 30%;" class="col-3 form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><i class=" text-dark far fa-calendar-alt"></i
+            ></span>
+          </div>
+          <input 
+            type="text"
+            placeholder="Hari ini"
+            class="form-control text-dark text-center"
+            [(ngModel)] = "selectedDate"
+            bsDatepicker>
+        </div>
+
+      </div>
+
+      <div class="col-6 align-items-center">
+        <button class="btn btn-info btn-sm" (click)="getBookingData()" type="button">
+         Cari 
+        </button>
+      </div>
+
+    </div>
+
+      <div class="text-dark">
+      <table class="text-dark table table-striped">
+        <thead>
+          <tr>
+
+            <th scope="col">No</th>          
+            <th scope="col">Nama</th>          
+            <th scope="col">No.Telefon</th>          
+            <th scope="col">Email</th>          
+            <th scope="col">Organisasi</th>          
+            <th scope="col">Tarikh Tempahan</th>          
+            <th scope="col">Jumlah Harga</th>          
+            <th scope="col">Jumlah Peserta</th>          
+            <th scope="col">Tempah Alat</th>          
+            <th scope="col">Status</th>          
+            <th scope="col">Tindakan</th>          
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let facility of facilityRows; index as i ">
+            <td scope="row">{{ i + 1 }}</td>
+
+            <td>{{ facility.user_name }}</td>
+            <td>{{ facility.user_phone }}</td>
+            <td>{{ facility.user_email }}</td>
+            <td>{{ facility.organisation_name }}</td>
+            <td>{{ facility.booking_date }}</td>
+            <td>RM {{ facility.total_price }}</td>
+            <td>{{ facility.number_of_people }}</td>
+            <td>{{ enumArray[facility.want_equipment] }}</td>
+            <td>{{ enumArray[facility.status] }}</td>
+
+            <td>
+              <a *ngIf="facility.status == 'FB05'" class="btn btn-sm btn-info text-white" (click)="openModal(confirmRefundModal, facility, 'facility')">Bayaran Balik</a>
+              <a *ngIf="facility.status != 'FB05'" class="btn btn-sm btn-info text-white" disabled="true">Bayaran Balik</a>
+              &nbsp;
+              <a class="btn btn-sm btn-info text-white" (click)="openModalDetail(detailModal, 'facility', facility)">Butiran</a>
+
+            </td>
+          </tr>
+        </tbody>
+       </table>
+
+
+      </div>
+    </tab>
+
+  </tabset>
+</div>
+
+
+<ng-template #detailModal>
+  <div class="modal-header justify-content-center">
+    <button
+      aria-hidden="true"
+      class="close"
+      data-dismiss="modal"
+      (click)="closeModal()"
+      type="button"
+    >
+      <i class="tim-icons icon-simple-remove text-dark"> </i>
+    </button>
+    <div class="text-dark text-center ml-auto mr-auto">
+      <h3 class="title mb-0">
+       Butiran Permohonan 
+      </h3>
+    </div>
+  </div>
+  <div *ngIf="detailTemp == 'show'" class="modal-body text-dark">
+    <div class="row mt-4">
+      <div class="col-6 custom-left">
+
+        <h4>Nama</h4>
+        <br>
+        <h4>Jenis Tiket</h4>
+        <br>
+        <h4>Kategori Tiket</h4>
+        <br>
+        <h4>Tajuk</h4>
+        <br>
+        <h4>Kerusi</h4>
+        <br>
+
+        <h4>Tarikh Tempahan</h4>
+        <br>
+        <h4>Masa Tempahan</h4>
+        <br>
+        <h4>Jumlah Harga</h4>
+        <br>
+        <h4>Status</h4>
+
+      </div>
+      <div class="col-6 custom-right">
+
+
+        <h4><b>{{ show_name }}</b></h4>
+        <br>
+          <h4><b>{{ show_ticket_type }}</b></h4>
+        <br>
+          <h4><b>{{ show_ticket_cat }}</b></h4>
+        <br>
+          <h4><b>{{ show_title }}</b></h4>
+        <br>
+          <h4><b>{{ show_seat }}</b></h4>
+        <br>
+        <h4><b>{{ show_date }}</b></h4>
+        <br>
+        <h4><b>{{ show_time }}</b></h4>
+        <br>
+        <h4><b>RM {{ show_price }}</b></h4>
+        <br>
+        <h4><b>{{ show_status }}</b></h4>
+
+      </div>
+
+      <div class="col mt-5 text-center text-white">
+        <a class="btn btn-md btn-info" (click)="reprintReceipt()">Cetak Resit</a>
+        &nbsp;
+        <a class="btn btn-md btn-info" (click)="reprintTicket()">Cetak Tiket</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="detailTemp == 'space'" class="modal-body text-dark">
+    <div class="row mt-4">
+      <div class="col-6 custom-left">
+
+        <h4>Nama</h4>
+        <br>
+        <h4>Jenis Tiket</h4>
+        <br>
+        <h4>Kategori Tiket</h4>
+        <br>
+        <h4>Tarikh Tempahan</h4>
+        <br>
+        <h4>Masa Tempahan</h4>
+        <br>
+        <h4>Jumlah Harga</h4>
+        <br>
+        <h4>Status</h4>
+
+      </div>
+      <div class="col-6 custom-right">
+
+
+        <h4><b>{{ space_name }}</b></h4>
+        <br>
+          <h4><b>{{ space_ticket_type }}</b></h4>
+        <br>
+          <h4><b>{{ space_ticket_cat }}</b></h4>
+        <br>
+        <h4><b>{{ space_date }}</b></h4>
+        <br>
+        <h4><b>{{ space_time }}</b></h4>
+        <br>
+        <h4><b>RM {{ space_price }}</b></h4>
+        <br>
+        <h4><b>{{ space_status }}</b></h4>
+
+      </div>
+
+      <div class="col mt-5 text-center text-white">
+        <a class="btn btn-md btn-info" (click)="reprintReceipt()">Cetak Resit</a>
+        &nbsp;
+        <a class="btn btn-md btn-info" (click)="reprintTicket()">Cetak Tiket</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="detailTemp == 'facility'" class="modal-body text-dark">
+    <div class="row mt-4">
+      <div class="col-6 custom-left">
+
+        <h4>Nama</h4>
+        <br>
+        <h4>No. Telefon</h4>
+        <br>
+        <h4>Email</h4>
+        <br>
+        <h4>Organisasi</h4>
+        <br>
+
+        <h4>Fasiliti</h4>
+        <br>
+
+        <h4>Tarikh Tempahan</h4>
+        <br>
+        <h4>Jumlah Peserta</h4>
+        <br>
+        <h4>Tempah Alat</h4>
+        <br>
+        <h4>Status</h4>
+        <br>
+        <h4>Jumlah Harga</h4>
+
+      </div>
+      <div class="col-6 custom-right">
+
+
+        <h4><b>{{ facility_name }}</b></h4>
+        <br>
+        <h4><b>{{ facility_phone }}</b></h4>
+        <br>
+        <h4><b>{{ facility_email }}</b></h4>
+        <br>
+        <h4><b>{{ facility_organisation }}</b></h4>
+        <br>
+
+        <h4><b>{{ facility_place }}</b></h4>
+        <br>
+        <h4><b>{{ facility_date }}</b></h4>
+        <br>
+        <h4><b>{{ facility_head }}</b></h4>
+        <br>
+        <h4><b>{{ facility_equipment }}</b></h4>
+        <br>
+        <h4><b>{{ facility_status }}</b></h4>
+        <br>
+        <h4><b> RM {{ facility_price }}</b></h4>
+
+      </div>
+
+      <div class="col mt-5 text-center text-white">
+        <a class="btn btn-md btn-info" (click)="reprintReceipt()">Cetak Resit</a>
+      </div>
+
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #confirmRefundModal>
+  <div class="modal-header justify-content-center mt-0">
+    <button
+      aria-hidden="true"
+      class="close"
+      data-dismiss="modal"
+      (click)="closeModal()"
+      type="button"
+    >
+      <i class="tim-icons icon-simple-remove text-dark"> </i>
+    </button>
+    <div class="text-dark text-center ml-auto mr-auto">
+      <h3 class="title mb-0">
+        Pengesahan Bayaran Balik
+      </h3>
+    </div>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="refundFormGroup">
+      <div class="form-group mb-3">
+        <div
+          class="input-group input-group-alternative"
+          [ngClass]="{ 'input-group-focus': focus1 === true }"
+        >
+          <input
+            class="form-control text-dark"
+            placeholder="{{ 'Penyelia Id' | translate }}"
+            type="text"
+            (focus)="focus1 = true"
+            (blur)="focus1 = false"
+            formControlName="penyelia_id"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fas fa-at fa-lg" style="color: gainsboro"> </i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+  </div>
+
+  <div class="modal-footer">
+    <a class="btn btn-md btn-danger text-white" (click)="closeModal()">Tidak</a>
+    <a class="btn btn-md btn-info text-white" (click)="validateRefund()">Ya</a>
+  </div>
+</ng-template>

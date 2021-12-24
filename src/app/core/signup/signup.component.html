@@ -1,0 +1,691 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">{{ "Daftar" | translate }}</h2>
+        <div class="row">
+          <div class="col-md-8 col-sm-12 mx-auto">
+            <form [formGroup]="registerFormGroup">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "NamaPenuh" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus1 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-user text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'NamaPenuh' | translate }}"
+                        type="text"
+                        (focus)="focus1 = true"
+                        (blur)="focus1 = false"
+                        formControlName="full_name"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "Emel" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus4 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-at text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'EmelPlaceholder' | translate }}"
+                        type="email"
+                        (focus)="focus4 = true"
+                        (blur)="focus4 = false"
+                        formControlName="email"
+                      />
+                    </div>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        registerFormGroup.controls['email'].hasError('email')
+                      "
+                      >{{ "EmelError" | translate }}</small
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "NomborTelefon" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus7 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-mobile-alt text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{
+                          'NomborTelefonPlaceholder' | translate
+                        }}"
+                        type="tel"
+                        (focus)="focus7 = true"
+                        (blur)="focus7 = false"
+                        formControlName="phone"
+                        maxlength="13"
+                      />
+                    </div>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        registerFormGroup.controls['phone'].hasError('pattern')
+                      "
+                      >{{ "PoskodError" | translate }}</small
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "KataLaluan" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus5 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-key text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'KataLaluan' | translate }}"
+                        type="password"
+                        (focus)="focus5 = true"
+                        (blur)="focus5 = false"
+                        formControlName="password1"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "UlangKataLaluan" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus6 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-key text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'UlangKataLaluan' | translate }}"
+                        type="password"
+                        (focus)="focus6 = true"
+                        (blur)="focus6 = false"
+                        formControlName="password2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <alert [type]="'danger'" class="text-justify">
+                    {{ "KataLaluanInfo" | translate }}
+                  </alert>
+                </div>
+              </div>
+              <div class="row pb-3">
+                <div class="col">
+                  <div class="card bg-white m-0">
+                    <div class="card-body">
+                      <p
+                        style="font-size: 1.2rem"
+                        [ngClass]="
+                          registerFormGroup.controls['password1'].hasError(
+                            'required'
+                          ) ||
+                          registerFormGroup.controls['password1'].hasError(
+                            'minlength'
+                          )
+                            ? 'text-danger'
+                            : 'text-success'
+                        "
+                      >
+                        <i
+                          [ngClass]="
+                            registerFormGroup.controls['password1'].hasError(
+                              'required'
+                            ) ||
+                            registerFormGroup.controls['password1'].hasError(
+                              'minlength'
+                            )
+                              ? 'fas fa-times-circle'
+                              : 'fas fa-check-circle'
+                          "
+                        ></i>
+                        {{ "KataLaluanValid1" | translate }}
+                      </p>
+
+                      <p
+                        style="font-size: 1.2rem"
+                        [ngClass]="
+                          registerFormGroup.controls['password1'].hasError(
+                            'required'
+                          ) ||
+                          registerFormGroup.controls['password1'].hasError(
+                            'hasCapitalCase'
+                          )
+                            ? 'text-danger'
+                            : 'text-success'
+                        "
+                      >
+                        <i
+                          [ngClass]="
+                            registerFormGroup.controls['password1'].hasError(
+                              'required'
+                            ) ||
+                            registerFormGroup.controls['password1'].hasError(
+                              'hasCapitalCase'
+                            )
+                              ? 'fas fa-times-circle'
+                              : 'fas fa-check-circle'
+                          "
+                        ></i>
+                        {{ "KataLaluanValid2" | translate }}
+                      </p>
+
+                      <p
+                        style="font-size: 1.2rem"
+                        [ngClass]="
+                          registerFormGroup.controls['password1'].hasError(
+                            'required'
+                          ) ||
+                          registerFormGroup.controls['password1'].hasError(
+                            'hasSmallCase'
+                          )
+                            ? 'text-danger'
+                            : 'text-success'
+                        "
+                      >
+                        <i
+                          [ngClass]="
+                            registerFormGroup.controls['password1'].hasError(
+                              'required'
+                            ) ||
+                            registerFormGroup.controls['password1'].hasError(
+                              'hasSmallCase'
+                            )
+                              ? 'fas fa-times-circle'
+                              : 'fas fa-check-circle'
+                          "
+                        ></i>
+                        {{ "KataLaluanValid3" | translate }}
+                      </p>
+
+                      <p
+                        style="font-size: 1.2rem"
+                        [ngClass]="
+                          registerFormGroup.controls['password1'].hasError(
+                            'required'
+                          ) ||
+                          registerFormGroup.controls['password1'].hasError(
+                            'hasNumber'
+                          )
+                            ? 'text-danger'
+                            : 'text-success'
+                        "
+                      >
+                        <i
+                          [ngClass]="
+                            registerFormGroup.controls['password1'].hasError(
+                              'required'
+                            ) ||
+                            registerFormGroup.controls['password1'].hasError(
+                              'hasNumber'
+                            )
+                              ? 'fas fa-times-circle'
+                              : 'fas fa-check-circle'
+                          "
+                        ></i>
+                        {{ "KataLaluanValid4" | translate }}
+                      </p>
+
+                      <p
+                        style="font-size: 1.2rem"
+                        [ngClass]="
+                          registerFormGroup.controls['password1'].hasError(
+                            'required'
+                          ) ||
+                          registerFormGroup.controls['password1'].hasError(
+                            'hasSpecialCharacters'
+                          )
+                            ? 'text-danger'
+                            : 'text-success'
+                        "
+                      >
+                        <i
+                          [ngClass]="
+                            registerFormGroup.controls['password1'].hasError(
+                              'required'
+                            ) ||
+                            registerFormGroup.controls['password1'].hasError(
+                              'hasSpecialCharacters'
+                            )
+                              ? 'fas fa-times-circle'
+                              : 'fas fa-check-circle'
+                          "
+                        ></i>
+                        {{ "KataLaluanValid5" | translate }}
+                      </p>
+
+                      <p
+                        style="font-size: 1.2rem"
+                        [ngClass]="
+                          registerFormGroup.controls['password2'].hasError(
+                            'required'
+                          ) ||
+                          registerFormGroup.controls['password2'].hasError(
+                            'NoPassswordMatch'
+                          )
+                            ? 'text-danger'
+                            : 'text-success'
+                        "
+                      >
+                        <i
+                          [ngClass]="
+                            registerFormGroup.controls['password2'].hasError(
+                              'required'
+                            ) ||
+                            registerFormGroup.controls['password2'].hasError(
+                              'NoPassswordMatch'
+                            )
+                              ? 'fas fa-times-circle'
+                              : 'fas fa-check-circle'
+                          "
+                        ></i>
+                        {{ "KataLaluanValid6" | translate }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label class="form-label required-field">{{
+                  "Alamat" | translate
+                }}</label>
+                <div
+                  class="input-group input-group-alternative"
+                  [ngClass]="{ 'input-group-focus': focus9 === true }"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-address-book text-dark"> </i>
+                    </span>
+                  </div>
+                  <input
+                    class="form-control text-dark"
+                    placeholder="{{ 'Alamat' | translate }}"
+                    type="text"
+                    (focus)="focus9 = true"
+                    (blur)="focus9 = false"
+                    formControlName="address_1"
+                  />
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <div
+                  class="input-group input-group-alternative"
+                  [ngClass]="{ 'input-group-focus': focus14 === true }"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-address-book text-dark"> </i>
+                    </span>
+                  </div>
+                  <input
+                    class="form-control text-dark"
+                    placeholder="{{ 'Alamat' | translate }}"
+                    type="text"
+                    (focus)="focus14 = true"
+                    (blur)="focus14 = false"
+                    formControlName="address_2"
+                  />
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <div
+                  class="input-group input-group-alternative"
+                  [ngClass]="{ 'input-group-focus': focus15 === true }"
+                >
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-address-book text-dark"> </i>
+                    </span>
+                  </div>
+                  <input
+                    class="form-control text-dark"
+                    placeholder="{{ 'Alamat' | translate }}"
+                    type="text"
+                    (focus)="focus15 = true"
+                    (blur)="focus15 = false"
+                    formControlName="address_3"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "Poskod" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus10 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-address-book text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'PoskodPlaceholder' | translate }}"
+                        type="text"
+                        (focus)="focus10 = true"
+                        (blur)="focus10 = false"
+                        formControlName="postcode"
+                        maxlength="5"
+                      />
+                    </div>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        registerFormGroup.controls['postcode'].hasError(
+                          'pattern'
+                        )
+                      "
+                      >{{ "PoskodError" | translate }}</small
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "Bandar" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus11 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-address-book text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'BandarPlaceholder' | translate }}"
+                        type="text"
+                        (focus)="focus11 = true"
+                        (blur)="focus11 = false"
+                        formControlName="city"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "Negeri" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus12 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-flag text-dark"> </i>
+                        </span>
+                      </div>
+                      <select
+                        class="form-control text-dark"
+                        (focus)="focus12 = true"
+                        (blur)="focus12 = false"
+                        formControlName="state"
+                      >
+                        <option value="">{{ "Silapilih" | translate }}</option>
+                        <option value="01">Johor</option>
+                        <option value="02">Kedah</option>
+                        <option value="03">Kelantan</option>
+                        <option value="04">Melaka</option>
+                        <option value="05">Negeri Sembilan</option>
+                        <option value="06">Pahang</option>
+                        <option value="07">Pulau Pinang</option>
+                        <option value="08">Perak</option>
+                        <option value="09">Perlis</option>
+                        <option value="10">Selangor</option>
+                        <option value="11">Terengganu</option>
+                        <option value="12">Sabah</option>
+                        <option value="13">Sarawak</option>
+                        <option value="14">
+                          Wilayah Persekutuan Kuala Lumpur
+                        </option>
+                        <option value="15">Wilayah Persekutuan Labuan</option>
+                        <option value="16">
+                          Wilayah Persekutuan Putrajaya
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "Negara" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus13 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-globe-asia text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'NegaraPlaceholder' | translate }}"
+                        type="text"
+                        (focus)="focus13 = true"
+                        (blur)="focus13 = false"
+                        formControlName="country"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group mb-3">
+                    <label class="form-label required-field">{{
+                      "TarikhLahir" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus16 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-user text-dark"> </i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control text-dark"
+                        placeholder="{{ 'TarikhLahir' | translate }}"
+                        type="date"
+                        (focus)="focus16 = true"
+                        (blur)="focus16 = false"
+                        formControlName="birth_date"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="form-label required-field">{{
+                      "Bangsa" | translate
+                    }}</label>
+                    <div
+                      class="input-group input-group-alternative"
+                      [ngClass]="{ 'input-group-focus': focus17 === true }"
+                    >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fas fa-user text-dark"> </i>
+                        </span>
+                      </div>
+                      <select
+                        class="form-control text-dark"
+                        (focus)="focus17 = true"
+                        (blur)="focus17 = false"
+                        formControlName="race_type"
+                      >
+                        <option value="">{{ "Silapilih" | translate }}</option>
+                        <option *ngFor="let race of races" [value]="race.value">
+                          {{ race.display_name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="form-label required-field mr-3">{{
+                      "Jantina" | translate
+                    }}</label>
+                    <div class="form-check form-check-radio form-check-inline">
+                      <label class="form-check-label text-dark">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender_type"
+                          value="FM"
+                          formControlName="gender_type"
+                        />
+                        {{ "Perempuan" | translate }}
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </div>
+                    <div class="form-check form-check-radio form-check-inline">
+                      <label class="form-check-label text-dark">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender_type"
+                          value="ML"
+                          formControlName="gender_type"
+                        />
+                        {{ "Lelaki" | translate }}
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <!-- (error)="handleError()" -->
+                    <ngx-recaptcha2
+                      #captchaElem
+                      [siteKey]="siteKey"
+                      (reset)="handleReset()"
+                      (expire)="handleExpire()"
+                      (load)="handleLoad()"
+                      (success)="handleSuccess($event)"
+                      [useGlobalDomain]="false"
+                      [size]="size"
+                      [hl]="lang"
+                      [theme]="theme"
+                      [type]="type"
+                      formControlName="recaptcha"
+                      class="text-center"
+                    >
+                    </ngx-recaptcha2>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button
+                  class="btn btn-default my-4"
+                  type="button"
+                  (click)="clickRegister()"
+                  [disabled]="!registerFormGroup.valid"
+                >
+                  {{ "Daftar" | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

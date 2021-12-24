@@ -1,0 +1,104 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          Kutubkhanah Mini <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              Kutubkhanah Mini Planetarium Negara telah dibuka kepada orang
+              ramai pada 2 Jun 2018, bersamaan dengan 17 Ramadhan 1439H. Koleksi
+              buku di Kutubkhanah Mini ini terdiri daripada sebahagian besarnya
+              subjek Astronomi dan Sains Angkasa serta subjek-subjek umum yang
+              lain seperti karya am, falsafah dan sains kemasyarakatan.
+              Buku-buku tersebut telah disusun dan dikatalog bagi memudahkan
+              orang ramai membuat carian dan rujukan. <br /><br />
+              Kutubkhanah Mini di Planetarium Negara menyokong program KLBACA!
+              bermula 23 April 2020 apabila ibu kota Kuala Lumpur dipilih
+              sebagai bandaraya ke-20 bagi sambutan Ibu Kota Buku Sedunia.<br /><br />
+              Pelbagai koleksi sumber bahan digital terus dipertingkatkan untuk
+              capaian oleh semua lapisan masyarakat.
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="module?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="module?.description_ms | safe: 'html'"
+            ></p>
+          </div>
+        </div>
+        <div class="row pb-3">
+          <div class="col-md-2 col-sm-12"></div>
+          <div class="col">
+            <div class="row">
+              <div
+                class="col-md-6 col-sm-12"
+                *ngFor="let vl_category of vl_categories"
+              >
+                <div
+                  class="card"
+                  [routerLink]="[
+                    '/virtual-library/' + vl_category.link,
+                    vl_category.id
+                  ]"
+                >
+                  <div class="card-header bg-white p-3 text-center">
+                    <i [class]="vl_category.icon + ' fa-10x text-info'"></i>
+                  </div>
+                  <div class="card-body">
+                    <h2
+                      class="title text-center"
+                      *ngIf="translate.currentLang == 'en'"
+                    >
+                      {{ vl_category.name_en }}
+                    </h2>
+                    <h2
+                      class="title text-center"
+                      *ngIf="translate.currentLang == 'ms'"
+                    >
+                      {{ vl_category.name_ms }}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-12"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.navigator {
+  width: 100%;
+  font-color: white;
+  font-weight: bold;
+}
+
+.card, .card-body, .row {
+  width: 100%;
+  height: 80%;
+}
+ 
+.g1 {
+  margin: auto;
+  background-image: none;
+  width: 100%;
+  background-color: white;
+  color: #f93154;
+  font-size: 20px;
+  text-align: center;
+}
+
+.g1:hover {
+  background-color: gainsboro;
+  cursor: pointer;
+}
+
+.g2 {
+  margin: auto;
+  background-image: none;
+  width: 100%;
+  border: solid 2px;
+  background-color: white;
+  color: #1266f1;
+  font-size: 20px;
+  text-align: center;
+}
+
+.g2:hover {
+  background-color: gainsboro;
+  cursor: pointer;
+}
+

@@ -1,0 +1,158 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KutubkhanahMiniArtikelTerkiniTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row pb-3" *ngIf="!showSelectedArticle">
+          <div class="col-md-8 col-sm-12 ml-auto mr-auto">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td class="bg-default p-3">
+                    <h4 class="title text-white m-0">
+                      {{ "KutubkhanahMiniArtikelTerkiniTajuk" | translate }}
+                    </h4>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vl_article of vl_articles">
+                  <td class="p-3">
+                    <h4
+                      class="title text-dark mt-1"
+                      *ngIf="translate.currentLang == 'en'"
+                    >
+                      {{ vl_article.name_en }}
+                    </h4>
+                    <h4
+                      class="title text-dark mt-1"
+                      *ngIf="translate.currentLang == 'ms'"
+                    >
+                      {{ vl_article.name_ms }}
+                    </h4>
+                    <p class="text-dark">
+                      <span
+                        *ngIf="translate.currentLang == 'en'"
+                        [innerHtml]="vl_article.description_en | safe: 'html'"
+                      ></span>
+                      <span
+                        *ngIf="translate.currentLang == 'ms'"
+                        [innerHtml]="vl_article.description_ms | safe: 'html'"
+                      ></span>
+                    </p>
+                    <div class="row">
+                      <div class="col">
+                        <p>
+                          <a
+                            class="mr-3"
+                            style="color: #ba54f5; font-weight: bold"
+                            (click)="readMore(vl_article)"
+                            >{{ "Bacaselanjutnya" | translate }}</a
+                          >
+                          <a
+                            style="color: #dc3545; font-weight: bold"
+                            download
+                            [href]="vl_article.pdf_link"
+                            >{{ "MuatTurunPDF" | translate }}</a
+                          >
+                        </p>
+                      </div>
+                      <div class="col-auto">
+                        <small class="font-weight-bold text-dark"
+                          >{{ "TarikhArtikel" | translate }}:
+                          {{ vl_article.date | date: "mediumDate" }}</small
+                        >
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row pb-3" *ngIf="showSelectedArticle">
+          <div class="col-md-8 col-sm-12 ml-auto mr-auto">
+            <div class="card">
+              <div class="card-header bg-default">
+                <h2
+                  class="title text-white mt-0"
+                  *ngIf="translate.currentLang == 'en'"
+                >
+                  {{ selectedArticle.name_en }}
+                </h2>
+                <h2
+                  class="title text-white mt-0"
+                  *ngIf="translate.currentLang == 'ms'"
+                >
+                  {{ selectedArticle.name_ms }}
+                </h2>
+              </div>
+              <div class="card-body bg-white">
+                <p class="text-dark text-justify">
+                  <span
+                    *ngIf="translate.currentLang == 'en'"
+                    [innerHtml]="selectedArticle.description_en | safe: 'html'"
+                  ></span>
+                  <span
+                    *ngIf="translate.currentLang == 'ms'"
+                    [innerHtml]="selectedArticle.description_ms | safe: 'html'"
+                  ></span>
+                </p>
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <a
+                      class="btn btn-danger btn-sm"
+                      download
+                      [href]="selectedArticle.pdf_link"
+                      >{{ "MuatTurunPDF" | translate }}</a
+                    >
+                    <a class="btn btn-neutral btn-sm" (click)="backArticle()">{{
+                      "Kembali" | translate
+                    }}</a>
+                  </div>
+                  <div class="col-auto align-self-center">
+                    <small class="font-weight-bold text-dark"
+                      >{{ "TarikhArtikel" | translate }}:
+                      {{ selectedArticle.date | date: "mediumDate" }}</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

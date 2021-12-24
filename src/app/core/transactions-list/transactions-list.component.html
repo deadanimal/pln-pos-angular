@@ -1,0 +1,134 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center"> {{ "Transaksi" | translate }}
+</h3>
+
+<div class="main-content">
+  <tabset>
+    <tab customClass="customClass" heading="Tunai" id="tab1">
+      <div class="row"> 
+
+        <div style="width: 30%;" class="ml-2 col-3 form-group">
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"
+                ><i class=" text-dark far fa-calendar-alt"></i
+              ></span>
+            </div>
+            <input 
+              type="text"
+              placeholder="Hari ini"
+              class="form-control text-dark text-center"
+              [(ngModel)] = "selectedDate"
+              bsDatepicker>
+          </div>
+
+        </div>
+
+        <div class="col-6 align-items-center">
+            <button class="btn btn-info btn-sm" (click)="getCashTransactions()" type="button">
+             Cari 
+            </button>
+        </div>
+      </div>
+
+      <div class="ml-2 pb-3">
+        <input type="text" class="form-control text-dark" style="width: 30%;" placeholder="carian invois" (keyup)="filterCashTable($event)">
+      </div>
+
+      <div class="text-dark">
+
+        <table class="text-dark table table-striped" >
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Jumlah Harga</th>          
+              <th scope="col">Jumlah Voucher</th>          
+              <th scope="col">Tarikh</th>          
+              <th scope="col">No. Invois</th>          
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trx of cashTrxTemp; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+
+              <td>RM {{ trx.total_price_before_voucher }}</td>
+              <td>{{ trx.total_voucher }}</td>
+              <td>{{ trx.payment_successful_datetime.slice(0,10) }}</td>
+              <td>{{ trx.invoice_running_no }}</td>
+
+            </tr>
+          </tbody>
+         </table>
+       </div>
+
+    </tab>
+    <tab customClass="customClass" heading="QR">
+     
+      <div class="row"> 
+        <div style="width: 30%;" class="col-3 form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"
+                ><i class=" text-dark far fa-calendar-alt"></i
+              ></span>
+            </div>
+            <input 
+              type="text"
+              placeholder="Hari ini"
+              class="form-control text-dark text-center"
+              [(ngModel)] = "selectedDate"
+              bsDatepicker>
+          </div>
+
+          
+        </div>
+        <div class="col-6 align-items-center">
+            <button class="btn btn-info btn-sm" (click)="getQrTransaction()" type="button">
+             Cari 
+            </button>
+        </div>
+      </div>
+
+      <div class="ml-2 pb-3">
+        <input type="text" placeholder="carian" style="" (keyup)="filterQRTable($event)">
+      </div>
+
+      <div class="text-dark">
+        <table class="text-dark table table-striped">
+          <thead>
+            <tr>
+
+              <th scope="col">No</th>          
+              <th scope="col">Jumlah Harga</th>          
+              <th scope="col">Jumlah Voucher</th>          
+              <th scope="col">Tarikh</th>          
+              <th scope="col">No. Invois</th>          
+              <th scope="col">Catatan</th>          
+
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let trx of qrTrxTemp; index as i ">
+              <td scope="row">{{ i + 1 }}</td>
+
+              <td>RM {{ trx.total_price_before_voucher }}</td>
+              <td>{{ trx.total_voucher }}</td>
+              <td>{{ trx.payment_successful_datetime.slice(0,10) }}</td>
+              <td>{{ trx.invoice_running_no }}</td>
+              <td>{{ trx.qr_notes }}</td>
+
+            </tr>
+
+          </tbody>
+         </table>
+
+
+      </div>
+    </tab>
+  </tabset>
+</div>
+

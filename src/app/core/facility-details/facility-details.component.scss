@@ -1,0 +1,33 @@
+.required-field::after {
+  content: " *";
+  color: red;
+}
+
+.form-control[readonly] {
+  background-color: #e9ecef !important;
+}
+
+.table-bordered {
+  border: 2px solid white;
+}
+
+.card:hover {
+  background-color: gainsboro;
+  cursor: pointer;
+}
+
+.labels {
+  color: black;
+}
+
+.modal-body {
+  height: 100%;
+}
+
+.card {
+  background-color: white;
+}
+
+.card-body > h3 {
+  color: black;
+}

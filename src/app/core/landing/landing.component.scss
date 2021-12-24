@@ -1,0 +1,108 @@
+.basic-info {
+  background-color: #0a0909;
+  color: #ffffff;
+}
+
+.page-content {
+  background-color: #ffffff;
+  color: #000000;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    color: #000000;
+  }
+
+  .card-title {
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .card-text {
+    color: #ffffff;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: #ffffff;
+}
+
+video {
+  // filter: opacity(70%);
+
+  h1 {
+    filter: opacity(10%);
+    color: black;
+  }
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}
+
+tm-ng-odometer {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+bar-rating {
+  font-size: 1.4rem;
+}
+
+.br-stars .br-unit {
+  width: 33px;
+  height: 33px;
+}
+
+.page-subfooter {
+  border-top: 2px solid #17a2b8;
+}
+
+// FullCalendar
+.fc .fc-toolbar-title {
+  color: black;
+  font-weight: bold;
+}
+
+.inner-html {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    color: black;
+  }
+
+  ol,
+  ul {
+    li {
+      color: black;
+    }
+  }
+}
+
+slide {
+  margin-left: 1px !important;
+  margin-right: 1px !important;
+}
+
+.custom-brand {
+  vertical-align: middle;
+}
+
+.pb {
+  margin-bottom: 100px;
+}

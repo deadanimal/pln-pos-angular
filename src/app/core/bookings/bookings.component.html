@@ -1,0 +1,46 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Fasiliti" | translate }}
+</h3>
+<div class="main-content mt-3">
+   <table class="text-dark table table-striped">
+    <thead>
+      <tr>
+
+        <th scope="col">No</th>          
+        <th scope="col">Nama</th>          
+        <th scope="col">No.Telefon</th>          
+        <th scope="col">Email</th>          
+        <th scope="col">Organisasi</th>          
+        <th scope="col">Jenis Organisasi</th>          
+        <th scope="col">Tarikh Tempahan</th>          
+        <th scope="col">Jumlah Harga</th>          
+        <th scope="col">Jumlah Peserta</th>          
+        <th scope="col">Tempah Alat</th>          
+        <th scope="col">Tindakan</th>          
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let facility of booked_facilities; index as i ">
+        <td scope="row">{{ i + 1 }}</td>
+
+        <td>{{ facility.user_name }}</td>
+        <td>{{ facility.user_phone }}</td>
+        <td>{{ facility.user_email }}</td>
+        <td>{{ facility.organisation_name }}</td>
+        <td>{{ enumArray[facility.organisation_category] }}</td>
+        <td>{{ facility.booking_date }}</td>
+        <td>{{ facility.total_price }}</td>
+        <td>{{ facility.number_of_people }}</td>
+        <td>{{ enumArray[facility.want_equipment] }}</td>
+        <td>
+          <a class="btn btn-sm btn-danger text-white" (click)="batalTempahan(facility)">Batal</a>
+          &nbsp;&nbsp;
+          <a class="btn btn-sm btn-info text-white" (click)="tambahTempahanKeTroli(facility)">Tambah</a>
+        </td>
+
+
+      </tr>
+    </tbody>
+   </table>
+</div>

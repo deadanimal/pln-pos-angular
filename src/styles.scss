@@ -1,0 +1,97 @@
+/* You can add global styles to this file, and also import other style files */
+/*!
+
+=========================================================
+* BLK Design System PRO Angular - v1.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/blk-design-system-pro-angular
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+// @import "assets/scss/br-smiley-theme.scss";
+@import "assets/css/br-smiley-theme.css";
+@import "~ngx-bar-rating/themes/br-stars-theme";
+@import "~ngx-sharebuttons/themes/default/default-theme";
+@import "~ngx-org-chart/_theming.scss";
+// @import "~nouislider/distribute/nouislider.min.css";
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.fs-09rem {
+  p,
+  span {
+    font-size: 0.9rem;
+  }
+}
+
+.fs-1rem {
+  p,
+  span {
+    font-size: 1rem;
+  }
+}
+
+.fs-11rem {
+  p,
+  span {
+    font-size: 1.1rem;
+  }
+}
+
+.fs-12rem {
+  p,
+  span {
+    font-size: 1.2rem;
+  }
+}
+
+.fs-13rem {
+  p,
+  span {
+    font-size: 1.2rem;
+  }
+}
+
+.theme-default {
+  .navbar, .card {
+    background: #202251;
+  }
+}
+
+.theme-info {
+  .navbar, .card {
+    background: #8f2c2c;
+  }
+}
+
+.theme-primary {
+  .navbar, .card {
+    background: #c96130;
+  }
+}
+
+.theme-success {
+  .navbar, .card {
+    background: #18631b;
+  }
+}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

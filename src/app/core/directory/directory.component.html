@@ -1,0 +1,357 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "LokasiKami" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <div class="col mx-auto">
+            <iframe
+              width="100%"
+              height="450"
+              frameborder="0"
+              style="border: 0"
+              src="https://maps.google.com/maps?q=Planetarium%20Negara%2C%20Kuala%20Lumpur&t=m&z=15&output=embed&iwloc=near"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <div class="row pb-3">
+          <div class="col-md-6 col-sm-12">
+            <div class="card bg-transparent" style="height: 500px">
+              <div class="card-body">
+                <h2 class="title text-dark">{{ "CARIKAMIDI" | translate }}</h2>
+
+                <h4 class="title text-dark mb-0">
+                  {{ "PlanetariumNegara" | translate }}
+                </h4>
+                <p>
+                  Kementerian Sains, Teknologi dan Inovasi (MOSTI)<br />
+                  53, Jalan Perdana,<br />Tasik Perdana,<br />50480 Kuala
+                  Lumpur,<br />MALAYSIA
+                </p>
+
+                <p class="mt-3 mb-3">
+                  {{ "Koordinat" | translate }}: 3.1396° N,101.6887° E
+                </p>
+
+                <h2 class="title text-dark">{{ "HUBUNGIKAMI" | translate }}</h2>
+
+                <p>{{ "NomborTelefon" | translate }}: +603-2273 4303</p>
+                <p>{{ "Fax" | translate }}: +603-2273 5488</p>
+                <p>{{ "Emel" | translate }}: info[at]planet.gov.my</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card bg-transparent" style="height: 500px">
+              <div class="card-body">
+                <h2 class="title text-dark">
+                  {{ "DIMANAKAMIBERADA" | translate }}
+                </h2>
+
+                <ul>
+                  <li>
+                    <p>{{ "WhereAreWe1" | translate }}</p>
+                  </li>
+                  <li>
+                    <p>{{ "WhereAreWe2" | translate }}</p>
+                  </li>
+                  <li>
+                    <p>{{ "WhereAreWe3" | translate }}</p>
+                  </li>
+                  <li>
+                    <p>{{ "WhereAreWe4" | translate }}</p>
+                  </li>
+                  <li>
+                    <p>{{ "WhereAreWe5" | translate }}</p>
+                  </li>
+                  <li>
+                    <p>{{ "WhereAreWe6" | translate }}</p>
+                  </li>
+                  <li>
+                    <p>
+                      {{ "WhereAreWe7" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p>{{ "WhereAreWe8" | translate }}</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="title text-center text-dark">
+          {{ "BagaimanahendakkePlanetarium" | translate }}
+        </h2>
+
+        <div class="row pb-3">
+          <div class="col-md-6 col-sm-12">
+            <div class="card bg-transparent" style="height: auto">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img src="../../../assets/icon/bus.svg" style="width: 30%" />
+                </div>
+                <h4 class="title text-dark text-center">
+                  {{ "BasTajuk" | translate }}
+                </h4>
+                <p
+                  class="text-dark text-justify"
+                  [innerHtml]="'BasDeskripsi' | translate"
+                ></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card bg-transparent" style="height: auto">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img
+                    src="../../../assets/icon/train.svg"
+                    style="width: 30%"
+                  />
+                </div>
+                <h4 class="title text-dark text-center">
+                  {{ "KeretaApiTajuk" | translate }}
+                </h4>
+                <p
+                  class="text-dark text-justify"
+                  [innerHtml]="'KeretaApiDeskripsi' | translate"
+                ></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pb-3">
+          <div class="col-md-6 col-sm-12">
+            <div class="card bg-transparent" style="height: auto">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img src="../../../assets/icon/car.svg" style="width: 30%" />
+                </div>
+                <h4 class="title text-dark text-center">
+                  {{ "KenderaanPersendirianTajuk" | translate }}
+                </h4>
+                <p
+                  class="text-dark text-justify"
+                  [innerHtml]="'KenderaanPersendirianDeskripsi' | translate"
+                ></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card bg-transparent" style="height: auto">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img src="../../../assets/icon/taxi.svg" style="width: 30%" />
+                </div>
+                <h4 class="title text-dark text-center">
+                  {{ "TeksiTajuk" | translate }}
+                </h4>
+                <p class="text-dark text-justify">
+                  {{ "TeksiDeskripsi" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row pb-3">
+          <div class="col">
+            <div class="card bg-transparent">
+              <div class="card-body">
+                <h4 class="title text-dark m-3">
+                  {{ "PengangkutanAwamTajuk" | translate }}
+                </h4>
+                <ul class="pr-3">
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "PengangkutanAwamDeskripsi1" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "PengangkutanAwamDeskripsi2" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "PengangkutanAwamDeskripsi3" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "PengangkutanAwamDeskripsi4" | translate }}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="row pb-3">
+          <div class="col">
+            <div class="card bg-transparent">
+              <div class="card-body">
+                <h4 class="title text-dark m-3">
+                  {{ "KenderaanPersendirian1Tajuk" | translate }}
+                </h4>
+                <ul>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "KenderaanPersendirian1Deskripsi1" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "KenderaanPersendirian1Deskripsi2" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "KenderaanPersendirian1Deskripsi3" | translate }}
+                    </p>
+                  </li>
+                  <li>
+                    <p class="text-dark text-justify">
+                      {{ "KenderaanPersendirian1Deskripsi4" | translate }}
+                    </p>
+                  </li>
+                </ul>
+
+                <h4 class="title text-dark m-3">
+                  {{ "KenderaanPersendirianTajuk" | translate }}
+                </h4>
+                <h5 class="title text-dark m-3">
+                  {{ "KenderaanPersendirianBangsarTajuk" | translate }}
+                </h5>
+                <p class="text-dark text-justify pl-3 pr-3">
+                  {{ "KenderaanPersendirianBangsarDeskripsi" | translate }}
+                </p>
+
+                <h5 class="title text-dark m-3">
+                  {{ "KenderaanPersendirianParlimenTajuk" | translate }}
+                </h5>
+                <p class="text-dark text-justify pl-3 pr-3">
+                  {{ "KenderaanPersendirianParlimenDeskripsi" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="row pb-3">
+          <div class="col">
+            <div class="card bg-transparent">
+              <div class="card-body">
+                <h4 class="title text-dark m-3">
+                  {{ "KeretapiTajuk" | translate }}
+                </h4>
+                <p class="text-dark text-justify pl-3 pr-3">
+                  {{ "KeretapiDeskripsi" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <h2 class="title text-center text-dark">
+          {{ "PerkhidmatanKemudahan" | translate }}
+        </h2>
+
+        <div class="row pb-3">
+          <div class="col-md-4 col-sm-12">
+            <div class="card bg-transparent">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img
+                    src="../../../assets/icon/parking.svg"
+                    style="width: 30%"
+                  />
+                </div>
+                <h3 class="title text-dark text-center">
+                  {{ "ServiceFacility1Title" | translate }}
+                </h3>
+
+                <p class="text-dark text-center">
+                  {{ "ServiceFacility1Description" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12">
+            <div class="card bg-transparent">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img
+                    src="../../../assets/icon/toilet.svg"
+                    style="width: 30%"
+                  />
+                </div>
+                <h3 class="title text-dark text-center">
+                  {{ "ServiceFacility2Title" | translate }}
+                </h3>
+
+                <p class="text-dark text-center">
+                  {{ "ServiceFacility2Description" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12">
+            <div class="card bg-transparent">
+              <div class="card-body">
+                <div class="card-img text-center">
+                  <img
+                    src="../../../assets/icon/mosque.svg"
+                    style="width: 30%"
+                  />
+                </div>
+                <h3 class="title text-dark text-center">
+                  {{ "ServiceFacility3Title" | translate }}
+                </h3>
+
+                <p class="text-dark text-center">
+                  {{ "ServiceFacility3Description" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

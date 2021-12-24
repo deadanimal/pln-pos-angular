@@ -1,0 +1,50 @@
+    <!-- <img class="path path3" src="assets/img/path3.png" /> -->
+
+    <!-- <svg class="hidden">
+      <defs>
+        <path
+          d="M292,517.91s-15.55-56.18-82.16-38.13C144.29,497.54,155.58,363.16,162,313.12S224.89,15.59,387.71,4.49,515.3,133.38,499.28,174.22s-48.71,85.09,11,218.26S455,582.74,430.06,588.37,339.71,621.12,292,517.91Z"
+          id="deco2"
+        ></path>
+      </defs>
+    </svg> -->
+    <!-- <div class="content-center m-0 p-0"> -->
+        <!-- </div> -->
+
+  <h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+        {{ "Produk" | translate }}
+  </h3>
+  <div class="row">
+   <div class="col-md-4 col-sm-12" *ngFor="let module of modules">
+     <div
+       class="card text-dark"
+       style="background: white;"
+       [routerLink]="['/app/' + module.module]"
+       data-animation="true"
+     >
+       <img class="card-img-top" [src]="module.image_link" />
+       <div class="card-body text-center">
+
+         <h4
+           style="color: black;"
+           class="text-dark text-uppercase font-weight-bold"
+           *ngIf="translate.currentLang == 'en'"
+         >
+           {{ module.title_en }}
+         </h4>
+         <h4
+           class="text-dark card-title title text-uppercase font-weight-bold"
+           *ngIf="translate.currentLang == 'ms'"
+         >
+           {{ module.title_ms }}
+         </h4>
+         <!-- <button
+           class="btn btn-sm btn-info"
+           (click)="openModal(interestingModal, interesting)"
+         >
+           Info
+         </button> -->
+       </div>
+     </div>
+   </div>
+  </div>

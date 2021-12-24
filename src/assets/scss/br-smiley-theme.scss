@@ -1,0 +1,40 @@
+.br-smiley {
+  .br-unit {
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-left: 5px;
+    width: 40px;
+    height: 40px;
+    filter: grayscale(1);
+
+    &:first-child {
+      margin-left: 0;
+      background-image: url("/assets/smiley/angry.svg");
+    }
+
+    &:nth-child(2) {
+      background-image: url("/assets/smiley/angry-1.svg");
+    }
+    &:nth-child(3) {
+      background-image: url("/assets/smiley/confused.svg");
+    }
+    &:nth-child(4) {
+      background-image: url("/assets/smiley/happy.svg");
+    }
+    &:nth-child(5) {
+      background-image: url("/assets/smiley/happy-1.svg");
+    }
+  }
+
+  .br-selected,
+  .br-active {
+    filter: grayscale(0);
+  }
+}

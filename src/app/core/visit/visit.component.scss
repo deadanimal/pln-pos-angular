@@ -1,0 +1,44 @@
+.section {
+  padding: 1px 0;
+}
+
+.inner-html {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    color: black;
+  }
+
+  ol,
+  ul {
+    li {
+      color: black;
+    }
+  }
+}
+
+.required-field::after {
+  content: " *";
+  color: red;
+}
+
+.form-control[readonly] {
+  background-color: #e9ecef !important;
+}
+
+.modal-content .modal-body form .form-check .form-check-label {
+  padding-left: 0px;
+}
+
+.form-check-radio .form-check-inline .form-check-label {
+  margin-right: 0px;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}

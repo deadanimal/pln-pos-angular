@@ -1,0 +1,21 @@
+.card-selected {
+  border: 2px solid blue;
+}
+
+.required-field::after {
+  content: " *";
+  color: red;
+}
+
+.form-control[readonly] {
+  background-color: #e9ecef !important;
+}
+
+hr {
+  width: 100% !important;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px #000000;
+}

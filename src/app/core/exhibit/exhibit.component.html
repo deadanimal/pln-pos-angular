@@ -1,0 +1,163 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <!-- <div
+      class="page-header-image rellax"
+      data-parallax="true"
+      style="background-image: url('assets/img/exhibit/minin.jpg')"
+    ></div>
+    <div class="content-center">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto text-center">
+          <h1 class="title">Pameran</h1>
+          <h2 class="description">
+            Pameran-pameran terbaru yang bakal menggagumkan anda.
+          </h2>
+        </div>
+      </div>
+    </div> -->
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="section related-products bg-white">
+    <div class="container pb-3">
+      <h2 class="title text-dark text-center">
+        {{ "PetaLakaranPlanetarium" | translate }}
+        <share-button button="facebook"></share-button
+        ><share-button button="twitter"></share-button
+        ><share-button button="whatsapp"></share-button>
+      </h2>
+      <div class="row pb-3">
+        <div class="col">
+          <!-- <p class="text-dark text-justify" style="font-size: 1rem">
+            {{ "PetaLakaranPlanetariumDescription" | translate }}
+          </p> -->
+          <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="module?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="module?.description_ms | safe: 'html'"
+            ></p>
+
+          <small class="font-weight-bold text-danger">
+            {{ "PetaLakaranPlanetariumNote" | translate }}
+          </small>
+        </div>
+      </div>
+      <div class="row pb-3 text-center">
+        <div class="col text-center">
+          <a href="https://streetview.my/nibm/planetarium/" target="_blank">
+            <img
+              src="../../../assets/icon/street-view.svg"
+              style="width: 10%"
+              alt="Street View 360"
+            />
+
+            <h4 class="font-weight-bold text-primary text-center pt-3">
+              {{ "PetaLakaranPlanetarium360" | translate }}&#176;
+            </h4>
+          </a>
+        </div>
+      </div>
+      <div class="row pb-3">
+        <img
+          src="../../../assets/img/planetarium-map.png"
+          usemap="#image-map"
+          width="1140"
+          height="950"
+        />
+
+        <map name="image-map">
+          <area
+            target="_self"
+            alt="Zone A"
+            title="Zone A"
+            href="/#/exhibit/lists/A"
+            coords="83,250,440,730"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone B"
+            title="Zone B"
+            href="/#/exhibit/lists/B"
+            coords="560,430,440,330"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone C"
+            title="Zone C"
+            href="/#/exhibit/lists/C"
+            coords="560,320,440,250"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone D"
+            title="Zone D"
+            href="/#/exhibit/lists/D"
+            coords="50,50,485,250"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone E"
+            title="Zone E"
+            href="/#/exhibit/lists/E"
+            coords="690,50,930,250"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone F"
+            title="Zone F"
+            href="/#/exhibit/lists/F"
+            coords="690,670,880,570"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone G"
+            title="Zone G"
+            href="/#/exhibit/lists/G"
+            coords="47,477,77,504"
+            shape="rect"
+          />
+          <area
+            target="_self"
+            alt="Zone H"
+            title="Zone H"
+            href="/#/exhibit/lists/H"
+            coords="15,477,43,504"
+            shape="rect"
+          />
+        </map>
+      </div>
+    </div>
+  </div>
+</div>

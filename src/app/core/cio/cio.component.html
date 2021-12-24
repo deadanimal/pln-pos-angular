@@ -1,0 +1,108 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KetuaPegawaiMaklumat" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <div class="col-md-4 col-sm-12 mr-auto ml-auto">
+            <img src="../../../assets/img/mosti-cio.jpg" style="width: 80%" />
+            <h4 class="title text-dark mb-0">Roshana Alma Binti Mohd Ali</h4>
+            <h4 class="title text-dark m-0">
+              {{ "SetiausahaBahagianKanan" | translate }}
+            </h4>
+            <p class="pt-1">alma[at]mosti.gov.my</p>
+            <p>03-8885 8201</p>
+          </div>
+          <div class="col-md-8 col-sm-12">
+            <h4 class="title text-dark mt-0">
+              {{ "PERANANDANTANGGUNGJAWAB" | translate }}
+            </h4>
+
+            <ol>
+              <li>
+                <p [innerHtml]="'Role1' | translate"></p>
+              </li>
+              <li>
+                <p>
+                  {{ "Role2" | translate }}
+                </p>
+              </li>
+              <li>
+                <p>{{ "Role3" | translate }}</p>
+              </li>
+              <li>
+                <p>
+                  {{ "Role4" | translate }}
+                </p>
+              </li>
+              <li>
+                <p>
+                  {{ "Role5" | translate }}
+                </p>
+              </li>
+              <li>
+                <p>
+                  {{ "Role6" | translate }}
+                </p>
+              </li>
+              <li>
+                <p>
+                  {{ "Role7" | translate }}
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="row pb-3" *ngFor="let dynamiccontent of dynamiccontents">
+          <div class="col" *ngIf="translate.currentLang == 'en'">
+            <h2 class="title text-center text-dark">
+              {{ dynamiccontent.title_en }}
+            </h2>
+            <div
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_en | safe: 'html'"
+            ></div>
+          </div>
+          <div class="col" *ngIf="translate.currentLang == 'ms'">
+            <h2 class="title text-center text-dark">
+              {{ dynamiccontent.title_ms }}
+            </h2>
+            <div
+              class="inner-html"
+              [innerHtml]="dynamiccontent.description_ms | safe: 'html'"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,979 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised">
+    <div class="section team-4">
+      <div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <mat-horizontal-stepper [linear]="true" #stepper>
+              <mat-step [stepControl]="firstFormGroup">
+                <ng-template matStepLabel>{{
+                  "SpecialProgramLabel1" | translate
+                }}</ng-template>
+                <form [formGroup]="firstFormGroup">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Nama" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="teacher_name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NamaSekolah" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="teacher_school_name"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "AlamatSekolah" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="teacher_school_address"
+                          />
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label class="form-control-label">{{
+                                "Poskod" | translate
+                              }}</label>
+                              <input
+                                type="number"
+                                class="form-control text-dark"
+                                formControlName="teacher_school_postcode"
+                              />
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <label class="form-control-label">{{
+                                "Daerah" | translate
+                              }}</label>
+                              <input
+                                type="text"
+                                class="form-control text-dark"
+                                formControlName="teacher_school_division"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label">{{
+                                "Negeri" | translate
+                              }}</label>
+                              <input
+                                type="text"
+                                class="form-control text-dark"
+                                formControlName="teacher_school_state"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborTelefon" | translate
+                          }}</label>
+                          <input
+                            type="tel"
+                            class="form-control text-dark"
+                            formControlName="teacher_tel"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborTelefonBimbit" | translate
+                          }}</label>
+                          <input
+                            type="tel"
+                            class="form-control text-dark"
+                            formControlName="teacher_hp"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "AlamatEmel" | translate
+                          }}</label>
+                          <input
+                            type="email"
+                            class="form-control text-dark"
+                            formControlName="teacher_email"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborFax" | translate
+                          }}</label>
+                          <input
+                            type="tel"
+                            class="form-control text-dark"
+                            formControlName="teacher_fax"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "TarikhLahir" | translate
+                          }}</label>
+                          <input
+                            type="date"
+                            class="form-control text-dark"
+                            formControlName="teacher_dob"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Umur" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="teacher_age"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field">{{
+                            "Jantina" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let gender of genders"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="gender.value"
+                                formControlName="teacher_gender"
+                              />
+                              {{ getGender(gender.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborKadPengenalanPassport" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="teacher_nric_passportno"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field">{{
+                            "StatusPerkahwinan" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let maritalstatus of maritalstatuses"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="maritalstatus.value"
+                                formControlName="teacher_maritalstatus"
+                              />
+                              {{ getMaritalStatus(maritalstatus.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Agama" | translate
+                          }}</label
+                          ><br />
+                          <select
+                            class="form-control text-dark"
+                            formControlName="teacher_religion"
+                          >
+                            <option value="">
+                              {{ "Silapilih" | translate }}
+                            </option>
+                            <option
+                              *ngFor="let religion of religions"
+                              [value]="religion.value"
+                            >
+                              {{ religion.display_name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field">{{
+                            "SaizBajuT-shirt" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let tshirtsize of tshirtsizes"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="tshirtsize.value"
+                                formControlName="teacher_tshirt_size"
+                              />
+                              {{ tshirtsize.display_name }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Warganegara" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let citizenship of citizenships"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="citizenship.value"
+                                formControlName="teacher_citizenship"
+                              />
+                              {{ getCitizenship(citizenship.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "EmergencyPeople" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="teacher_contactperson_name"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborTelefon" | translate
+                          }}</label>
+                          <input
+                            type="tel"
+                            class="form-control text-dark"
+                            formControlName="teacher_contactperson_tel"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Alergi" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="teacher_anyallergies"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "PenyakitUbat" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="teacher_anysickness"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field"
+                            >Vegetarian</label
+                          ><br />
+                          <div
+                            *ngFor="let truefalse of truefalses"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="truefalse.value"
+                                formControlName="teacher_vegetarian"
+                              />
+                              {{ getTrueFalse(truefalse.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pt-3 text-center">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      matStepperNext
+                      [disabled]="!firstFormGroup.valid"
+                    >
+                      {{ "Seterusnya" | translate }}
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="secondFormGroup">
+                <ng-template matStepLabel>{{
+                  "SpecialProgramLabel2" | translate
+                }}</ng-template>
+                <form [formGroup]="secondFormGroup">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Nama" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_1_name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "TarikhLahir" | translate
+                          }}</label>
+                          <input
+                            type="date"
+                            class="form-control text-dark"
+                            formControlName="student_1_dob"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Umur" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="student_1_age"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Tahun" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="student_1_year"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Jantina" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let gender of genders"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="gender.value"
+                                formControlName="student_1_gender"
+                              />
+                              {{ getGender(gender.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborKadPengenalanPassport" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="student_1_nric_passportno"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Agama" | translate
+                          }}</label>
+                          <select
+                            class="form-control text-dark"
+                            formControlName="student_1_religion"
+                          >
+                            <option value="">
+                              {{ "Silapilih" | translate }}
+                            </option>
+                            <option
+                              *ngFor="let religion of religions"
+                              [value]="religion.value"
+                            >
+                              {{ religion.display_name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Warganegara" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let citizenship of citizenships"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="citizenship.value"
+                                formControlName="student_1_citizenship"
+                              />
+                              {{ getCitizenship(citizenship.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field">{{
+                            "SaizBajuT-shirt" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let tshirtsize of tshirtsizes"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="tshirtsize.value"
+                                formControlName="student_1_tshirt_size"
+                              />
+                              {{ tshirtsize.display_name }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "EmergencyPeople" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_1_contactperson_name"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborTelefon" | translate
+                          }}</label>
+                          <input
+                            type="tel"
+                            class="form-control text-dark"
+                            formControlName="student_1_contactperson_tel"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Alergi" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_1_anyallergies"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "PenyakitUbat" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_1_anysickness"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field"
+                            >Vegetarian</label
+                          ><br />
+                          <div
+                            *ngFor="let truefalse of truefalses"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="truefalse.value"
+                                formControlName="student_1_vegetarian"
+                              />
+                              {{ getTrueFalse(truefalse.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pt-3 text-center">
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      matStepperPrevious
+                    >
+                      {{ "Kembali" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      matStepperNext
+                      [disabled]="!secondFormGroup.valid"
+                    >
+                      {{ "Seterusnya" | translate }}
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="thirdFormGroup">
+                <ng-template matStepLabel>{{
+                  "SpecialProgramLabel3" | translate
+                }}</ng-template>
+                <form [formGroup]="thirdFormGroup">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Nama" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_2_name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "TarikhLahir" | translate
+                          }}</label>
+                          <input
+                            type="date"
+                            class="form-control text-dark"
+                            formControlName="student_2_dob"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Umur" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="student_2_age"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Tahun" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="student_2_year"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Jantina" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let gender of genders"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="gender.value"
+                                formControlName="student_2_gender"
+                              />
+                              {{ getGender(gender.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborKadPengenalanPassport" | translate
+                          }}</label>
+                          <input
+                            type="number"
+                            class="form-control text-dark"
+                            formControlName="student_2_nric_passportno"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Agama" | translate
+                          }}</label>
+                          <select
+                            class="form-control text-dark"
+                            formControlName="student_2_religion"
+                          >
+                            <option value="">
+                              {{ "Silapilih" | translate }}
+                            </option>
+                            <option
+                              *ngFor="let religion of religions"
+                              [value]="religion.value"
+                            >
+                              {{ religion.display_name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Warganegara" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let citizenship of citizenships"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="citizenship.value"
+                                formControlName="student_2_citizenship"
+                              />
+                              {{ getCitizenship(citizenship.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field">{{
+                            "SaizBajuT-shirt" | translate
+                          }}</label
+                          ><br />
+                          <div
+                            *ngFor="let tshirtsize of tshirtsizes"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="tshirtsize.value"
+                                formControlName="student_2_tshirt_size"
+                              />
+                              {{ tshirtsize.display_name }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "EmergencyPeople" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_2_contactperson_name"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "NomborTelefon" | translate
+                          }}</label>
+                          <input
+                            type="tel"
+                            class="form-control text-dark"
+                            formControlName="student_2_contactperson_tel"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "Alergi" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_2_anyallergies"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label">{{
+                            "PenyakitUbat" | translate
+                          }}</label>
+                          <input
+                            type="text"
+                            class="form-control text-dark"
+                            formControlName="student_2_anysickness"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-control-label required-field"
+                            >Vegetarian</label
+                          ><br />
+                          <div
+                            *ngFor="let truefalse of truefalses"
+                            class="form-check form-check-radio form-check-inline"
+                          >
+                            <label class="form-check-label text-dark">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [value]="truefalse.value"
+                                formControlName="student_2_vegetarian"
+                              />
+                              {{ getTrueFalse(truefalse.value) }}
+                              <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="pt-3 text-center">
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    matStepperPrevious
+                  >
+                    {{ "Kembali" | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-default"
+                    matStepperNext
+                    [disabled]="!thirdFormGroup.valid"
+                  >
+                    {{ "Seterusnya" | translate }}
+                  </button>
+                </div>
+              </mat-step>
+              <mat-step [stepControl]="fourthFormGroup">
+                <ng-template matStepLabel>{{
+                  "SpecialProgramLabel4" | translate
+                }}</ng-template>
+                <form [formGroup]="fourthFormGroup">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <p
+                          class="text-justify text-dark"
+                          style="font-size: 20px"
+                        >
+                          {{ "SpecialProgram4Note" | translate }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col text-center">
+                        <div class="form-check">
+                          <label class="form-check-label text-dark">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              formControlName="accept"
+                            />
+                            {{ "SpecialProgram4Agreement" | translate }}
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pt-3 text-center">
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      matStepperPrevious
+                    >
+                      {{ "Kembali" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      (click)="submitEntry()"
+                      [disabled]="!fourthFormGroup.valid"
+                    >
+                      {{ "HantarPenyertaan" | translate }}
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+            </mat-horizontal-stepper>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

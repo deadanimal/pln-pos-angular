@@ -1,0 +1,396 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <!-- <div
+      class="page-header-image rellax"
+      data-parallax="true"
+      style="background-image: url('assets/img/visit/nasa.jpg')"
+    ></div>
+    <div class="content-center">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto text-center">
+          <h1 class="title">Lawatan</h1>
+          <h2 class="description">
+            Anda boleh membuat tempahan awal lawatan berkumpulan/berpandu dalam
+            talian.
+          </h2>
+        </div>
+      </div>
+    </div> -->
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "LawatanPlanetarium" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row pb-3">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              {{ "LawatanPlanetariumDescription" | translate }}<br />
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="module?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="module?.description_ms | safe: 'html'"
+            ></p>
+            <h4 class="title text-center text-dark">
+              {{ "LawatanPlanetariumTempah" | translate }}!
+            </h4>
+          </div>
+        </div>
+        <div class="row pb-3">
+          <div class="col-8 mx-auto">
+            <carousel>
+              <slide *ngFor="let visit of visits">
+                <img
+                  [src]="visit.image_link"
+                  style="display: block; width: 100%"
+                />
+              </slide>
+              <!-- <slide>
+                <img
+                  src="../../../assets/img/visit/visit-1.jpg"
+                  style="display: block; width: 100%; height: 500px"
+                />
+              </slide>
+              <slide>
+                <img
+                  src="../../../assets/img/visit/visit-2.jpg"
+                  style="display: block; width: 100%; height: 500px"
+                />
+              </slide>
+              <slide>
+                <img
+                  src="../../../assets/img/visit/visit-3.jpg"
+                  style="display: block; width: 100%; height: 500px"
+                />
+              </slide> -->
+            </carousel>
+          </div>
+        </div>
+        <div class="row pb-3">
+          <div class="col text-center">
+            <button
+              class="btn btn-default btn-round"
+              (click)="openDefaultModal(modalDefault)"
+            >
+              <h3 class="m-0 title">{{ "Tempah" | translate }}</h3>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalDefault>
+  <div class="modal-header justify-content-center">
+    <button
+      aria-hidden="true"
+      class="close"
+      data-dismiss="modal"
+      (click)="defaultModal.hide()"
+      type="button"
+    >
+      <i class="tim-icons icon-simple-remove text-dark"> </i>
+    </button>
+    <div class="text-dark text-center ml-auto mr-auto">
+      <h3 class="title mb-0">{{ "Tempahan" | translate }}</h3>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <form class="js-validate" [formGroup]="visitapplicationFormGroup">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="labels required-field">
+                  {{ "NamaPenuh" | translate }}
+                </label>
+                <input
+                  class="form-control text-dark"
+                  placeholder=""
+                  readonly="true"
+                  type="text"
+                  formControlName="full_name"
+                />
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "AlamatEmel" | translate }}
+                  </label>
+                  <input
+                    class="form-control text-dark"
+                    placeholder=""
+                    readonly="true"
+                    type="email"
+                    formControlName="email"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels">
+                    {{ "NomborTelefon" | translate }}
+                  </label>
+                  <input
+                    class="form-control text-dark"
+                    placeholder=""
+                    readonly="true"
+                    type="tel"
+                    formControlName="phone"
+                  />
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "Tarikh" | translate }}
+                  </label>
+                  <input
+                    class="form-control text-dark"
+                    type="text"
+                    formControlName="visit_date"
+                    bsDatepicker
+                    [minDate]="today"
+                    [daysDisabled]="[1]"
+                    [placeholder]="'Silapilihtarikh' | translate"
+                    [bsConfig]="{
+                      isAnimated: true,
+                      containerClass: 'theme-dark-blue',
+                      dateInputFormat: 'YYYY-MM-DD'
+                    }"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "Waktu" | translate }}
+                  </label>
+                  <input
+                    class="form-control text-dark"
+                    [placeholder]="'Silapilihwaktu' | translate"
+                    type="time"
+                    formControlName="visit_time"
+                  />
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "KategoriOrganisasi" | translate }}
+                  </label>
+                  <select
+                    aria-label="Kategori Organisasi"
+                    class="form-control custom-select text-dark"
+                    formControlName="organisation_category"
+                  >
+                    <option selected hidden value="">
+                      {{ "Silapilih" | translate }}
+                    </option>
+                    <option
+                      *ngFor="
+                        let organisationcategory of organisationcategories
+                      "
+                      [value]="organisationcategory.value"
+                    >
+                      <span *ngIf="translate.currentLang == 'en'">{{
+                        organisationcategory.display_name_en
+                      }}</span>
+                      <span *ngIf="translate.currentLang == 'ms'">{{
+                        organisationcategory.display_name_ms
+                      }}</span>
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "NamaOrganisasi" | translate }}</label
+                  >
+                  <input
+                    aria-label="Nama Organisasi"
+                    class="form-control text-dark"
+                    [placeholder]="'NamaOrganisasi' | translate"
+                    type="text"
+                    formControlName="organisation_name"
+                  />
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "BilanganOrang" | translate }}
+                  </label>
+                  <input
+                    aria-label="Bilangan orang"
+                    class="form-control text-dark"
+                    [placeholder]="'BilanganOrang' | translate"
+                    required=""
+                    type="number"
+                    formControlName="total_participant"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="js-form-message mb-6">
+                  <label class="labels required-field">
+                    {{ "LawatanBerpandu" | translate }} </label
+                  ><br />
+                  <div
+                    class="form-check form-check-radio form-check-inline pl-0"
+                  >
+                    <label class="form-check-label text-dark">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="tour_guide"
+                        formControlName="tour_guide"
+                        value="true"
+                      />
+                      {{ "Ya" | translate }}
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                  <div
+                    class="form-check form-check-radio form-check-inline pl-0"
+                  >
+                    <label class="form-check-label text-dark">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="tour_guide"
+                        formControlName="tour_guide"
+                        value="false"
+                      />
+                      {{ "Tidak" | translate }}
+                      <span class="form-check-sign"></span>
+                    </label>
+                  </div>
+                  <!-- <select
+                    aria-label="Lawatan berpandu"
+                    class="form-control custom-select text-dark"
+                    formControlName="pic_id"
+                  >
+                    <option selected hidden value="">Sila pilih</option>
+                    <option *ngFor="let user of users" [value]="user.id">
+                      {{ user.full_name }}
+                    </option>
+                  </select> -->
+                </div>
+              </div>
+              <br />
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <label class="labels">
+                  {{ "LainlainAktiviti" | translate }}
+                </label>
+                <input
+                  class="form-control text-dark"
+                  [placeholder]="'LainlainAktivitiExample' | translate"
+                  type="text"
+                  formControlName="other_activities"
+                />
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-12">
+                <label class="labels">
+                  {{ "DokumenBerkaitan" | translate }}
+                  <small class="text-info"
+                    >* {{ "DokumenBerkaitanNote" | translate }}</small
+                  ></label
+                ><br />
+                <input
+                  class="text-dark"
+                  type="file"
+                  accept="application/msword, application/pdf, .doc, .docx, .pdf"
+                  name="document_link"
+                  (change)="onChange($event)"
+                />
+              </div>
+            </div>
+            <br />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      class="btn btn-primary"
+      type="button"
+      (click)="openAfterBooking()"
+      [disabled]="!visitapplicationFormGroup.valid"
+    >
+      {{ "BuatTempahan" | translate }}
+    </button>
+
+    <button
+      class="btn btn-link ml-auto"
+      data-dismiss="modal"
+      type="button"
+      (click)="defaultModal.hide()"
+    >
+      {{ "Tutup" | translate }}
+    </button>
+  </div>
+</ng-template>

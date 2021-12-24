@@ -1,0 +1,88 @@
+.brand-img {
+  max-height: 3.5rem !important;
+  margin-right: 0.2rem !important;
+}
+
+.dropdown-item {
+  color: black;
+  font-size: .9rem;
+}
+
+.navbar-brand {
+  color: black;
+
+}
+
+.navbar {
+  height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+
+  box-shadow: 0 1px 20px 0px rgb(0 0 0 / 10%);
+  opacity: 90%;
+}
+
+.out {
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+a {
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+h4, h1{
+  color: black !important;
+  margin: auto;
+}
+
+h2 {
+  color: white !important;
+  margin: auto;
+
+}
+
+.btn-info, {
+  width: 90%;
+  height: 80px;
+  border: black 1px;
+  margin: 0px 1px 0px 1px;
+}
+
+.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-group > button {
+  margin-left: 2px;
+  margin-top: 4px;
+}
+
+.g2 {
+  margin: auto;
+  background-image: none;
+  width: 100%;
+  border: solid 2px;
+  background-color: white;
+  color: #1266f1;
+  font-size: 20px;
+  text-align: center;
+}
+
+.g2:hover {
+  background-color: gainsboro !important;
+  cursor: pointer;
+}
+
+

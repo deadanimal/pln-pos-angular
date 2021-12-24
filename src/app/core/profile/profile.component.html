@@ -1,0 +1,795 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <div class="row pb-3">
+          <div class="col-md-4 col-sm-12">
+            <h2 class="title text-dark text-center">
+              Hi, {{ user?.full_name }}
+            </h2>
+
+            <div
+              class="card"
+              [ngClass]="
+                selectedTab == 'maklumat-am' ? 'bg-default' : 'bg-white'
+              "
+              (click)="selectTab('maklumat-am')"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 text-center">
+                    <i
+                      class="fas fa-user-astronaut fa-2x"
+                      [ngClass]="
+                        selectedTab == 'maklumat-am'
+                          ? 'text-white'
+                          : 'text-dark'
+                      "
+                    ></i>
+                  </div>
+                  <div class="col-md-8 col-sm-12 align-self-center">
+                    <p
+                      class="font-weight-bold"
+                      [ngClass]="
+                        selectedTab == 'maklumat-am'
+                          ? 'text-white'
+                          : 'text-dark'
+                      "
+                    >
+                      {{ "MaklumatAM" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="card mt-2"
+              [ngClass]="selectedTab == 'sekuriti' ? 'bg-default' : 'bg-white'"
+              (click)="selectTab('sekuriti')"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 text-center">
+                    <i
+                      class="fas fa-lock fa-2x"
+                      [ngClass]="
+                        selectedTab == 'sekuriti' ? 'text-white' : 'text-dark'
+                      "
+                    ></i>
+                  </div>
+                  <div class="col-md-8 col-sm-12 align-self-center">
+                    <p
+                      class="font-weight-bold"
+                      [ngClass]="
+                        selectedTab == 'sekuriti' ? 'text-white' : 'text-dark'
+                      "
+                    >
+                      {{ "Sekuriti" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="card mt-2"
+              [ngClass]="
+                selectedTab == 'notifikasi' ? 'bg-default' : 'bg-white'
+              "
+              (click)="selectTab('notifikasi')"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 text-center">
+                    <i
+                      class="fas fa-bell fa-2x"
+                      [ngClass]="
+                        selectedTab == 'notifikasi' ? 'text-white' : 'text-dark'
+                      "
+                    ></i>
+                  </div>
+                  <div class="col-md-8 col-sm-12 align-self-center">
+                    <p
+                      class="font-weight-bold"
+                      [ngClass]="
+                        selectedTab == 'notifikasi' ? 'text-white' : 'text-dark'
+                      "
+                    >
+                      {{ "Notifikasi" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="card mt-2"
+              [ngClass]="
+                selectedTab == 'transaksi-bayaran' ? 'bg-default' : 'bg-white'
+              "
+              (click)="selectTab('transaksi-bayaran')"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 text-center">
+                    <i
+                      class="fas fa-money-check fa-2x"
+                      [ngClass]="
+                        selectedTab == 'transaksi-bayaran'
+                          ? 'text-white'
+                          : 'text-dark'
+                      "
+                    ></i>
+                  </div>
+                  <div class="col-md-8 col-sm-12 align-self-center">
+                    <p
+                      class="font-weight-bold"
+                      [ngClass]="
+                        selectedTab == 'transaksi-bayaran'
+                          ? 'text-white'
+                          : 'text-dark'
+                      "
+                    >
+                      {{ "TransaksiBayaran" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="card mt-2"
+              [ngClass]="
+                selectedTab == 'log-keluar' ? 'bg-default' : 'bg-white'
+              "
+              (click)="selectTab('log-keluar')"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 text-center">
+                    <i
+                      class="fas fa-sign-out-alt fa-2x"
+                      [ngClass]="
+                        selectedTab == 'log-keluar' ? 'text-white' : 'text-dark'
+                      "
+                    ></i>
+                  </div>
+                  <div class="col-md-8 col-sm-12 align-self-center">
+                    <p
+                      class="font-weight-bold"
+                      [ngClass]="
+                        selectedTab == 'log-keluar' ? 'text-white' : 'text-dark'
+                      "
+                    >
+                      {{ "LogKeluar" | translate }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 col-sm-12">
+            <!-- Maklumat AM -->
+            <div *ngIf="selectedTab == 'maklumat-am'">
+              <form [formGroup]="userFormGroup">
+                <h2 class="title text-dark">{{ "MaklumatAM" | translate }}</h2>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "NamaPenuh" | translate }}</label>
+                  </div>
+                  <div class="col-9 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="full_name"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "Emel" | translate }}</label>
+                  </div>
+                  <div class="col-9 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="email"
+                        class="form-control text-dark"
+                        readonly="true"
+                        required="true"
+                        formControlName="email"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "NomborTelefon" | translate }}</label>
+                  </div>
+                  <div class="col-4 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="tel"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="phone"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "Alamat" | translate }}</label>
+                  </div>
+                  <div class="col-9 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="address_1"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="address_2"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="address_3"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "Poskod" | translate }}</label>
+                  </div>
+                  <div class="col-4 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="number"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="postcode"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "Bandar" | translate }}</label>
+                  </div>
+                  <div class="col-5 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="city"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "Negeri" | translate }}</label>
+                  </div>
+                  <div class="col-5 align-self-center">
+                    <div class="form-group">
+                      <select
+                        class="form-control text-dark"
+                        formControlName="state"
+                      >
+                        <option value="">{{ "Silapilih" | translate }}</option>
+                        <option value="01">Johor</option>
+                        <option value="02">Kedah</option>
+                        <option value="03">Kelantan</option>
+                        <option value="04">Melaka</option>
+                        <option value="05">Negeri Sembilan</option>
+                        <option value="06">Pahang</option>
+                        <option value="07">Pulau Pinang</option>
+                        <option value="08">Perak</option>
+                        <option value="09">Perlis</option>
+                        <option value="10">Selangor</option>
+                        <option value="11">Terengganu</option>
+                        <option value="12">Sabah</option>
+                        <option value="13">Sarawak</option>
+                        <option value="14">
+                          Wilayah Persekutuan Kuala Lumpur
+                        </option>
+                        <option value="15">Wilayah Persekutuan Labuan</option>
+                        <option value="16">
+                          Wilayah Persekutuan Putrajaya
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "Negara" | translate }}</label>
+                  </div>
+                  <div class="col-5 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="country"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "TarikhLahir" | translate }}</label>
+                  </div>
+                  <div class="col-4 align-self-center">
+                    <div class="form-group">
+                      <input
+                        type="date"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="birth_date"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="row">
+                <div class="col-3 align-self-center">
+                  <label class="labels">Bangsa</label>
+                </div>
+                <div class="col-4 align-self-center">
+                  <div class="form-group">
+                    <select
+                      class="form-control text-dark"
+                      placeholder="Bangsa"
+                      formControlName="race_type"
+                    >
+                      <option value="" selected>Sila pilih</option>
+                      <option *ngFor="let race of races" [value]="race.value">
+                        {{ race.display_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+
+                <!-- <div class="row">
+                <div class="col-3 align-self-center">
+                  <label class="labels">Jantina</label>
+                </div>
+                <div class="col-9 align-self-center">
+                  <div class="form-group">
+                    <div class="form-check form-check-radio form-check-inline">
+                      <label class="form-check-label text-dark">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender_type"
+                          value="FM"
+                          formControlName="gender_type"
+                        />
+                        Perempuan
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </div>
+                    <div class="form-check form-check-radio form-check-inline">
+                      <label class="form-check-label text-dark">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="gender_type"
+                          value="ML"
+                          formControlName="gender_type"
+                        />
+                        Lelaki
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+                <div class="row pt-3">
+                  <div class="col">
+                    <div class="text-center">
+                      <button class="btn btn-default" (click)="updateProfile()">
+                        {{ "Simpan" | translate }}
+                      </button>
+                      <button class="btn btn-neutral">{{ "Batal" | translate }}</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Sekuriti -->
+            <div *ngIf="selectedTab == 'sekuriti'">
+              <form [formGroup]="passwordchangeFormGroup">
+                <h2 class="title text-dark">{{ "Sekuriti" | translate }}</h2>
+                <h4 class="text-dark">{{ "Tukarkatalaluan" | translate }}</h4>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "KataLaluanBaru" | translate }}</label>
+                  </div>
+                  <div class="col-5 align-self-center">
+                    <div class="input-group">
+                      <input
+                        [type]="new_password1 ? 'text' : 'password'"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="new_password1"
+                      />
+                      <div
+                        class="input-group-append"
+                        (click)="changePasswordIcon('new_password1')"
+                      >
+                        <span class="input-group-text"
+                          ><i
+                            *ngIf="!new_password1"
+                            class="fas fa-eye-slash fa-lg"
+                            style="color: gainsboro"
+                          ></i>
+                          <i
+                            *ngIf="new_password1"
+                            class="fas fa-eye fa-lg"
+                            style="color: black"
+                          ></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "UlangKataLaluanBaru" | translate }}</label>
+                  </div>
+                  <div class="col-5 align-self-center">
+                    <div class="input-group">
+                      <input
+                        [type]="new_password2 ? 'text' : 'password'"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="new_password2"
+                      />
+                      <div
+                        class="input-group-append"
+                        (click)="changePasswordIcon('new_password2')"
+                      >
+                        <span class="input-group-text"
+                          ><i
+                            *ngIf="!new_password2"
+                            class="fas fa-eye-slash fa-lg"
+                            style="color: gainsboro"
+                          ></i>
+                          <i
+                            *ngIf="new_password2"
+                            class="fas fa-eye fa-lg"
+                            style="color: black"
+                          ></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 align-self-center">
+                    <label class="labels">{{ "KataLaluanLama" | translate }}</label>
+                  </div>
+                  <div class="col-5 align-self-center">
+                    <div class="input-group">
+                      <input
+                        [type]="old_password ? 'text' : 'password'"
+                        class="form-control text-dark"
+                        required="true"
+                        formControlName="old_password"
+                      />
+                      <div
+                        class="input-group-append"
+                        (click)="changePasswordIcon('old_password')"
+                      >
+                        <span class="input-group-text"
+                          ><i
+                            *ngIf="!old_password"
+                            class="fas fa-eye-slash fa-lg"
+                            style="color: gainsboro"
+                          ></i>
+                          <i
+                            *ngIf="old_password"
+                            class="fas fa-eye fa-lg"
+                            style="color: black"
+                          ></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="card bg-white">
+                      <div class="card-body">
+                        <p
+                          style="font-size: 1.2rem"
+                          [ngClass]="
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('required') ||
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('minlength')
+                              ? 'text-danger'
+                              : 'text-success'
+                          "
+                        >
+                          <i
+                            [ngClass]="
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('required') ||
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('minlength')
+                                ? 'fas fa-times-circle'
+                                : 'fas fa-check-circle'
+                            "
+                          ></i>
+                          {{ "KataLaluanValid1" | translate }}
+                        </p>
+
+                        <p
+                          style="font-size: 1.2rem"
+                          [ngClass]="
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('required') ||
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('hasCapitalCase')
+                              ? 'text-danger'
+                              : 'text-success'
+                          "
+                        >
+                          <i
+                            [ngClass]="
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('required') ||
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('hasCapitalCase')
+                                ? 'fas fa-times-circle'
+                                : 'fas fa-check-circle'
+                            "
+                          ></i>
+                          {{ "KataLaluanValid2" | translate }}
+                        </p>
+
+                        <p
+                          style="font-size: 1.2rem"
+                          [ngClass]="
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('required') ||
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('hasSmallCase')
+                              ? 'text-danger'
+                              : 'text-success'
+                          "
+                        >
+                          <i
+                            [ngClass]="
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('required') ||
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('hasSmallCase')
+                                ? 'fas fa-times-circle'
+                                : 'fas fa-check-circle'
+                            "
+                          ></i>
+                          {{ "KataLaluanValid3" | translate }}
+                        </p>
+
+                        <p
+                          style="font-size: 1.2rem"
+                          [ngClass]="
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('required') ||
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('hasNumber')
+                              ? 'text-danger'
+                              : 'text-success'
+                          "
+                        >
+                          <i
+                            [ngClass]="
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('required') ||
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('hasNumber')
+                                ? 'fas fa-times-circle'
+                                : 'fas fa-check-circle'
+                            "
+                          ></i>
+                          {{ "KataLaluanValid4" | translate }}
+                        </p>
+
+                        <p
+                          style="font-size: 1.2rem"
+                          [ngClass]="
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('required') ||
+                            passwordchangeFormGroup.controls[
+                              'new_password1'
+                            ].hasError('hasSpecialCharacters')
+                              ? 'text-danger'
+                              : 'text-success'
+                          "
+                        >
+                          <i
+                            [ngClass]="
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('required') ||
+                              passwordchangeFormGroup.controls[
+                                'new_password1'
+                              ].hasError('hasSpecialCharacters')
+                                ? 'fas fa-times-circle'
+                                : 'fas fa-check-circle'
+                            "
+                          ></i>
+                          {{ "KataLaluanValid5" | translate }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row pt-3">
+                  <div class="col">
+                    <div class="text-center">
+                      <button
+                        class="btn btn-default"
+                        (click)="changePassword()"
+                        [disabled]="!passwordchangeFormGroup.valid"
+                      >
+                        {{ "Simpan" | translate }}
+                      </button>
+                      <button class="btn btn-neutral">{{ "Batal" | translate }}</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Notifikasi -->
+            <div *ngIf="selectedTab == 'notifikasi'">
+              <h2 class="title text-dark">{{ "Notifikasi" | translate }}</h2>
+              <div class="table-responsive">
+                <table class="table table-bordered table-flush">
+                  <thead>
+                    <tr>
+                      <td>{{ "Bil" | translate }}</td>
+                      <td>{{ "Perkara" | translate }}</td>
+                      <td>{{ "Masa" | translate }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr>
+                      <td>1</td>
+                      <td>Permohonan lawatan anda diterima</td>
+                      <td>10 jam lalu</td>
+                    </tr> -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Transaksi Bayaran -->
+            <div *ngIf="selectedTab == 'transaksi-bayaran'">
+              <h2 class="title text-dark">{{ "TransaksiBayaran" | translate }}</h2>
+              <div class="table-responsive">
+                <table class="table table-bordered table-flush">
+                  <thead>
+                    <tr>
+                      <td>{{ "Bil" | translate }}</td>
+                      <td>{{ "Perkara" | translate }}</td>
+                      <td>{{ "TarikhPembayaran" | translate }}</td>
+                      <td>Status</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let invoicereceipt of invoicereceipts;
+                        let i = index
+                      "
+                    >
+                      <td>{{ i + 1 }}</td>
+                      <td></td>
+                      <td>
+                        {{
+                          invoicereceipt.payment_successful_datetime
+                            | date: "medium"
+                        }}
+                      </td>
+                      <td>
+                        <div
+                          [innerHtml]="
+                            getInvoiceReceiptStatus(invoicereceipt.status)
+                          "
+                        ></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Log Keluar -->
+            <div *ngIf="selectedTab == 'log-keluar'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

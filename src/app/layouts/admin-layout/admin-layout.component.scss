@@ -1,0 +1,42 @@
+.row {
+  margin-top: 50px;
+  height: 100%;
+}
+.cart, .card, .card-body, .right {
+  width: 100%;
+  height: 100%;
+  opacity: 90%;
+
+
+}
+
+.card {
+  background-color: white;
+  border-radius: 0;
+
+
+}
+
+.page {
+  width: 100%;
+  height: 86%;
+  overflow-y: scroll;
+}
+
+
+.aux {
+  width: 100%;
+  height: 14%;
+  opacity: 80%;
+}
+
+.main2 {
+  margin-top: 30px;
+  background-color: white;
+  opacity: 90%;
+}
+
+
+.cart {
+  margin: 0;
+}

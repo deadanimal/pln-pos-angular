@@ -1,0 +1,133 @@
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="page-header page-header-small header-filter">
+    <carousel>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-1.jpg"
+          alt="second slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-2.jpg"
+          alt="third slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+      <slide>
+        <img
+          src="../../../assets/img/show/show-3.jpg"
+          alt="first slide"
+          style="display: block; width: 100%"
+        />
+      </slide>
+    </carousel>
+  </div>
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "KutubkhanahMiniMengenaiKamiTajuk" | translate }}
+          <share-button button="facebook"></share-button
+          ><share-button button="twitter"></share-button
+          ><share-button button="whatsapp"></share-button>
+        </h2>
+        <div class="row pb-5">
+          <div class="col">
+            <!-- <p class="text-dark text-justify">
+              {{ "KutubkhanahMiniMengenaiKamiDeskripsi1" | translate }}
+            </p>
+
+            <p
+              class="text-dark text-justify pt-3"
+              [innerHtml]="'KutubkhanahMiniMengenaiKamiDeskripsi2' | translate"
+            ></p>
+
+            <p class="text-dark text-justify pt-3">
+              {{ "KutubkhanahMiniMengenaiKamiDeskripsi3" | translate }}
+            </p> -->
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'en'"
+              [innerHtml]="submodule?.description_en | safe: 'html'"
+            ></p>
+            <p
+              class="text-dark text-justify inner-html"
+              *ngIf="translate.currentLang == 'ms'"
+              [innerHtml]="submodule?.description_ms | safe: 'html'"
+            ></p>
+          </div>
+        </div>
+        <div class="row pb-5">
+          <div class="col-md-8 col-sm-12 ml-auto mr-auto">
+            <div class="card">
+              <div class="card-image">
+                <img
+                  src="../../../assets/img/waktu-operasi-kutubkhanah-mini.jpg"
+                  style="width: 100%"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pb-5">
+          <div class="col-md-6 col-sm-12">
+            <h2 class="title text-dark">{{ "WaktuOperasi" | translate }}</h2>
+            <h4 class="title text-dark">
+              {{ "Selasa" | translate }} – {{ "Ahad" | translate }}:
+            </h4>
+            <p class="text-dark">9:00 AM – 4:45 PM</p>
+            <h4 class="title text-dark">
+              {{ "Isnin" | translate }} & {{ "HariCutiUmum" | translate }}:
+            </h4>
+            <p class="text-dark">{{ "Tutup" | translate }}</p>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <table class="table table-bordered">
+              <tr>
+                <td>1<sup>st</sup> {{ "Februari" | translate }}</td>
+                <td class="font-weight-bold">
+                  {{ "HariWilayahPersekutuan" | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td>1<sup>st</sup> {{ "Mei" | translate }}</td>
+                <td class="font-weight-bold">
+                  {{ "HariPekerja" | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td>31<sup>st</sup> {{ "Ogos" | translate }}</td>
+                <td class="font-weight-bold">
+                  {{ "HariKebangsaan" | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td>16<sup>th</sup> September</td>
+                <td class="font-weight-bold">
+                  {{ "HariMalaysia" | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center font-weight-bold">
+                  {{ "HariKeputeraanRasmiYangDi-PertuanAgong" | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center font-weight-bold">
+                  Hari Raya Aidilfitri
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-center font-weight-bold">
+                  Hari Raya Aidiladha
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<!-- <div class="header header-4">
+  <div class="header-wrapper">
+    <div class="page-header header-video header-filter">
+      <video
+        autoplay="autoplay"
+        loop="loop"
+        muted="muted"
+        oncanplay="this.play()"
+        onloadedmetadata="this.muted = true"
+      >
+        <source
+          src="../../../assets/video/planetarium-homepage-video.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container text-center">
+        <div class="video-text">
+          <h1 class="title">Portal Rasmi Planetarium Negara</h1>
+          <h4 class="text-center">
+            Kementerian Sains, Teknologi & Inovasi (MOSTI)
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="main main-raised bg-white">
+    <div class="section">
+      <div class="container">
+        <h2 class="title text-center text-dark">
+          {{ "WaktuOperasi" | translate }}
+        </h2>
+        <div class="row">
+          <div class="col text-center">
+            <!-- <h4 class="title text-dark">
+              Dibuka setiap hari (kecuali Isnin dan Cuti Umum terpilih) dari jam
+              9.00 pagi hingga 4.30 petang
+            </h4>
+
+            <h4 class="title text-dark">
+              Tutup pada setiap Isnin dan hari Cuti Umum terpilih
+            </h4> -->
+
+            <h4 class="title text-dark">
+              {{ "BukaDari" | translate }}
+            </h4>
+
+            <h4 class="title text-dark">
+              {{ "DitutupPada" | translate }}
+            </h4>
+            <h5 class="title text-dark">
+              {{ "HariCuti" | translate }}
+            </h5>
+          </div>
+        </div>
+        <h2 class="title text-center text-dark">
+          {{ "KadarBayaran" | translate }}
+        </h2>
+        <div class="row pb-3">
+          <div class="col-md-10 col-sm-12 mx-auto">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td rowspan="2" class="theadstyle">
+                      {{ "TEMPAT" | translate }}
+                    </td>
+                    <td
+                      colspan="2"
+                      class="theadstyle"
+                      [innerHtml]="'DEWASA' | translate"
+                    ></td>
+                    <td
+                      colspan="2"
+                      class="theadstyle"
+                      [innerHtml]="'KANAKKANAK' | translate"
+                    ></td>
+                    <td
+                      colspan="2"
+                      class="theadstyle"
+                      [innerHtml]="'PELAJAR' | translate"
+                    ></td>
+                  </tr>
+
+                  <tr>
+                    <td class="theadcategory">{{ "BukanWarganegara" | translate }}</td>
+                    <td class="theadcategory">{{ "MyKAD" | translate }}</td>
+                    <td class="theadcategory">{{ "BukanWarganegara" | translate }}</td>
+                    <td class="theadcategory">{{ "MyKID" | translate }}</td>
+                    <td class="theadcategory">{{ "BukanWarganegara" | translate }}</td>
+                    <td class="theadcategory">{{ "MyKID" | translate }}</td>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let ticket of tickets">
+                    <td
+                      class="theadstyle"
+                      *ngIf="translate.currentLang == 'ms'"
+                    >
+                      {{ ticket.venue_ms }}
+                    </td>
+                    <td
+                      class="theadstyle"
+                      *ngIf="translate.currentLang == 'en'"
+                    >
+                      {{ ticket.venue_en }}
+                    </td>
+                    <div
+                      *ngIf="
+                        ticket.venue_ms != 'GALERI PAMERAN';
+                        then haveprice;
+                        else allfree
+                      "
+                    ></div>
+                    <ng-template #haveprice>
+                      <td class="tbodyprice">{{ ticket.normalAdult }}</td>
+                      <td class="tbodyprice">{{ ticket.mykadAdult }}</td>
+                      <td class="tbodyprice">{{ ticket.normalChildren }}</td>
+                      <td class="tbodyprice">{{ ticket.mykadChildren }}</td>
+                      <td class="tbodyprice">{{ ticket.normalStudent }}</td>
+                      <td class="tbodyprice">{{ ticket.mykadStudent }}</td>
+                    </ng-template>
+                    <ng-template #allfree>
+                      <td
+                        colspan="6"
+                        class="tbodyprice"
+                        [innerHtml]="'PERCUMA' | translate"
+                      ></td>
+                    </ng-template>
+                  </tr>
+
+                  <tr>
+                    <td colspan="7" class="text-center text-dark">
+                      {{ "NOTABAYARAN" | translate }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

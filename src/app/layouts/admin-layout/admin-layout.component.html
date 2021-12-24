@@ -1,0 +1,25 @@
+<!-- Sidenav -->
+  <app-navbar></app-navbar>
+   <div class="row mr-0"> 
+
+    <!-- checkout -->
+    <div class="cart col-lg-3 col-xl-3">
+      <div class="card">
+      <app-cart></app-cart>
+      </div>
+    </div>
+
+    <!-- Pages -->
+    <div class=" main2 col-lg-9 col-xl-9" style="top: fixed; height: 100%;">
+      <div class="page">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- aux
+      -->
+
+      <div class="aux">
+        <app-auxiliary></app-auxiliary>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,104 @@
+<h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
+      {{ "Pembayaran" | translate }}
+</h3>
+<div class="main-content">
+
+  <ngx-spinner> <p style="font-size: 20px; color: white">Loading...</p></ngx-spinner>
+  
+  <div class="row">
+    <div style="padding: 10% 0 5% 0;" class="col-12 text-center">
+      <div
+        class="icon icon-shape rounded-circle" style="background: white; margin: auto;"
+      >
+        <i class="fas fa-money-bill-alt" style="font-size: 4.25rem; color: green"> </i>
+      </div>
+      <h1 class="card-title text-uppercase text-muted mb-0 text-center"><b>BAKI: {{ amount_change | currency:'RM' }}
+       <br>
+       Transaksi Berjaya!
+       </b></h1>
+  </div>
+  <div class="row" style="margin: auto; width: 60%;">
+
+    <div class="col-6">
+      <div class="card g2 btn-lg" (click)="cetakTiket2()">
+        <h2>Cetak Tiket</h2>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card g2 btn-lg" (click)="cetakResit()">
+        <h2>Cetak Resit</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin: auto; width: 60%;">
+    <div class="col-12">
+      <div (click)="clickSelesai()" style="margin-top: 20px;" class="card g2 btn-lg">
+        <h2>Selesai</h2>
+      </div>
+    </div>
+  </div>
+
+ </div>
+</div>
+<!--
+<div class="wrapper" [ngClass]="fontSize" [ngClass]="themeColor">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 mx-auto">
+          <div class="card" style="background-color: #ffffff">
+            <div class="card-body">
+              <h3 class="title text-dark text-center m-3">
+                {{ "Berjaya" | translate }}
+              </h3>
+
+            <hr class="line-info mb-3" style="border-top: 3px solid" />
+              <div style="" class="row">
+                <div class="col-auto text-center">
+                  <div class="" style="margin: auto;">
+                    <div
+                      class="icon icon-shape rounded-circle" style="background: white; margin-left: auto;"
+                    >
+                      <i class="fas fa-money-bill-alt" style="font-size: 3.25rem; color: green"> </i>
+                    </div>
+                  </div>
+                </div>
+                <h1 class="card-title text-uppercase text-muted mb-0 text-left"><b>BAKI: RM10.50</b></h1>
+              </div>
+
+
+              <div class="main">
+                <div class="row" style="">
+                  <div class="col-6">
+                    <div class="card g2 navigator btn-lg">
+                      <h3> Cetak Tiket</h3>
+                    </div>
+                  </div>
+        
+        
+                  <div class="col-6">
+                    <div class="card g2 navigator btn-lg">
+                      <h3> Cetak Resit</h3>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 10%;" class="row">
+                  <div class="col-12">
+                    <div (click)="clickSelesai()" style="background-color: lightblue; height: 70%;" class="card g2 navigator btn-lg">
+                      <h3> Selesai</h3>
+                    </div>
+                  </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->

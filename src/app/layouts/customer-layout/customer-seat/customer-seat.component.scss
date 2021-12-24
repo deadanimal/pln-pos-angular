@@ -1,0 +1,34 @@
+.form-check-label {
+  color: #000000 !important;
+}
+
+.form-control {
+  color: #000000 !important;
+}
+
+.table td {
+  padding: 0.1rem;
+}
+
+.section {
+  padding: 0px 0;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+.box {
+  width: auto;
+  height: 50px;
+  border: solid 15px purple;
+  border-color: purple transparent transparent transparent;
+  border-radius: 50%/100px 100px 0 0;
+}
+
+small {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  height: 5px;
+  width: 5px;
+}

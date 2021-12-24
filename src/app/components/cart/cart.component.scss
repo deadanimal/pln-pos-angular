@@ -1,0 +1,44 @@
+thead {
+  background-color: gainsboro;
+}
+
+td {
+  border: none;
+}
+
+.vouch-btn {
+  border: none;
+  background-image: none;
+  width: 100%;
+  background-color: #1266f1;
+  color: white;
+}
+
+.vouch-btn:hover {
+  background-color: #39c0ed;
+}
+
+
+.pay-btn {
+  border: none;
+  background-image: none;
+  width: 100%;
+  background-color: #00b74a;
+  color: white;
+}
+
+.pay-btn:hover {
+  background-color: limegreen;
+}
+
+.fixed_header tbody{
+  display:block;
+  overflow:auto;
+  height:350px !important;
+  width:100%;
+}
+.fixed_header thead tr{
+  display:block;
+}
+
+

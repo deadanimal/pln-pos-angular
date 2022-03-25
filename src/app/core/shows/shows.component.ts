@@ -147,21 +147,8 @@ export class ShowsComponent implements OnInit {
 
   makeBooking(id: number, title: string) {
     if (this.jwtService.getToken("accessToken")) {
-      let result = this.closebookings.find((obj) => {
-        return obj.status == true;
-      });
-      // to check if the close booking is exist for shows
-      if (result) {
-        if (this.translate.currentLang == "en")
-          this.sweetAlertWarning(result.title_en, result.description_en);
-        if (this.translate.currentLang == "ms")
-          this.sweetAlertWarning(result.title_ms, result.description_ms);
-      }
-      // no close booking and no calendar
-      else {
-        this.postMessage(id);
-        this.router.navigate(["/app/shows/shows-book/" + id]);
-      }
+      this.postMessage(id);
+      this.router.navigate(["/app/shows/shows-book/" + id]);
     } else {
       this.toastr.error(
         this.translate.instant("RalatLoginBook"),

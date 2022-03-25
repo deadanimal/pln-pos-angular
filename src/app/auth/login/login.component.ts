@@ -11,6 +11,7 @@ import swal from "sweetalert2";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { UsersService } from 'src/app/shared/services/users/users.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-login",
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit {
     public router: Router,
     private authService: AuthService,
     private userService: UsersService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastr: ToastrService
   ) {
     this.loginFormGroup = this.formBuilder.group({
       username: new FormControl("", [Validators.required, Validators.email]),
@@ -43,17 +45,25 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.obtainToken(this.loginFormGroup.value).subscribe(
       (res) => {
-        // adjust this to push child window to next screen
         let left = 500 + 1000;
         let currentUser = this.authService.decodedToken();
-        
         this.userService.currentUser = currentUser;
 
+        this.userService.get(currentUser.user_id).subscribe(
+          (res) => {
+            if (res.user_type == "TC") { 
+              this.router.navigate(["/app/home"]);
+              window.open("#/customer-display", "_blank", 'toolbar=0,location=0,menubar=0,width=500,height=320,left=500,top=100');
+            }
+            else {
+              this.toastr
+              .warning("Hanya pengguna jenis Pentadbir Kaunter Tiket Dibenarkan Masuk", "Info")
+            }
+          },
+          (err) => {},
+          () => {}
+        );
 
-        // initiate child window on popup
-        this.router.navigate(["/app/home"]);
-        window.open("#/customer-display", "_blank", 'toolbar=0,location=0,menubar=0,width=500,height=320,left=500,top=100');
-        //window.open("/Users/pipeline-dev/pipeline-work/pos/src/app/layouts/customer-layout/customer-layout.component.html", "_blank", 'toolbar=0,location=0,menubar=0,width=500,height=320,left='+left+',top=100');
 
 
 

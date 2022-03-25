@@ -38,6 +38,7 @@
     "@fullcalendar/interaction": "^5.0.0",
     "@glidejs/glide": "3.4.1",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
+    "@ngrx/store": "^9.2.1",
     "@ngu/carousel": "^1.5.5",
     "@ngx-gallery/core": "^4.0.3",
     "@ngx-gallery/lightbox": "^4.0.3",

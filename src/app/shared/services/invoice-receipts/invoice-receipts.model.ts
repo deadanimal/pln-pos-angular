@@ -6,6 +6,7 @@ export class InvoiceReceipt {
   public status: string;
   public invoice_created_datetime: string;
   public invoice_running_no: string;
+  public receipt_running_no: string;
   public pending_payment_datetime: string;
   public payment_successful_datetime: string;
   public payment_rejected_datetime: string;
@@ -37,6 +38,7 @@ export class InvoiceReceipt {
     created_date: string,
     modified_date: string,
     invoice_running_no: string,
+    receipt_running_no: string,
   ) {
     this.id = id;
     this.total_price_before_voucher = total_price_before_voucher;
@@ -56,5 +58,6 @@ export class InvoiceReceipt {
     this.created_date = created_date;
     this.modified_date = modified_date;
     this.invoice_running_no = invoice_running_no;
+    this.receipt_running_no = receipt_running_no;
   }
 }

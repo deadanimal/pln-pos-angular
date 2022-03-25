@@ -1,12 +1,36 @@
-import { Component, OnInit } from "@angular/core"; import { EventEmitterService } from "src/app/shared/services/event-emitter/event-emitter.service"; import { HttpClient } from "@angular/common/http"; import { FormBuilder, FormControl, FormGroup, Validators, } from "@angular/forms"; import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { EventEmitterService } from "src/app/shared/services/event-emitter/event-emitter.service";
+import { HttpClient } from "@angular/common/http";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
+
 import { TranslateService } from "@ngx-translate/core";
 import { environment } from "src/environments/environment";
 import swal from "sweetalert2";
 
+import { Store } from "@ngrx/store";
+import {
+  addCheckoutState,
+  clearCheckoutState,
+} from "src/app/checkout-state-store/action";
+import { CheckoutState } from "src/app/checkout-state-store/model";
+import { getCheckoutState } from "src/app/checkout-state-store/selector";
+
+//initial state
+import { initialState } from "src/app/checkout-state-store/state";
+
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { CartsService } from "src/app/shared/services/carts/carts.service";
 import { Cart } from "src/app/shared/services/carts/carts.model";
-import { InvoiceReceiptsService } from "src/app/shared/services/invoice-receipts/invoice-receipts.service"; import { SimulatorRideBookingsService } from "src/app/shared/services/simulator-ride-bookings/simulator-ride-bookings.service"; import { VouchersService } from "src/app/shared/services/vouchers/vouchers.service";
+import { InvoiceReceiptsService } from "src/app/shared/services/invoice-receipts/invoice-receipts.service";
+import { SimulatorRideBookingsService } from "src/app/shared/services/simulator-ride-bookings/simulator-ride-bookings.service";
+import { VouchersService } from "src/app/shared/services/vouchers/vouchers.service";
 import { W3csService } from "src/app/shared/services/w3cs/w3cs.service";
 import { CashPaymentService } from "src/app/shared/services/cash-payment/cash-payment.service";
 import { CashTransactions } from "src/app/shared/services/cash-payment/cash-payment.model";
@@ -19,7 +43,7 @@ import { Showing } from "src/app/shared/services/showings/showings.model";
 import { SimulatorRidesService } from "src/app/shared/services/simulator-rides/simulator-rides.service";
 import { SimulatorRideTimesService } from "src/app/shared/services/simulator-ride-times/simulator-ride-times.service";
 import { SimulatorRide } from "src/app/shared/services/simulator-rides/simulator-rides.model";
-
+import { ToastrService } from "ngx-toastr";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import * as data from "src/app/shared/imagebyte/img.json";
@@ -27,11 +51,17 @@ import * as data2 from "src/app/shared/imagebyte/img2.json";
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import JsBarcode from 'jsbarcode/bin/JsBarcode'
+import JsBarcode from "jsbarcode/bin/JsBarcode";
 
-
-import * as FileSaver from 'file-saver';
+import * as FileSaver from "file-saver";
 import { map, tap, catchError } from "rxjs/operators";
+
+//Checkout initial state
+export const CHECKOUT_STATUS = [
+  {
+    status: true,
+  },
+];
 
 @Component({
   selector: "app-checkout",
@@ -39,14 +69,22 @@ import { map, tap, catchError } from "rxjs/operators";
   styleUrls: ["./checkout.component.scss"],
 })
 export class CheckoutComponent implements OnInit {
+  //Flag Selesai
+  tiket_click: boolean = false;
+  resit_click: boolean = false;
+
+  //Checkout state
+  checkout_state$: Observable<CheckoutState>[];
+
   //Others
-  imageUrl: any; 
-  unix_ts : number;
+  imageUrl: any;
+  unix_ts: number;
 
   //Transaction
   received: any = 0;
   changed: any = 0;
   invoice_running_no: any;
+  receipt_running_no: any;
   current_date = new Date();
 
   //Showings
@@ -67,11 +105,11 @@ export class CheckoutComponent implements OnInit {
   bookingDatas = [];
 
   cart_id: any[] = [];
-  
+
   // CSS class
   fontSize: string;
   themeColor: string;
-  
+
   // Data
   carts: Cart[] = [];
   amount_change: string;
@@ -91,7 +129,6 @@ export class CheckoutComponent implements OnInit {
   total_price_before_voucher: number = 0;
   total_voucher: number = 0;
   total_price_after_voucher: number = 0;
-
 
   // Dropdown
   simulatorridedays = [
@@ -187,12 +224,12 @@ export class CheckoutComponent implements OnInit {
   ];
 
   enumArray = {
-    "AD": "Dewasa",
-    "KD": "Kanak-kanak",
-    "OF": "Warga Emas",
-    "SD": "Student",
-    "OK": "OKU"
-  }
+    AD: "Dewasa",
+    KD: "Kanak-kanak",
+    OF: "Warga Emas",
+    SD: "Student",
+    OK: "OKU",
+  };
 
   constructor(
     public formBuilder: FormBuilder,
@@ -214,7 +251,8 @@ export class CheckoutComponent implements OnInit {
     private simulatorRideTimesServices: SimulatorRideTimesService,
     private showtimesService: ShowtimesService,
     private ngxSpinner: NgxSpinnerService,
-
+    private toastr: ToastrService,
+    private store: Store
   ) {
     this.getCart();
     this.getVoucher();
@@ -223,16 +261,14 @@ export class CheckoutComponent implements OnInit {
   }
 
   getChangeAmount() {
-    let user_id = this.authService.decodedToken().user_id
-    this.cashPaymentService.filter("user="+ user_id).subscribe(
+    let user_id = this.authService.decodedToken().user_id;
+    this.cashPaymentService.filter("user=" + user_id).subscribe(
       (res) => {
         this.amount_change = res[0].amount_change;
       },
-      (err) => {
-      },
-      () => {
-      }
-    )
+      (err) => {},
+      () => {}
+    );
   }
 
   getVoucher() {
@@ -505,13 +541,11 @@ export class CheckoutComponent implements OnInit {
                         invoice_created_datetime: this.getCurrentDateTime(),
                         user: this.authService.decodedToken().user_id,
                         cart_id: cart_id,
-                        total_price_before_voucher: this.total_price_before_voucher.toFixed(
-                          2
-                        ),
+                        total_price_before_voucher:
+                          this.total_price_before_voucher.toFixed(2),
                         total_voucher: this.total_voucher.toFixed(2),
-                        total_price_after_voucher: this.total_price_after_voucher.toFixed(
-                          2
-                        ),
+                        total_price_after_voucher:
+                          this.total_price_after_voucher.toFixed(2),
                         voucher_id: this.voucher_id,
                       };
                       this.invoicereceiptService.post(obj).subscribe(
@@ -567,13 +601,11 @@ export class CheckoutComponent implements OnInit {
                 invoice_created_datetime: this.getCurrentDateTime(),
                 user: this.authService.decodedToken().user_id,
                 cart_id: cart_id,
-                total_price_before_voucher: this.total_price_before_voucher.toFixed(
-                  2
-                ),
+                total_price_before_voucher:
+                  this.total_price_before_voucher.toFixed(2),
                 total_voucher: this.total_voucher,
-                total_price_after_voucher: this.total_price_after_voucher.toFixed(
-                  2
-                ),
+                total_price_after_voucher:
+                  this.total_price_after_voucher.toFixed(2),
                 voucher_id: this.voucher_id,
               };
               this.invoicereceiptService.post(obj).subscribe(
@@ -619,6 +651,8 @@ export class CheckoutComponent implements OnInit {
       );
   }
 
+  // assign to datatype
+
   ngOnInit() {
     this.unix_ts = this.current_date.setHours(this.current_date.getHours());
     this.current_date = new Date(this.unix_ts);
@@ -632,68 +666,92 @@ export class CheckoutComponent implements OnInit {
     this.w3cService.currentThemeColor.subscribe(
       (themeColor) => (this.themeColor = themeColor)
     );
+    // init state test
+
+    // update checkout state
+    let new_state = {
+      status: true,
+    };
+    this.store.dispatch(clearCheckoutState());
+    this.store.dispatch(addCheckoutState(new_state));
+    let a = this.store.select(getCheckoutState);
+    a.subscribe((res) => {
+      console.log("RES", res);
+    });
+    //this.checkout_state$.subscribe(
+    //  (res) => {
+    //    console.log("this.checkout_state$", res);
+
+    //  }
+    //);
 
     // loading a while
 
-
     // get receipt and ticket id
-    this.invoicereceiptService.filter("status=PS&user=" + this.user_id).subscribe(
-      (res) => {
-        console.log("resss", res);
-        this.invoice_running_no = res[res.length - 1].invoice_running_no
-        this.cashPaymentService.filter("id="+res[res.length - 1].cash_transaction_id).subscribe(
-          (res) => {
-            console.log("trx data", res);
-            this.received = res[0].amount_receive
-            this.changed = res[0].amount_change
-
-
-          },
-          (err) => {
-            console.log("err", err);
-
-          }
-        );
-        
-        // sorting to make sure every transaction is tallied
-        res.sort((a, b) => a.payment_successful_datetime < b.payment_successful_datetime ? -1 : a.payment_successful_datetime > b.payment_successful_datetime ? 1 : 0)
-        this.cart_id = res[res.length - 1].cart_id;
-        this.receipt_id = res[res.length - 1].id;
-
-      },
-      (err) => {
-        console.log(err);
-      },
-      () => {
-      
-        for (let i = 0; i < this.cart_id.length; i++) {
-          this.cartService.getOne(this.cart_id[i]).subscribe(
-            (res) => {
-              if ( res.show_booking_id.length > 0) {
-                for (let j = 0; j < res.show_booking_id.length; j++) {
-                  this.ticket_array_show.push(res.show_booking_id[j]);
-                  this.ticket_array_show_data.push(res);
-                }
-                
-              } else if ( res.simulator_ride_booking_id.length > 0) {
-                for (let k = 0; k < res.simulator_ride_booking_id.length; k++) {
-                  this.ticket_array_space.push(res.simulator_ride_booking_id[k]);
-                  this.ticket_array_space_data.push(res);
-
-                }
-
+    this.invoicereceiptService
+      .filter("status=RC&user=" + this.user_id)
+      .subscribe(
+        (res) => {
+          console.log("resss", res);
+          this.invoice_running_no = res[res.length - 1].invoice_running_no;
+          this.receipt_running_no = res[res.length - 1].receipt_running_no;
+          this.cashPaymentService
+            .filter("id=" + res[res.length - 1].cash_transaction_id)
+            .subscribe(
+              (res) => {
+                console.log("trx data", res);
+                this.received = res[0].amount_receive;
+                this.changed = res[0].amount_change;
+              },
+              (err) => {
+                console.log("err", err);
               }
+            );
 
-            },
-            (err) => {
-              console.log(err);
-            }
-
+          // sorting to make sure every transaction is tallied
+          res.sort((a, b) =>
+            a.payment_successful_datetime < b.payment_successful_datetime
+              ? -1
+              : a.payment_successful_datetime > b.payment_successful_datetime
+              ? 1
+              : 0
           );
+          this.cart_id = res[res.length - 1].cart_id;
+          this.receipt_id = res[res.length - 1].id;
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          for (let i = 0; i < this.cart_id.length; i++) {
+            this.cartService.getOne(this.cart_id[i]).subscribe(
+              (res) => {
+                if (res.show_booking_id.length > 0) {
+                  for (let j = 0; j < res.show_booking_id.length; j++) {
+                    this.ticket_array_show.push(res.show_booking_id[j]);
+                    this.ticket_array_show_data.push(res);
+                  }
+                } else if (res.simulator_ride_booking_id.length > 0) {
+                  for (
+                    let k = 0;
+                    k < res.simulator_ride_booking_id.length;
+                    k++
+                  ) {
+                    this.ticket_array_space.push(
+                      res.simulator_ride_booking_id[k]
+                    );
+                    this.ticket_array_space_data.push(res);
+                  }
+                }
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+          }
+          this.ngxSpinner.hide();
         }
-        this.ngxSpinner.hide();
-      });
-
+      );
   }
 
   getCurrentDateTime() {
@@ -751,113 +809,132 @@ export class CheckoutComponent implements OnInit {
   }
 
   clickSelesai() {
-    // update cart status from created(CR) to complete(CM)
-    this.cartService.filter("cart_status=CR&user="+this.user_id).subscribe(
-      (res) => { this.carts = res },
-      (err) => {},
-      () => {
-
-        let body = {" cart_status": "CM "} 
-        for (let i = 0; i < this.carts.length; i++) {
-          this.cartService.update(body, this.carts[i].id).subscribe(
-            (res)=> { console.log(res) },
-            (err)=> {}
-          );
+    if (this.tiket_click == true && this.resit_click == true) {
+      this.cartService.filter("cart_status=CR&user=" + this.user_id).subscribe(
+        (res) => {
+          this.carts = res;
+        },
+        (err) => {},
+        () => {
+          let body = { " cart_status": "CM " };
+          for (let i = 0; i < this.carts.length; i++) {
+            this.cartService.update(body, this.carts[i].id).subscribe(
+              (res) => {
+                console.log(res);
+              },
+              (err) => {}
+            );
+          }
         }
+      );
 
-      }
-    );
-
-    // quick patch only !
-    // makesure all request is succesful before navigating to homepage
-    setTimeout(() => {
-      this.eventEmitterService.updateCart();
-      this.router.navigate(["/app/home"]);
-    }, 1000);
+      // quick patch only !
+      // makesure all request is succesful before navigating to homepage
+      setTimeout(() => {
+        this.eventEmitterService.updateCart();
+        this.store.dispatch(clearCheckoutState());
+        this.router.navigate(["/app/home"]);
+      }, 1000);
+    } else {
+      this.toastr.error("Sila Cetak Tiket/Resit Untuk Simpanan", "Amaran");
+    }
   }
 
   cetakTiket() {
+    this.tiket_click = true;
 
     for (let i = 0; i < this.ticket_array_show.length; i++) {
-
-      this.showbookingsservice.generateTicket("id=" + this.ticket_array_show[i]).subscribe(
-        (res) => {                                                             
-          let filename: string;
-          filename = "Tiket Tayangan.pdf"                                               
-          FileSaver.saveAs(res, filename)                                      
-        },                                                                     
-        (err) => {                                                             
-          console.log(err)                                                     
-      });                                                                    
-
-    } 
+      this.showbookingsservice
+        .generateTicket("id=" + this.ticket_array_show[i])
+        .subscribe(
+          (res) => {
+            let filename: string;
+            filename = "Tiket Tayangan.pdf";
+            FileSaver.saveAs(res, filename);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    }
 
     for (let i = 0; i < this.ticket_array_space.length; i++) {
-      this.simulatorridebookingService.generateTicket("id=" + this.ticket_array_space[i]).subscribe(
-        (res) => {                                                             
-          let filename: string;
-          filename = "Tiket Kembara.pdf"                                               
-          FileSaver.saveAs(res, filename)                                      
-        },                                                                     
-        (err) => {                                                             
-          console.log(err)                                                     
-      });                                                                    
-    } 
-
-    
+      this.simulatorridebookingService
+        .generateTicket("id=" + this.ticket_array_space[i])
+        .subscribe(
+          (res) => {
+            let filename: string;
+            filename = "Tiket Kembara.pdf";
+            FileSaver.saveAs(res, filename);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    }
   }
 
   cetakTiket2() {
+    this.tiket_click = true;
 
+    let ir = this.invoice_running_no;
+    let rr = this.receipt_running_no;
     this.ngxSpinner.show();
     let booking_data: any;
     let booking_meta_data: any;
     let booking_meta_data_2: any;
 
-      for (let i = 0; i < this.ticket_array_space.length; i++) {
-        let booking_data: any;
-        let booking_meta_data: any;
-        let booking_meta_data_2: any;
+    for (let i = 0; i < this.ticket_array_space.length; i++) {
+      let booking_data: any;
+      let booking_meta_data: any;
+      let booking_meta_data_2: any;
 
-        this.simulatorridebookingService.getOne(this.ticket_array_space[i]).subscribe(
-          (res) => {                                                             
+      this.simulatorridebookingService
+        .getOne(this.ticket_array_space[i])
+        .subscribe(
+          (res) => {
             console.log(res);
             booking_data = res;
-          },                                                                     
-          (err) => {                                                             
-            console.log(err)                                                     
+          },
+          (err) => {
+            console.log(err);
           },
           () => {
-            this.simulatorRideTimesServices.getOne(booking_data.simulator_ride_time_id).subscribe(
-              (res) => {
-                console.log(res);
-                booking_meta_data = res;
-              },
-              (err) => {
-                console.log(err);
-              },
-              () => {
-                this.populateSpaceTicketContent(booking_data, booking_meta_data);
-              }
-            );
-
+            this.simulatorRideTimesServices
+              .getOne(booking_data.simulator_ride_time_id)
+              .subscribe(
+                (res) => {
+                  console.log(res);
+                  booking_meta_data = res;
+                },
+                (err) => {
+                  console.log(err);
+                },
+                () => {
+                  this.populateSpaceTicketContent(
+                    booking_data,
+                    booking_meta_data,
+                    ir,
+                    rr
+                  );
+                }
+              );
           }
-        );                                                                    
-      } 
+        );
+    }
 
-    
     for (let i = 0; i < this.ticket_array_show.length; i++) {
       let booking_data: any;
       let booking_meta_data: any;
       let booking_meta_data_2: any;
 
       this.showbookingService.getOne(this.ticket_array_show[i]).subscribe(
-        (res) => {                                                             
+        (res) => {
           console.log(res);
           booking_data = res;
-        },                                                                     
-        (err) => {                                                             
-          console.log(err)                                                     
+        },
+        (err) => {
+          console.log(err);
         },
         () => {
           this.showtimesService.getOne(booking_data.showtime_id).subscribe(
@@ -872,7 +949,7 @@ export class CheckoutComponent implements OnInit {
               //console.log(booking_data, booking_meta_data);
               //this.generateShowTicket(booking_data, booking_meta_data);
               this.showingService.getOne(booking_data.show_id).subscribe(
-                (res)=> {
+                (res) => {
                   console.log(res);
                   booking_meta_data_2 = res;
                 },
@@ -880,36 +957,40 @@ export class CheckoutComponent implements OnInit {
                   console.log(err);
                 },
                 () => {
-                  this.populateShowTicketContent(booking_data, booking_meta_data, booking_meta_data_2);
+                  this.populateShowTicketContent(
+                    booking_data,
+                    booking_meta_data,
+                    booking_meta_data_2,
+                    ir,
+                    rr
+                  );
                 }
               );
             }
           );
         }
-      );                                                                    
-    } 
-    
-
-   
+      );
+    }
   }
 
   cetakResit() {
+    this.resit_click = true;
+
     let c = this.changed;
     let r = this.received;
     let ir = this.invoice_running_no;
+    let rr = this.receipt_running_no;
     let imgs = data.image_byte;
     let imgs_2 = data.image_byte_2;
 
-
-    let product_list = []
-    let price_list = []
+    let product_list = [];
+    let price_list = [];
 
     for (let i = 0; i < this.ticket_array_show.length; i++) {
       console.log("show booked", this.ticket_array_show);
 
       this.showbookingsservice.getOne(this.ticket_array_show[i]).subscribe(
-        (res) => {                                                             
-
+        (res) => {
           price_list.push(res.total_price);
           this.showingService.filter("id=" + res.show_id).subscribe(
             (res) => {
@@ -920,152 +1001,157 @@ export class CheckoutComponent implements OnInit {
               console.log("err", err);
             }
           );
-          
-        },                                                                     
-        (err) => {                                                             
-          console.log(err)                                                     
-      });                                                                    
-
-    } 
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
 
     for (let i = 0; i < this.ticket_array_space.length; i++) {
       console.log("space booked", this.ticket_array_space);
 
-      this.simulatorridebookingService.getOne(this.ticket_array_space[i]).subscribe(
-        (res) => {                                                             
+      this.simulatorridebookingService
+        .getOne(this.ticket_array_space[i])
+        .subscribe(
+          (res) => {
+            price_list.push(res.total_price);
+            this.simulatorRideService
+              .filter("id=" + res.simulator_ride_time_id)
+              .subscribe(
+                (res) => {
+                  product_list.push(res[0].title);
+                },
 
-          price_list.push(res.total_price);
-          this.simulatorRideService.filter("id=" + res.simulator_ride_time_id).subscribe(
-            (res) => {
-              product_list.push(res[0].title);
-            },
-
-            (err) => {
-              console.log("err", err);
-            }
-          );
-
-
-        },                                                                     
-        (err) => {                                                             
-          console.log(err)                                                     
-      });                                                                    
-    } 
+                (err) => {
+                  console.log("err", err);
+                }
+              );
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    }
 
     let current_date = this.current_date;
 
-    let timeout_delay = (product_list.length > 20) ? 1000 : 5000;
-
+    let timeout_delay = product_list.length > 20 ? 1000 : 5000;
 
     setTimeout(function () {
-      let total = price_list.reduce((a, b) => +a + +b, 0)
-      
+      let total = price_list.reduce((a, b) => +a + +b, 0);
+
       // construct table body
-      let table_body = [["Item","Harga"]]
-      for (let i=0; i < product_list.length; i++) {
+      let table_body = [["Item", "Harga"]];
+      for (let i = 0; i < product_list.length; i++) {
         let temp = [];
         temp.push(product_list[i], price_list[i]);
         table_body.push(temp);
       }
 
       // append total price
-      table_body.push(["Jumlah", total + ".00"])
+      table_body.push(["Jumlah", total + ".00"]);
 
       console.log("tb", table_body);
 
       // pdfmake
       var dd = {
         pageSize: {
-        width: 200,
-        height: 400
+          width: 200,
+          height: 400,
         },
 
         content: [
-          {columns: [
-
           {
-			      image: imgs_2, 			     
-            width: 50,
-			      height: 50,
-		      },
-          {
-            text: ' '
+            columns: [
+              {
+                image: imgs_2,
+                width: 50,
+                height: 50,
+              },
+              {
+                text: " ",
+              },
+              {
+                image: imgs,
+                width: 50,
+                height: 50,
+              },
+            ],
           },
+
           {
-			      image: imgs, 			     
-            width: 50,
-			      height: 50,
-		      }]},
-
-
-          {text: 'Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi\n(MOSTI)', alignment: 'center', style: 'header'},
-          {text: 'RESIT BAYARAN', alignment: 'center', style: 'header'},
-
+            text: "Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi\n(MOSTI)",
+            alignment: "center",
+            style: "header",
+          },
+          { text: "RESIT BAYARAN", alignment: "center", style: "header" },
 
           // sub-header
-          {lineHeight: 2, text: 'Tarikh: ' + new Date().toJSON().slice(0,10).split('-').reverse().join('/'), style: 'sub_header'},
-          {lineHeight: 2, text: 'No. Resit: ' + ir, style: 'sub_header'},
+          {
+            lineHeight: 2,
+            text:
+              "Tarikh: " +
+              new Date().toJSON().slice(0, 10).split("-").reverse().join("/"),
+            style: "sub_header",
+          },
+          { lineHeight: 1, text: "No. Invois: " + ir, style: "sub_header" },
+          { lineHeight: 2, text: "No. Resit: " + rr, style: "sub_header" },
 
           // product-detail
           {
-            style: 'table',
+            style: "table",
             table: {
-            headerRows: 1,
-            widths: '*',
-            body: table_body
+              headerRows: 1,
+              widths: "*",
+              body: table_body,
             },
           },
 
           // page breaker
           //
-          {text: '   ', alignment: 'center', style: 'pagebreaker'},
-          {text: 'Tunai Diterima: RM' + r , style: 'sub_header'},
-          {text: 'Baki: RM' + c, style: 'sub_header'},
+          { text: "   ", alignment: "center", style: "pagebreaker" },
+          { text: "Tunai Diterima: RM" + r, style: "sub_header" },
+          { text: "Baki: RM" + c, style: "sub_header" },
 
           // footer
           //
-          {text: '   ', alignment: 'center', style: 'pagebreaker2'},
-          {text: 'Tel: 603-22734301', style: 'header_no_bold'},
-          {text: 'info@planet.gov.my', style: 'header_no_bold'},
-          {text: 'www.planetariumnegara.gov.my', style: 'header_no_bold'},
+          { text: "   ", alignment: "center", style: "pagebreaker2" },
+          { text: "Tel: 603-22734301", style: "header_no_bold" },
+          { text: "info@planet.gov.my", style: "header_no_bold" },
+          { text: "www.planetariumnegara.gov.my", style: "header_no_bold" },
 
           // page breaker
-          {text: '...', alignment: 'center', style: 'pagebreaker'},
-
-
-
-
-          
+          { text: "...", alignment: "center", style: "pagebreaker" },
         ],
 
         styles: {
-      		qr: {
-      			margin: [0, 30, 0, 30]
-      	  },
+          qr: {
+            margin: [0, 30, 0, 30],
+          },
 
-      		header: {
-      			fontSize: 8,
-      			bold: true,
-      			margin: [0, 20, 0, 5]
-      	  },
+          header: {
+            fontSize: 8,
+            bold: true,
+            margin: [0, 20, 0, 5],
+          },
 
           header_no_bold: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
+            fontSize: 8,
+            margin: [0, 0, 0, 0],
+          },
           sub_header: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
+            fontSize: 8,
+            margin: [0, 0, 0, 0],
+          },
           sub_header_end: {
-      			fontSize: 8,
-      			margin: [0, 200, 0, 0]
-      	  },
+            fontSize: 8,
+            margin: [0, 200, 0, 0],
+          },
           table: {
             fontSize: 8,
             margin: [0, 0, 0, 0],
-            padding: [0, 0, 0, 0]
-
+            padding: [0, 0, 0, 0],
           },
           pagebreaker: {
             fontSize: 5,
@@ -1075,306 +1161,398 @@ export class CheckoutComponent implements OnInit {
             fontSize: 5,
             margin: [0, 10, 0, 0],
           },
-
-
-        }
-
-
+        },
       };
 
-       (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake
-        .createPdf(dd)
-        .download("Resit Bayaran " + current_date + ".pdf");
+      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+      pdfMake.createPdf(dd).download("Resit Bayaran " + current_date + ".pdf");
 
-
-       (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake
-        .createPdf(dd)
-        .print();
-
-
-
-      
+      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+      pdfMake.createPdf(dd).print();
     }, timeout_delay);
-
   }
 
-  populateShowTicketContent(booking_data, booking_meta_data, booking_meta_data_2) {
+  populateShowTicketContent(
+    booking_data,
+    booking_meta_data,
+    booking_meta_data_2,
+    ir,
+    rr
+  ) {
+    console.log("1", booking_data);
+    console.log("2", booking_meta_data);
+    console.log("3", booking_meta_data_2);
+
     let imgs = data.image_byte;
     let imgs_2 = data.image_byte_2;
     //let qr_array = [booking_meta_data_2.id, booking_data.user_id];
     //let qr_array = [booking_meta_data_2.id];
     let qr_array = [booking_data.ticket_number];
     let qr_string = qr_array.join("|");
-    let status_kerakyatan = (booking_data.ticket_type == "CZ") ? "Ya" : "Bukan";
+    let status_kerakyatan = booking_data.ticket_type == "CZ" ? "Ya" : "Bukan";
 
-  
     // push logo into content
-    this.showTicketContent.push({columns: [{image: imgs_2,width: 50,height: 50},{text: ' '},{image: imgs,width: 50,height: 50,}]})
+    this.showTicketContent.push({
+      columns: [
+        { image: imgs_2, width: 50, height: 50 },
+        { text: " " },
+        { image: imgs, width: 50, height: 50 },
+      ],
+    });
 
     // push title & header into content
-    this.showTicketContent.push({text: 'Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi (MOSTI)', alignment: 'center', style: 'header'})
-    this.showTicketContent.push({text: 'TIKET TAYANGAN', alignment: 'center', style: 'header'})
+    this.showTicketContent.push({
+      text: "Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi (MOSTI)",
+      alignment: "center",
+      style: "header",
+    });
+    this.showTicketContent.push({
+      text: "TIKET TAYANGAN",
+      alignment: "center",
+      style: "header",
+    });
 
-    this.showTicketContent.push({text: ' ', style: 'sub_header'})
+    this.showTicketContent.push({ text: " ", style: "sub_header" });
 
     // push ticket details
-    this.showTicketContent.push({text: 'Tajuk Tayangan: ' + booking_meta_data_2.title_en , style: 'sub_header'})
-    this.showTicketContent.push({text: 'Tiket Kategori: ' + this.enumArray[booking_data.ticket_category] , style: 'sub_header'})
-    this.showTicketContent.push({text: 'Tarikh Tayangan: ' + new Date(booking_meta_data.show_date).toJSON().slice(0,10).split('-').reverse().join('/'), style: 'sub_header'})
-    this.showTicketContent.push({text: 'Masa Tayangan: ' + booking_meta_data.show_time , style: 'sub_header'})
-    this.showTicketContent.push({text: 'Tempat: Teater Angkasa' , style: 'sub_header'})
-    this.showTicketContent.push({text: 'No. Tempat Duduk: ' + booking_data.ticket_seat , style: 'sub_header'})
-    this.showTicketContent.push({text: 'No. Tiket: ' + booking_data.ticket_number , style: 'sub_header'})
-    //this.showTicketContent.push({text: 'Warganegara: ' + status_kerakyatan , style: 'sub_header'})
-    this.showTicketContent.push({text: 'Harga: RM' + booking_data.price , style: 'sub_header'})
+    this.showTicketContent.push({
+      text: "Tajuk Tayangan: " + booking_meta_data_2.title_en,
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "Tiket Kategori: " + this.enumArray[booking_data.ticket_category],
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text:
+        "Tarikh Tayangan: " +
+        new Date(booking_meta_data.show_date)
+          .toJSON()
+          .slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("/"),
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "Masa Tayangan: " + booking_meta_data.show_time,
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "Tempat: Teater Angkasa",
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "No. Tempat Duduk: " + booking_data.ticket_seat,
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "No. Tiket: " + booking_data.ticket_number,
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "Harga: RM" + booking_data.price,
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "No Invois: " + ir,
+      style: "sub_header",
+    });
+    this.showTicketContent.push({
+      text: "No Receipt: " + rr,
+      style: "sub_header",
+    });
 
-    this.showTicketContent.push({text: ' ', style: 'sub_header'})
-    
     // footer
-    this.showTicketContent.push({ qr: qr_string, fit: '65', alignment: 'center', style: 'qr'  }),
+    this.showTicketContent.push({
+      qr: qr_string,
+      fit: "65",
+      alignment: "center",
+      style: "qr",
+    }),
+      this.showTicketContent.push({ text: " ", style: "sub_header" });
+    this.showTicketContent.push({
+      text: "Tel: 603-22734301",
+      style: "header_no_bold",
+    });
+    this.showTicketContent.push({
+      text: "info@planet.gov.my",
+      style: "header_no_bold",
+    });
+    this.showTicketContent.push({
+      text: "www.planetariumnegara.gov.my",
+      style: "header_no_bold",
+    });
 
-    this.showTicketContent.push({text: ' ', style: 'sub_header'})
-    this.showTicketContent.push({text: 'Tel: 603-22734301', style: 'header_no_bold'})
-    this.showTicketContent.push({text: 'info@planet.gov.my', style: 'header_no_bold'})
-    this.showTicketContent.push({text: 'www.planetariumnegara.gov.my', style: 'header_no_bold'})
-
-    this.showTicketContent.push({text: ' ', style: 'sub_header'})
+    this.showTicketContent.push({ text: " ", style: "sub_header" });
+    console.log("content length", this.showTicketContent.length);
     //this.showTicketContent.push({image: this.textToBase64Barcode(booking_data.id), width: 120, height: 30 }),
     console.log(this.ticket_array_show.length);
 
-
-    if (this.showTicketContent.length == 19*this.ticket_array_show.length) {
+    if (this.showTicketContent.length == 20 * this.ticket_array_show.length) {
       this.generateShowTicket();
     }
-
   }
 
-
-  populateSpaceTicketContent(booking_data, meta_data) {
+  populateSpaceTicketContent(booking_data, meta_data, ir, rr) {
     this.bookingDatas.push(booking_data);
     console.log("tiket data", booking_data);
 
     let imgs = data.image_byte;
     let imgs_2 = data.image_byte_2;
-    let status_kerakyatan = (booking_data.ticket_type == "CZ") ? "Ya" : "Bukan";
+    let status_kerakyatan = booking_data.ticket_type == "CZ" ? "Ya" : "Bukan";
 
     // predefined  url -> change before push to live or staging env
-    let qr_string = "https://api.planetariumnegara.gov.my/v1/simulator-ride-tickets/display_ticket?id=" + booking_data.id;  
+    let qr_string =
+      "https://api.planetariumnegara.gov.my/v1/simulator-ride-tickets/display_ticket?id=" +
+      booking_data.id;
     // push logo into content
-    this.spaceTicketContent.push({columns: [{image: imgs_2,width: 50,height: 50},{text: ' '},{image: imgs,width: 50,height: 50,}]})
+    this.spaceTicketContent.push({
+      columns: [
+        { image: imgs_2, width: 50, height: 50 },
+        { text: " " },
+        { image: imgs, width: 50, height: 50 },
+      ],
+    });
 
     // push title & header into content
-    this.spaceTicketContent.push({text: 'Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi (MOSTI)', alignment: 'center', style: 'header'})
-    this.spaceTicketContent.push({text: 'TIKET KEMBARA', alignment: 'center', style: 'header'})
+    this.spaceTicketContent.push({
+      text: "Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi (MOSTI)",
+      alignment: "center",
+      style: "header",
+    });
+    this.spaceTicketContent.push({
+      text: "TIKET KEMBARA",
+      alignment: "center",
+      style: "header",
+    });
 
     // push ticket details
-    this.spaceTicketContent.push({text: 'Tarikh: ' + new Date(booking_data.booking_date).toJSON().slice(0,10).split('-').reverse().join('/'), style: 'sub_header'})
-    this.spaceTicketContent.push({text: 'Masa: ' + meta_data.time , style: 'sub_header'})
-    this.spaceTicketContent.push({text: 'No. Tempat Duduk: S1/S2 ' , style: 'sub_header'})
-    this.spaceTicketContent.push({text: 'No. Tiket: ' + booking_data.ticket_number , style: 'sub_header'})
-    this.spaceTicketContent.push({text: 'Warganegara: ' + status_kerakyatan , style: 'sub_header'})
-    this.spaceTicketContent.push({text: 'Jumlah: RM' + booking_data.total_price , style: 'sub_header'})
-    this.spaceTicketContent.push({text: ' ', style: 'sub_header'})
-    
+    this.spaceTicketContent.push({
+      text:
+        "Tarikh: " +
+        new Date(booking_data.booking_date)
+          .toJSON()
+          .slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("/"),
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "Masa: " + meta_data.time,
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "No. Tempat Duduk: S1/S2 ",
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "No. Tiket: " + booking_data.ticket_number,
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "Warganegara: " + status_kerakyatan,
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "Jumlah: RM" + booking_data.total_price,
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "No Invois: " + ir,
+      style: "sub_header",
+    });
+    this.spaceTicketContent.push({
+      text: "No Receipt: " + rr,
+      style: "sub_header",
+    });
+
     // footer
-    this.spaceTicketContent.push({qr: qr_string, fit: '100', alignment: 'center', style: 'qr'  }),
-    this.spaceTicketContent.push({text: ' ', style: 'sub_header'})
-    this.spaceTicketContent.push({text: ' ', style: 'sub_header'})
-    this.spaceTicketContent.push({text: ' ', style: 'sub_header'})
-    this.spaceTicketContent.push({text: 'Tel: 603-22734301', style: 'header_no_bold'})
-    this.spaceTicketContent.push({text: 'info@planet.gov.my', style: 'header_no_bold'})
-    this.spaceTicketContent.push({text: 'www.planetariumnegara.gov.my', style: 'header_no_bold'})
+    this.spaceTicketContent.push({
+      qr: qr_string,
+      fit: "100",
+      alignment: "center",
+      style: "qr",
+    }),
+      this.spaceTicketContent.push({ text: " ", style: "sub_header" });
+    this.spaceTicketContent.push({ text: " ", style: "sub_header" });
+    this.spaceTicketContent.push({ text: " ", style: "sub_header" });
+    this.spaceTicketContent.push({
+      text: "Tel: 603-22734301",
+      style: "header_no_bold",
+    });
+    this.spaceTicketContent.push({
+      text: "info@planet.gov.my",
+      style: "header_no_bold",
+    });
+    this.spaceTicketContent.push({
+      text: "www.planetariumnegara.gov.my",
+      style: "header_no_bold",
+    });
 
-    if (this.spaceTicketContent.length == 17*this.ticket_array_space.length) {
+    if (this.spaceTicketContent.length == 18 * this.ticket_array_space.length) {
       this.generateSpaceTicket();
-      let spaceTicketChunks = this.sliceIntoChunks(this.spaceTicketContent, 17);
+      let spaceTicketChunks = this.sliceIntoChunks(this.spaceTicketContent, 18);
 
-        for (let i = 0; i<spaceTicketChunks.length; i++) {
-          spaceTicketChunks[i].shift(); //logo
-          //spaceTicketChunks[i].shift(); //logo 2
+      for (let i = 0; i < spaceTicketChunks.length; i++) {
+        spaceTicketChunks[i].shift(); //logo
+        //spaceTicketChunks[i].shift(); //logo 2
 
-          let temp = [];
-          temp.push({columns: [{image: imgs_2,width: 50,height: 50},{text: ' '},{image: imgs,width: 50,height: 50,}]})
-          temp = temp.concat(spaceTicketChunks[i]);
+        let temp = [];
+        temp.push({
+          columns: [
+            { image: imgs_2, width: 50, height: 50 },
+            { text: " " },
+            { image: imgs, width: 50, height: 50 },
+          ],
+        });
+        temp = temp.concat(spaceTicketChunks[i]);
 
-          let booking_data = this.bookingDatas[i];
-          var dds = {
-            pageSize: {
+        let booking_data = this.bookingDatas[i];
+        var dds = {
+          pageSize: {
             width: 200,
-            height: 400
+            height: 400,
+          },
+
+          content: temp,
+          styles: {
+            qr: {
+              margin: [0, 5, 0, 0],
             },
 
-          content: temp
-            , 
-            styles: {
-              qr: {
-          			margin: [0, 5, 0, 0]
-          	  },
+            header: {
+              fontSize: 8,
+              bold: true,
+              margin: [0, 0, 0, 0],
+            },
 
-          		header: {
-          			fontSize: 8,
-          			bold: true,
-          			margin: [0, 0, 0, 0]
-          	  },
+            header_no_bold: {
+              fontSize: 8,
+              margin: [0, 0, 0, 0],
+            },
+            sub_header: {
+              fontSize: 8,
+              margin: [0, 0, 0, 0],
+            },
+            sub_header_end: {
+              fontSize: 8,
+              margin: [0, 0, 0, 0],
+            },
+            table: {
+              fontSize: 8,
+              margin: [0, 0, 0, 0],
+              padding: [0, 0, 0, 0],
+            },
+            pagebreaker: {
+              fontSize: 5,
+              margin: [0, 0, 0, 0],
+            },
+          },
+        };
 
-              header_no_bold: {
-          			fontSize: 8,
-          			margin: [0, 0, 0, 0]
-          	  },
-              sub_header: {
-          			fontSize: 8,
-          			margin: [0, 0, 0, 0]
-          	  },
-              sub_header_end: {
-          			fontSize: 8,
-          			margin: [0, 0, 0, 0]
-          	  },
-              table: {
-                fontSize: 8,
-                margin: [0, 0, 0, 0],
-                padding: [0, 0, 0, 0]
-
-              },
-              pagebreaker: {
-                fontSize: 5,
-                margin: [0, 0, 0, 0],
-              },
-
-            }
-
-
+        pdfMake.createPdf(dds).getDataUrl((dataUrl) => {
+          let body = {
+            ticket_booking_id: booking_data.id,
+            ticket_link: dataUrl,
           };
 
+          console.log("submit ", body);
 
-          pdfMake
-            .createPdf(dds)
-            .getDataUrl((dataUrl) => {
-
-              let body = {
-                "ticket_booking_id": booking_data.id,
-                "ticket_link": dataUrl
-              }
-
-              console.log("submit ", body)
-
-              this.simulatorridebookingService.submit_ticket(body).subscribe(
-                (res) => {
-                  console.log(res);
-                },
-                (err) => {
-                  console.log(err);
-                }
-              );
-
-            });
-
-
-        }
-
-
-      
-
-
+          this.simulatorridebookingService.submit_ticket(body).subscribe(
+            (res) => {
+              console.log(res);
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        });
+      }
     }
-
-
-
   }
-
 
   generateSpaceTicket() {
     let ticketContent = this.spaceTicketContent;
 
     var dd = {
-        pageSize: {
+      pageSize: {
         width: 200,
-        height: 400
+        height: 400,
+      },
+
+      content: ticketContent,
+      styles: {
+        qr: {
+          margin: [0, 5, 0, 0],
         },
 
-      content: ticketContent 
-        , 
-        styles: {
-          qr: {
-      			margin: [0, 5, 0, 0]
-      	  },
+        header: {
+          fontSize: 8,
+          bold: true,
+          margin: [0, 0, 0, 0],
+        },
 
-      		header: {
-      			fontSize: 8,
-      			bold: true,
-      			margin: [0, 0, 0, 0]
-      	  },
+        header_no_bold: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        sub_header: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        sub_header_end: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        table: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+          padding: [0, 0, 0, 0],
+        },
+        pagebreaker: {
+          fontSize: 5,
+          margin: [0, 0, 0, 0],
+        },
+      },
+    };
 
-          header_no_bold: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          sub_header: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          sub_header_end: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          table: {
-            fontSize: 8,
-            margin: [0, 0, 0, 0],
-            padding: [0, 0, 0, 0]
+    // initiate printing job
+    pdfMake
+      .createPdf(dd)
+      .download("Tiket Kembara " + this.current_date + ".pdf");
 
-          },
-          pagebreaker: {
-            fontSize: 5,
-            margin: [0, 0, 0, 0],
-          },
+    pdfMake.createPdf(dd).print();
 
-        }
+    //  (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+    // pdfMake
+    //   .createPdf(dd)
+    //   .getDataUrl((dataUrl) => {
 
+    //     let body = {
+    //       "ticket_booking_id": booking_data.id,
+    //       "ticket_link": dataUrl
+    //     }
 
-      };
+    //     console.log(body)
 
-      // initiate printing job
-      pdfMake
-        .createPdf(dd)
-        .download("Tiket Kembara " + this.current_date + ".pdf");
+    //     this.simulatorridebookingService.submit_ticket(body).subscribe(
+    //       (res) => {
+    //         console.log(res);
+    //       },
+    //       (err) => {
+    //         console.log(err);
+    //       }
+    //     );
 
-
-      pdfMake
-        .createPdf(dd)
-        .print();
-
-
-
-     //  (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-     // pdfMake
-     //   .createPdf(dd)
-     //   .getDataUrl((dataUrl) => {
-
-     //     let body = {
-     //       "ticket_booking_id": booking_data.id,
-     //       "ticket_link": dataUrl
-     //     }
-
-     //     console.log(body)
-
-     //     this.simulatorridebookingService.submit_ticket(body).subscribe(
-     //       (res) => {
-     //         console.log(res);
-     //       },
-     //       (err) => {
-     //         console.log(err);
-     //       }
-     //     );
-
-     //   });
-
+    //   });
 
     //TODO
     //get the pdf array
-    //split into length 
+    //split into length
     //for each blocks -> create pdf -> get data url -> send to api -> store in db
-    
+
     //console.log(this.spaceTicketContent);
     //let spaceTicketChunks = this.sliceIntoChunks(this.spaceTicketContent, 16);
 
@@ -1388,7 +1566,7 @@ export class CheckoutComponent implements OnInit {
     //    },
 
     //  content: spaceTicketChunks[i]
-    //    , 
+    //    ,
     //    styles: {
     //      qr: {
     //  			margin: [0, 5, 0, 0]
@@ -1425,9 +1603,7 @@ export class CheckoutComponent implements OnInit {
 
     //    }
 
-
     //  };
-
 
     //  pdfMake
     //    .createPdf(dds)
@@ -1451,223 +1627,240 @@ export class CheckoutComponent implements OnInit {
 
     //    });
 
-
     //}
 
     this.ngxSpinner.hide();
-
-          
   }
 
   sliceIntoChunks(arr, chunkSize) {
     const res = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
-        const chunk = arr.slice(i, i + chunkSize);
-        res.push(chunk);
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
     }
     return res;
   }
-
 
   generateShowTicket() {
     let ticketContent = this.showTicketContent;
 
     var dd = {
-        pageSize: {
+      pageSize: {
         width: 200,
-        height: 400
+        height: 400,
+      },
+
+      content: ticketContent,
+      styles: {
+        qr: {
+          margin: [0, 5, 0, 5],
         },
 
-      content: ticketContent 
-        , 
-        styles: {
-          qr: {
-      			margin: [0, 5, 0, 5]
-      	  },
+        header: {
+          fontSize: 8,
+          bold: true,
+          margin: [0, 0, 0, 0],
+        },
 
-      		header: {
-      			fontSize: 8,
-      			bold: true,
-      			margin: [0, 0, 0, 0]
-      	  },
+        header_no_bold: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        sub_header: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        sub_header_end: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        table: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+          padding: [0, 0, 0, 0],
+        },
+        pagebreaker: {
+          fontSize: 5,
+          margin: [0, 0, 0, 0],
+        },
+      },
+    };
 
-          header_no_bold: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          sub_header: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          sub_header_end: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          table: {
-            fontSize: 8,
-            margin: [0, 0, 0, 0],
-            padding: [0, 0, 0, 0]
+    // initiate printing job
+    (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+    pdfMake
+      .createPdf(dd)
+      .download("Tiket Tayangan " + this.current_date + ".pdf");
 
-          },
-          pagebreaker: {
-            fontSize: 5,
-            margin: [0, 0, 0, 0],
-          },
+    (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.createPdf(dd).print();
 
-        }
-
-
-      };
-
-      // initiate printing job
-     (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake
-        .createPdf(dd)
-        .download("Tiket Tayangan " + this.current_date + ".pdf");
-
-
-       (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake
-        .createPdf(dd)
-        .print();
-
-      this.ngxSpinner.hide();
+    this.ngxSpinner.hide();
   }
 
-
-  
-  generateShowTicketDeprecated(booking_data, booking_meta_data, booking_meta_data_2) {
-    // generate qr array 
-    let qr_array = ["PLN"+new Date().getFullYear(),booking_data.ticket_number,booking_meta_data.id, booking_meta_data_2.id, booking_data.user_id];
+  generateShowTicketDeprecated(
+    booking_data,
+    booking_meta_data,
+    booking_meta_data_2
+  ) {
+    // generate qr array
+    let qr_array = [
+      "PLN" + new Date().getFullYear(),
+      booking_data.ticket_number,
+      booking_meta_data.id,
+      booking_meta_data_2.id,
+      booking_data.user_id,
+    ];
     console.log("qr array", qr_array);
 
     let qr_string = qr_array.join("|");
-    console.log("qr string", qr_string)
+    console.log("qr string", qr_string);
 
-    
     // generate pdf
     let imgs = data.image_byte;
     let imgs_2 = data.image_byte_2;
 
     var dd = {
-        pageSize: {
+      pageSize: {
         width: 200,
-        height: 400
+        height: 400,
+      },
+
+      content: [
+        {
+          columns: [
+            {
+              image: imgs_2,
+              width: 50,
+              height: 50,
+            },
+            {
+              text: " ",
+            },
+            {
+              image: imgs,
+              width: 50,
+              height: 50,
+            },
+          ],
+        },
+        {
+          text: "Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi\n(MOSTI)",
+          alignment: "center",
+          style: "header",
         },
 
-        content: [
+        // title
+        { text: "TIKET TAYANGAN", alignment: "center", style: "header" },
 
-          {columns: [
+        // detail ticket
+        //
+        {
+          text: "Tajuk Tayangan: " + booking_meta_data_2.title_en,
+          style: "sub_header",
+        },
+        {
+          text:
+            "Tiket Kategori: " + this.enumArray[booking_data.ticket_category],
+          style: "sub_header",
+        },
+        {
+          text:
+            "Tarikh Tayangan: " +
+            new Date(booking_meta_data.show_date)
+              .toJSON()
+              .slice(0, 10)
+              .split("-")
+              .reverse()
+              .join("/"),
+          style: "sub_header",
+        },
+        {
+          text: "Masa Tayangan: " + booking_meta_data.show_time,
+          style: "sub_header",
+        },
 
-          {
-			      image: imgs_2, 			     
-            width: 50,
-			      height: 50,
-		      },
-          {
-            text: ' '
-          },
-          {
-			      image: imgs, 			     
-            width: 50,
-			      height: 50,
-		      }]},
-          {text: 'Planetarium Negara \nKementerian Sains, Teknologi dan Inovasi\n(MOSTI)', alignment: 'center', style: 'header'},
-          
-          // title
-          {text: 'TIKET TAYANGAN', alignment: 'center', style: 'header'},
+        { text: "Tempat: Teater Angkasa", style: "sub_header" },
+        {
+          text: "No. Tempat Duduk: " + booking_data.ticket_seat,
+          style: "sub_header",
+        },
+        {
+          text: "No. Tiket: " + booking_data.ticket_number,
+          style: "sub_header",
+        },
+        { text: "Harga: RM" + booking_data.price, style: "sub_header" },
 
-          // detail ticket
-          //
-          {text: 'Tajuk Tayangan: ' + booking_meta_data_2.title_en , style: 'sub_header'},
-          {text: 'Tiket Kategori: ' + this.enumArray[booking_data.ticket_category] , style: 'sub_header'},
-          {text: 'Tarikh Tayangan: ' + new Date(booking_meta_data.show_date).toJSON().slice(0,10).split('-').reverse().join('/'), style: 'sub_header'},
-          {text: 'Masa Tayangan: ' + booking_meta_data.show_time , style: 'sub_header'},
+        // footer
+        { qr: qr_string, fit: "120", alignment: "center", style: "qr" },
+        { text: "Tel: 603-22734301", style: "header_no_bold" },
+        { text: "info@planet.gov.my", style: "header_no_bold" },
+        { text: "www.planetariumnegara.gov.my", style: "header_no_bold" },
 
-          {text: 'Tempat: Teater Angkasa' , style: 'sub_header'},
-          {text: 'No. Tempat Duduk: ' + booking_data.ticket_seat , style: 'sub_header'},
-          {text: 'No. Tiket: ' + booking_data.ticket_number , style: 'sub_header'},
-          {text: 'Harga: RM' + booking_data.price , style: 'sub_header'},
+        // page breaker
+        { text: "...", alignment: "center", style: "pagebreaker" },
+      ],
 
-          // footer
-          { qr: qr_string, fit: '120', alignment: 'center', style: 'qr'  },
-          {text: 'Tel: 603-22734301', style: 'header_no_bold'},
-          {text: 'info@planet.gov.my', style: 'header_no_bold'},
-          {text: 'www.planetariumnegara.gov.my', style: 'header_no_bold'},
+      styles: {
+        qr: {
+          margin: [0, 2, 0, 2],
+        },
 
+        header: {
+          fontSize: 8,
+          bold: true,
+          margin: [0, 2, 0, 2],
+        },
 
-          // page breaker
-          {text: '...', alignment: 'center', style: 'pagebreaker'},
+        header_no_bold: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        sub_header: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+        },
+        sub_header_end: {
+          fontSize: 8,
+          margin: [0, 200, 0, 0],
+        },
+        table: {
+          fontSize: 8,
+          margin: [0, 0, 0, 0],
+          padding: [0, 0, 0, 0],
+        },
+        pagebreaker: {
+          fontSize: 5,
+          margin: [0, 50, 0, 0],
+        },
+      },
+    };
 
-        ],
-
-        styles: {
-          qr: {
-      			margin: [0, 2, 0, 2]
-      	  },
-
-      		header: {
-      			fontSize: 8,
-      			bold: true,
-      			margin: [0, 2, 0, 2]
-      	  },
-
-          header_no_bold: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          sub_header: {
-      			fontSize: 8,
-      			margin: [0, 0, 0, 0]
-      	  },
-          sub_header_end: {
-      			fontSize: 8,
-      			margin: [0, 200, 0, 0]
-      	  },
-          table: {
-            fontSize: 8,
-            margin: [0, 0, 0, 0],
-            padding: [0, 0, 0, 0]
-
-          },
-          pagebreaker: {
-            fontSize: 5,
-            margin: [0, 50, 0, 0],
-          },
-
-        }
-
-
-      };
-
-      // initiate printing job
-       (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake
-        .createPdf(dd)
-        .print();
-
-
+    // initiate printing job
+    (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.createPdf(dd).print();
   }
 
   // receipt data already created in BE on previous step
   // deprecated
   cetakResitOld() {
-    this.invoicereceiptService.generateReceipt("id=" + this.receipt_id).subscribe(
-      (res) => {
-        let filename: string;
-        filename = "resit.pdf"
-        FileSaver.saveAs(res, filename)
-      },
-      (err) => {
-        console.log(err);
-      });
-
+    this.invoicereceiptService
+      .generateReceipt("id=" + this.receipt_id)
+      .subscribe(
+        (res) => {
+          let filename: string;
+          filename = "resit.pdf";
+          FileSaver.saveAs(res, filename);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
-  textToBase64Barcode(text){
+  textToBase64Barcode(text) {
     console.log("called");
     var canvas = document.createElement("canvas");
-    JsBarcode(canvas, text, {format: "CODE39"});
+    JsBarcode(canvas, text, { format: "CODE39" });
     return canvas.toDataURL("image/png");
   }
-
 }

@@ -8,6 +8,7 @@ import { ToastrService } from "ngx-toastr";
 import { map, tap, catchError } from "rxjs/operators";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import * as FileSaver from 'file-saver';
 
 
 @Component({
@@ -19,8 +20,7 @@ export class ReportingPrintComponent implements OnInit {
 
   // class variable 
   selectedDate:any;
-  user_id: string;
-  full_name: string;
+  user_id: string; full_name: string;
   temp: DailyReports;
   dailyReports: DailyReports[] = [];
 
@@ -109,7 +109,19 @@ export class ReportingPrintComponent implements OnInit {
   //   );
   //   
   // }
+  cetakPdf(data) {
+    this.reportingService.generatePosReport(data.id).subscribe(
+        (res) => {                                                             
+          let filename: string;
+          filename = "Laporan Harian Pos.pdf"                                               
+          FileSaver.saveAs(res, filename)                                      
+        },                                                                     
+        (err) => {                                                             
+          console.log(err)                                                     
+      }); 
+  }
 
+  //Deprecated
   printPdf(temp) {
     console.log("TEMP", temp);
     // setup pdf page

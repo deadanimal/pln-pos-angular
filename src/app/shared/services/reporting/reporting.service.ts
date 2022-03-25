@@ -14,6 +14,8 @@ import { DailyReports } from "src/app/shared/services/reporting/reporting.model"
 export class ReportingService {
   // URL
   public url: string = environment.baseUrl + "v1/pos-daily-reports/";
+  public url2: string = environment.baseUrl + "v1/daily-operating-reports/";
+  
 
   // data
   cashTransactions: DailyReports[] = [];
@@ -74,5 +76,15 @@ export class ReportingService {
       })
     );
   }
+
+  generatePosReport(id): Observable<any> {
+    var HTTPOptions = {
+      'responseType': 'blob' as 'json'
+    }
+    let urlGeneratePdf = this.url2 + "generate_pos_report?id=" + id;
+    return this.http.get<any>(urlGeneratePdf, HTTPOptions);
+  }
+
+
 
 }

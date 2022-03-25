@@ -25,18 +25,22 @@ import { InvoiceReceiptsService } from "src/app/shared/services/invoice-receipts
 import { InvoiceReceipt } from "src/app/shared/services/invoice-receipts/invoice-receipts.model";
 import { ToastrService } from "ngx-toastr";
 
+//State management
+import { Store } from "@ngrx/store";
+import { getTroliState } from "src/app/troli-state-store/selector";
+
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  selector: "app-cart",
+  templateUrl: "./cart.component.html",
+  styleUrls: ["./cart.component.scss"],
 })
 export class CartComponent implements OnInit {
   // CSS class
   fontSize: string;
   themeColor: string;
-  
+
   // Data
-  message: number; 
+  message: number;
   user_id: string = "";
   carts = [];
   summarycarts = [];
@@ -57,7 +61,7 @@ export class CartComponent implements OnInit {
   total_voucher: number = 0;
   total_price_after_voucher: number = 0;
 
-   // Dropdown
+  // Dropdown
   simulatorridedays = [
     {
       value: "MON",
@@ -168,36 +172,44 @@ export class CartComponent implements OnInit {
     private facilitiesService: FacilitiesService,
     private facilityBookingsService: FacilityBookingsService,
     private invoicereceiptService: InvoiceReceiptsService,
-    public toastr: ToastrService,
-
+    private store: Store,
+    public toastr: ToastrService
   ) {
     this.getCart();
     this.getVoucher();
 
     this.done_voucher_verify = false;
+
+    let checkout_state_selector = this.store.select(getTroliState);
+
+    checkout_state_selector.subscribe((res) => {
+      if (res.length > 0) {
+        console.log("troli event");
+        this.getCart();
+      } else {
+      }
+    });
+
   }
 
   getVoucher() {
-    this.voucherService
-      .get()
-      .subscribe(
-        (res) => {
-          // console.log("res", res);
-          this.vouchers = res;
-          console.log("vouchers", this.vouchers);
-        },
-        (err) => {
-          console.error("err", err);
-        }
-      );
+    this.voucherService.get().subscribe(
+      (res) => {
+        // console.log("res", res);
+        this.vouchers = res;
+        console.log("vouchers", this.vouchers);
+      },
+      (err) => {
+        console.error("err", err);
+      }
+    );
   }
 
-   // to get cart detail
+  // to get cart detail
   getCart() {
     // reset voucher if previous transaction use voucher
     this.done_voucher_verify = false;
     this.voucher_code = "";
-
 
     this.cartService
       .extended(
@@ -208,12 +220,12 @@ export class CartComponent implements OnInit {
           this.w3cService.changeAddToCartCount(res.length);
           this.carts = res;
           this.getBookingDetail();
-          this.calculateTotalPriceAllCart() 
-
+          this.calculateTotalPriceAllCart();
         },
         (err) => {
           console.error("err", err);
-        });
+        }
+      );
   }
 
   getBookingDetail() {
@@ -239,7 +251,6 @@ export class CartComponent implements OnInit {
           this.summaryFacility(this.carts[i].facility_booking_id)
         );
       }
-
 
       // to calculate total price of all carts
       if (i === this.carts.length - 1) {
@@ -316,11 +327,11 @@ export class CartComponent implements OnInit {
 
   summaryFacility(facility_booking_id) {
     // make request by id to get facility details to display on cart
-    this.facilitiesService.filter("id" + facility_booking_id[0].id).subscribe(
-      (res) => {
+    this.facilitiesService
+      .filter("id" + facility_booking_id[0].id)
+      .subscribe((res) => {
         this.facility = res;
-      }
-    );
+      });
 
     let array = [];
     for (let i = 0; i < facility_booking_id.length; i++) {
@@ -359,10 +370,13 @@ export class CartComponent implements OnInit {
       }
     }
 
-    // push totalprice to event bus 
+    if (localStorage.getItem("ticketFree") == "true") {
+      this.totalprice = 0;
+    }
+
+    // push totalprice to event bus
     // to be used by payment component
     this.data.changeMessage(this.totalprice);
-
   }
 
   // to delete many2manyfield and other table that linked with many2manyfield
@@ -402,7 +416,7 @@ export class CartComponent implements OnInit {
                   this.summarycarts = [];
                   this.totalprice = 0;
                   this.getCart();
-                  this.calculateTotalPriceAllCart() 
+                  this.calculateTotalPriceAllCart();
                 }
               }
             );
@@ -421,11 +435,10 @@ export class CartComponent implements OnInit {
                     this.summarycarts = [];
                     this.totalprice = 0;
                     this.getCart();
-                    this.calculateTotalPriceAllCart() 
+                    this.calculateTotalPriceAllCart();
                   }
                 }
               );
-
           } else if (child_type == "facilities") {
             // this.facilityBookingsService
             //   .delete(child_array[i].id)
@@ -441,23 +454,21 @@ export class CartComponent implements OnInit {
             //         this.summarycarts = [];
             //         this.totalprice = 0;
             //         this.getCart();
-            //         this.calculateTotalPriceAllCart() 
+            //         this.calculateTotalPriceAllCart()
             //       }
             //     }
             //   );
-            
+
             if (i === child_array.length - 1) {
-                this.summarycarts = [];
-                this.totalprice = 0;
-                this.getCart();
-                this.calculateTotalPriceAllCart() 
-              }
+              this.summarycarts = [];
+              this.totalprice = 0;
+              this.getCart();
+              this.calculateTotalPriceAllCart();
+            }
           }
         }
       }
     );
-
-
   }
 
   checkVoucherCode() {
@@ -477,7 +488,7 @@ export class CartComponent implements OnInit {
           // to update total price after voucher inserted
           this.totalprice = this.totalprice - this.total_voucher;
           this.total_price_after_voucher = this.totalprice;
-          
+
           // update total price value at event bus
           // to be used by payment component
           this.data.changeMessage(this.totalprice);
@@ -487,16 +498,11 @@ export class CartComponent implements OnInit {
         }
       } else {
         if (this.voucher_code.length == 0) {
-
         } else {
-          this.toastr.error(
-            this.translate.instant("Kod tidak sah"),
-            "Ralat"
-          );
+          this.toastr.error(this.translate.instant("Kod tidak sah"), "Ralat");
 
           this.total_price_after_voucher = this.totalprice;
         }
-        
       }
     }
   }
@@ -531,17 +537,15 @@ export class CartComponent implements OnInit {
                     console.log("cart id push ka tida", cart_id);
                     if (cart_id.length > 0) {
                       let obj = {
-                        type: 'T',
+                        type: "T",
                         invoice_created_datetime: this.getCurrentDateTime(),
                         user: this.authService.decodedToken().user_id,
                         cart_id: cart_id,
-                        total_price_before_voucher: this.total_price_before_voucher.toFixed(
-                          2
-                        ),
+                        total_price_before_voucher:
+                          this.total_price_before_voucher.toFixed(2),
                         total_voucher: this.total_voucher.toFixed(2),
-                        total_price_after_voucher: this.total_price_after_voucher.toFixed(
-                          2
-                        ),
+                        total_price_after_voucher:
+                          this.total_price_after_voucher.toFixed(2),
                         voucher_id: this.voucher_id,
                       };
 
@@ -600,13 +604,11 @@ export class CartComponent implements OnInit {
                 invoice_created_datetime: this.getCurrentDateTime(),
                 user: this.authService.decodedToken().user_id,
                 cart_id: cart_id,
-                total_price_before_voucher: this.total_price_before_voucher.toFixed(
-                  2
-                ),
+                total_price_before_voucher:
+                  this.total_price_before_voucher.toFixed(2),
                 total_voucher: this.total_voucher,
-                total_price_after_voucher: this.total_price_after_voucher.toFixed(
-                  2
-                ),
+                total_price_after_voucher:
+                  this.total_price_after_voucher.toFixed(2),
                 voucher_id: this.voucher_id,
               };
               this.invoicereceiptService.post(obj).subscribe(
@@ -664,13 +666,14 @@ export class CartComponent implements OnInit {
     );
 
     // subscribe and call this method if event get called
-    if (this.eventEmitterService.subsVar==undefined) {
-      this.eventEmitterService.subsVar = this.eventEmitterService.invokeCartComponentFunction.subscribe(() => {
-        this.getCart(); 
-      });
+    if (this.eventEmitterService.subsVar == undefined) {
+      this.eventEmitterService.subsVar =
+        this.eventEmitterService.invokeCartComponentFunction.subscribe(() => {
+          this.getCart();
+        });
     }
 
-    this.data.currentMessage.subscribe(message => this.message = message)
+    this.data.currentMessage.subscribe((message) => (this.message = message));
   }
 
   getCurrentDateTime() {
@@ -726,4 +729,5 @@ export class CartComponent implements OnInit {
     if (result && lang == "en") return result.display_name_en;
     if (result && lang == "ms") return result.display_name_ms;
   }
+
 }

@@ -125,6 +125,9 @@
                 <a *ngIf="show.status != 'SB05'" class="btn btn-sm btn-info text-white" disabled="true">Bayaran Balik</a>
                 &nbsp;
                 <a class="btn btn-sm btn-info text-white" (click)="openModalDetail(detailModal, 'show', show)">Butiran</a>
+                &nbsp;
+                <a class="btn btn-sm btn-info text-white" *ngIf="show.status == 'SB05'" disabled="true" (click)="troliEventShow(show)">Troli</a>
+                <a class="btn btn-sm btn-info text-white" *ngIf="show.status != 'SB05'" (click)="troliEventShow(show)">Troli</a>
               </td>
             </tr>
           </tbody>
@@ -197,6 +200,10 @@
                 <a *ngIf="space.status != 'SRB03'" class="btn btn-sm btn-info text-white" disabled="true">Bayaran Balik</a>
                  &nbsp;
                 <a class="btn btn-sm btn-info text-white" (click)="openModalDetail(detailModal, 'space', space)">Butiran</a>
+                &nbsp;
+                <a class="btn btn-sm btn-info text-white" *ngIf="space.status != 'SRB02'" disabled="true" (click)="troliEventSpace(space)">Troli</a>
+                <a class="btn btn-sm btn-info text-white" *ngIf="space.status == 'SRB02'" (click)="troliEventSpace(space)">Troli</a>
+
 
               </td>
             </tr>

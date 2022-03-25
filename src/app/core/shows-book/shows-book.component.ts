@@ -68,6 +68,7 @@ export class ShowsBookComponent implements OnInit {
       formcontrol: "adult",
       price_citizen: 6.0,
       price_noncitizen: 12.0,
+      price_free: 0.0,
     },
     {
       value: "KD",
@@ -75,6 +76,7 @@ export class ShowsBookComponent implements OnInit {
       formcontrol: "children",
       price_citizen: 4.0,
       price_noncitizen: 8.0,
+      price_free: 0.0,
     },
     {
       value: "OF",
@@ -82,6 +84,7 @@ export class ShowsBookComponent implements OnInit {
       formcontrol: "senior",
       price_citizen: 0.0,
       price_noncitizen: 0.0,
+      price_free: 0.0,
     },
     {
       value: "SD",
@@ -89,6 +92,7 @@ export class ShowsBookComponent implements OnInit {
       formcontrol: "school",
       price_citizen: 4.0,
       price_noncitizen: 8.0,
+      price_free: 0.0,
     },
     {
       value: "OK",
@@ -96,6 +100,7 @@ export class ShowsBookComponent implements OnInit {
       formcontrol: "oku",
       price_citizen: 0.0,
       price_noncitizen: 0.0,
+      price_free: 0.0,
     },
   ];
 
@@ -144,6 +149,7 @@ export class ShowsBookComponent implements OnInit {
     });
     this.secondFormGroup = this.formBuilder.group({
       citizen: [true, Validators.required],
+      free: [false, Validators.required],
       // adult: [0, Validators.required],
       // children: [0, Validators.required],
       // school: [0, Validators.required],
@@ -191,7 +197,7 @@ export class ShowsBookComponent implements OnInit {
   getShowsPrice() {
     this.ticketpriceService.filter("module=shows&status=true").subscribe(
       (res) => {
-        // console.log("res", res);
+        console.log("res", res);
         this.ticketprices = res;
 
         for (let i = 0; i < this.ticketprices.length; i++) {
@@ -358,6 +364,16 @@ export class ShowsBookComponent implements OnInit {
       } else {
         this.secondFormGroup.value.total +=
           formcontrol * this.ticketprices[i].price_noncitizen;
+      }
+
+      // check ticket percume
+      if (this.secondFormGroup.value.free) {
+        this.secondFormGroup.value.total = 0;
+        // change state
+        localStorage.setItem('ticketFree', 'true');
+      } else {
+        localStorage.setItem('ticketFree', 'false');
+
       }
     }
     this.totalticket = count;

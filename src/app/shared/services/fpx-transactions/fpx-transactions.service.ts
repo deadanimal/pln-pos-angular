@@ -71,4 +71,14 @@ export class FpxTransactionsService {
       })
     );
   }
+
+  generate_receipt_pos(body) {
+    let receiptUrl = this.url + "generate_receipt_pos/";
+    return this.http.post<any>(receiptUrl, body).pipe(
+      tap((res) => {
+        console.log("Receipt generated: ", res);
+      })
+    );
+
+  }
 }

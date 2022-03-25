@@ -109,6 +109,22 @@
                           <thead>
                             <tr>
                               <th scope="col" class="text-dark">
+                                Tiket Percuma
+                              </th>
+                              <th scope="col">
+                                <bSwitch
+                                  switch-off-text="{{ 'Tidak' | translate }}"
+                                  switch-on-text="{{ 'Ya' | translate }}"
+                                  formControlName="free"
+                                  (changeState)="citizenChange()"
+                                ></bSwitch>
+                              </th>
+                            </tr>
+                          </thead>
+
+                          <thead>
+                            <tr>
+                              <th scope="col" class="text-dark">
                                 {{ "JenisTiket" | translate }}
                               </th>
                               <th scope="col" class="text-dark">
@@ -126,15 +142,22 @@
                                   ticketprice.title_ms
                                 }}</span>
                                 <br /><small
-                                  *ngIf="secondFormGroup.value.citizen"
+                                  *ngIf="secondFormGroup.value.citizen && !secondFormGroup.value.free"
                                   >(RM {{ ticketprice.price_citizen }}/{{
                                     "Tiket" | translate
                                   }})</small
-                                ><small *ngIf="!secondFormGroup.value.citizen"
+                                ><small *ngIf="!secondFormGroup.value.citizen && !secondFormGroup.value.free"
                                   >(RM {{ ticketprice.price_noncitizen }}/{{
                                     "Tiket" | translate
                                   }})</small
                                 >
+                                <small
+                                  *ngIf="secondFormGroup.value.free"
+                                  >(RM 0.00/{{
+                                    "Tiket" | translate
+                                  }})</small
+                                >
+
                               </th>
                               <td class="text-dark">
                                 <ngx-number-spinner

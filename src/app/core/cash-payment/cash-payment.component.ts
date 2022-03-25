@@ -10,6 +10,7 @@ import { CartComponent } from "src/app/components/cart/cart.component";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { DataServiceService } from "src/app/shared/services/data-service/data-service.service";
 import { InvoiceReceiptsService } from "src/app/shared/services/invoice-receipts/invoice-receipts.service";
+import { FpxTransactionsService } from "src/app/shared/services/fpx-transactions/fpx-transactions.service";
 import { ShowbookingsService } from "src/app/shared/services/showbookings/showbookings.service";
 import { FacilityBookingsService } from "src/app/shared/services/facility-bookings/facility-bookings.service";
 import { SimulatorRideBookingsService } from "src/app/shared/services/simulator-ride-bookings/simulator-ride-bookings.service";
@@ -71,6 +72,7 @@ export class CashPaymentComponent implements OnInit {
     private modalService: BsModalService,
     private showtimeService: ShowtimesService,
     private formBuilder: FormBuilder,
+    private fpxService: FpxTransactionsService,
 
   ) { }
 
@@ -384,6 +386,15 @@ export class CashPaymentComponent implements OnInit {
         this.invoicereceiptService.update(obj, id).subscribe(
           (res) => {
             console.log(res);
+            let body = {
+              "receipt_id": id,
+              "type": trx_type
+            };
+            this.fpxService.generate_receipt_pos(body).subscribe(
+              (res) => {
+                console.log("receipt created", res);
+              }
+            );
             this.router.navigate(["/app/checkout"]);
           },
           (err) => {

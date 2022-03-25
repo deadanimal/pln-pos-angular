@@ -7,7 +7,9 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import "hammerjs";
-import { QRCodeModule } from 'angular2-qrcode';
+import { QRCodeModule } from "angular2-qrcode";
+
+import { StoreModule } from "@ngrx/store";
 
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ProgressbarModule } from "ngx-bootstrap/progressbar";
@@ -42,15 +44,16 @@ import { W3cComponent } from "./components/w3c/w3c.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { CustomerLayoutComponent } from "./layouts/customer-layout/customer-layout.component";
-import { CartComponent } from './components/cart/cart.component';
-import { AuxiliaryComponent } from './components/auxiliary/auxiliary.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { EventEmitterService } from './shared/services/event-emitter/event-emitter.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerSeatComponent } from './layouts/customer-layout/customer-seat/customer-seat.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CartComponent } from "./components/cart/cart.component";
+import { AuxiliaryComponent } from "./components/auxiliary/auxiliary.component";
+import { SidebarComponent } from "./components/sidebar/sidebar.component";
+import { EventEmitterService } from "./shared/services/event-emitter/event-emitter.service";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { CustomerSeatComponent } from "./layouts/customer-layout/customer-seat/customer-seat.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { NgxSpinnerModule } from "ngx-spinner";
-
+import { checkoutReducer, metaReducerLocalStorage } from 'src/app/checkout-state-store/reducer';
+import { troliReducer, metaReducerLocalStorageTroli } from 'src/app/troli-state-store/reducer';
 
 // AOT compilation support
 export function httpTranslateLoader(http: HttpClient) {
@@ -77,6 +80,7 @@ export function getToken(): string {
     CustomerSeatComponent,
   ],
   imports: [
+    StoreModule.forRoot({ checkoutEntries: checkoutReducer, troliEntries: troliReducer }, { metaReducers: [ metaReducerLocalStorage, metaReducerLocalStorageTroli ] }),
     QRCodeModule,
     CommonModule,
     FormsModule,

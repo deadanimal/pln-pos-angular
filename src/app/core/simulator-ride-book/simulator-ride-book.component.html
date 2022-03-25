@@ -1,14 +1,19 @@
-        <h3 style="border-bottom: solid gainsboro; margin: auto;" class="title p-2 text-dark text-center">
-        {{ "Kembara Simulasi" | translate }}
-        </h3>
+<h3
+  style="border-bottom: solid gainsboro; margin: auto"
+  class="title p-2 text-dark text-center"
+>
+  {{ "Kembara Simulasi" | translate }}
+</h3>
 
-        <ngx-spinner> <p style="font-size: 20px; color: white">Loading...</p></ngx-spinner>
-      
-        <div class="row">
-          <!-- <div class="col-md-2 col-sm-12"></div> -->
-          <div class="col-md-12 col-sm-12">
-            <!-- <alert [type]="'info'"> -->
-            <!-- <div class="row">
+<ngx-spinner>
+  <p style="font-size: 20px; color: white">Loading...</p></ngx-spinner
+>
+
+<div class="row">
+  <!-- <div class="col-md-2 col-sm-12"></div> -->
+  <div class="col-md-12 col-sm-12">
+    <!-- <alert [type]="'info'"> -->
+    <!-- <div class="row">
               <div class="col">
                 <h4 class="title m-0 text-dark">Arahan Keselamatan</h4>
                 <small class="text-danger">Sila baca terlebih dahulu</small>
@@ -22,181 +27,168 @@
                 </button>
               </div>
             </div> -->
-            <!-- </alert> -->
-            <mat-horizontal-stepper [linear]="true" #stepper>
-              <mat-step [stepControl]="firstFormGroup">
-                <form [formGroup]="firstFormGroup">
-                  <ng-template matStepLabel>{{
-                    "SpacePodStep2Label" | translate
-                  }}</ng-template>
-                  <div class="row pb-3">
-                    <div class="col-md-7 col-sm-12 mx-auto">
-                      <alert [type]="'danger'">
-                        <b>{{ "SpacePodStep2Note" | translate }}</b>
-                      </alert>
-                      <div class="form-group">
-                        <label>{{ "Tarikh" | translate }}</label>
-                        <input
-                          type="text"
-                          placeholder="{{ 'Tarikh' | translate }}"
-                          class="form-control"
-                          formControlName="date"
-                          bsDatepicker
-                          [minDate]="minDateVar"
-                          [maxDate]="threemonth"
-                          [daysDisabled]="[1]"
-                          [bsConfig]="{
+    <!-- </alert> -->
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel
+            >{{ "SpacePodStep2Label" | translate }}</ng-template
+          >
+          <div class="row pb-3">
+            <div class="col-md-7 col-sm-12 mx-auto">
+              <alert [type]="'danger'">
+                <b>{{ "SpacePodStep2Note" | translate }}</b>
+              </alert>
+              <div class="form-group">
+                <label>{{ "Tarikh" | translate }}</label>
+                <input
+                  type="text"
+                  placeholder="{{ 'Tarikh' | translate }}"
+                  class="form-control"
+                  formControlName="date"
+                  bsDatepicker
+                  [minDate]="minDateVar"
+                  [maxDate]="threemonth"
+                  [daysDisabled]="[1]"
+                  [bsConfig]="{
                             isAnimated: true,
                             containerClass: 'theme-dark-blue',
                             dateInputFormat: 'YYYY-MM-DD'
                           }"
-                          (bsValueChange)="changeDate($event)"
-                        />
+                  (bsValueChange)="changeDate($event)"
+                />
+              </div>
+              <div class="form-group">
+                <label>{{ "Masa" | translate }}</label><br />
+                <div *ngIf="times.length == 0">
+                  <p class="text-danger">{{ "MasaNota" | translate }}</p>
+                </div>
+                <div
+                  class="row d-flex justify-content-center"
+                  *ngFor="let bookingtime of bookingtimes"
+                >
+                  <div *ngFor="let time of times">
+                    <div
+                      class="col mx-auto"
+                      *ngIf="bookingtime === time.time.substring(0, 2)"
+                    >
+                      <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="time"
+                            [value]="time.time + '_' + time.id"
+                            formControlName="time"
+                          />
+                          {{ time.time | formatBookingTime }}
+                          <span class="form-check-sign"></span>
+                        </label>
                       </div>
-                      <div class="form-group">
-                        <label>{{ "Masa" | translate }}</label
-                        ><br />
-                        <div *ngIf="times.length == 0">
-                          <p class="text-danger">
-                            {{ "MasaNota" | translate }}
-                          </p>
-                        </div>
-                        <div
-                          class="row d-flex justify-content-center"
-                          *ngFor="let bookingtime of bookingtimes"
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 text-center">
+            <button
+              type="button"
+              class="btn btn-default"
+              (click)="checkExistBooking(stepper)"
+              [disabled]="!firstFormGroup.valid"
+            >
+              {{ "Seterusnya" | translate }}
+            </button>
+            <!-- matStepperNext -->
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <ng-template matStepLabel
+          >{{ "SpacePodStep3Label" | translate }}</ng-template
+        >
+        <form [formGroup]="secondFormGroup">
+          <div class="row">
+            <div class="col-6 mx-auto">
+              <div class="table-responsive">
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-dark">
+                        {{ "Warganegara" | translate }}
+                      </th>
+                      <th scope="col text-center">
+                        <bSwitch
+                          switch-off-text="{{ 'Tidak' | translate }}"
+                          switch-on-text="{{ 'Ya' | translate }}"
+                          formControlName="citizen"
+                          (changeState)="citizenChange()"
+                        ></bSwitch>
+                      </th>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-dark">
+                        {{ "JenisTiket" | translate }}
+                      </th>
+                      <th scope="col" class="text-dark">
+                        {{ "Kuantiti" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let ticketprice of ticketprices">
+                      <th scope="row" class="text-dark">
+                        <span *ngIf="translate.currentLang == 'en'"
+                          >{{ ticketprice.title_en }}</span
                         >
-                          <div *ngFor="let time of times">
-                            <div
-                              class="col mx-auto"
-                              *ngIf="bookingtime === time.time.substring(0, 2)"
-                            >
-                              <div class="form-check form-check-radio">
-                                <label class="form-check-label">
-                                  <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="time"
-                                    [value]="time.time + '_' + time.id"
-                                    formControlName="time"
-                                  />
-                                  {{ time.time | formatBookingTime }}
-                                  <span class="form-check-sign"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        <span *ngIf="translate.currentLang == 'ms'"
+                          >{{ ticketprice.title_ms }}</span
+                        >
+                        <br /><small *ngIf="secondFormGroup.value.citizen"
+                          >(RM {{ ticketprice.price_citizen }}/{{ "Tiket" |
+                          translate }})</small
+                        ><small *ngIf="!secondFormGroup.value.citizen"
+                          >(RM {{ ticketprice.price_noncitizen }}/{{ "Tiket" |
+                          translate }})</small
+                        >
+                      </th>
+                      <td class="text-dark">
+                        <ngx-number-spinner
+                          [value]="0"
+                          (change)="calculateTotal()"
+                          [min]="0"
+                          [formControlName]="ticketprice.formcontrol"
+                        >
+                        </ngx-number-spinner>
+                      </td>
+                    </tr>
 
-                  <div class="p-3 text-center">
-                    <button
-                      type="button"
-                      class="btn btn-warning"
-                      matStepperPrevious
-                    >
-                      {{ "Kembali" | translate }}
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-default"
-                      (click)="checkExistBooking(stepper)"
-                      [disabled]="!firstFormGroup.valid"
-                    >
-                      {{ "Seterusnya" | translate }}
-                    </button>
-                    <!-- matStepperNext -->
+                    <tr>
+                      <th scope="row" class="text-dark">
+                        {{ "Jumlah" | translate }}
+                      </th>
+                      <td class="text-dark">
+                        RM {{ secondFormGroup.value.total | number }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row" *ngIf="totalticket > 2">
+                  <div class="col">
+                    <alert [type]="'danger'">
+                      <b>{{ "SpacePodStep3Note" | translate }}</b>
+                    </alert>
                   </div>
-                </form>
-              </mat-step>
-              <mat-step [stepControl]="secondFormGroup">
-                <ng-template matStepLabel>{{
-                  "SpacePodStep3Label" | translate
-                }}</ng-template>
-                <form [formGroup]="secondFormGroup">
-                  <div class="row">
-                    <div class="col-6 mx-auto">
-                      <div class="table-responsive">
-                        <table class="table table-borderless">
-                          <thead>
-                            <tr>
-                              <th scope="col" class="text-dark">
-                                {{ "Warganegara" | translate }}
-                              </th>
-                              <th scope="col text-center">
-                                <bSwitch
-                                  switch-off-text="{{ 'Tidak' | translate }}"
-                                  switch-on-text="{{ 'Ya' | translate }}"
-                                  formControlName="citizen"
-                                  (changeState)="citizenChange()"
-                                ></bSwitch>
-                              </th>
-                            </tr>
-                          </thead>
-                          <thead>
-                            <tr>
-                              <th scope="col" class="text-dark">
-                                {{ "JenisTiket" | translate }}
-                              </th>
-                              <th scope="col" class="text-dark">
-                                {{ "Kuantiti" | translate }}
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let ticketprice of ticketprices">
-                              <th scope="row" class="text-dark">
-                                <span *ngIf="translate.currentLang == 'en'">{{
-                                  ticketprice.title_en
-                                }}</span>
-                                <span *ngIf="translate.currentLang == 'ms'">{{
-                                  ticketprice.title_ms
-                                }}</span>
-                                <br /><small
-                                  *ngIf="secondFormGroup.value.citizen"
-                                  >(RM {{ ticketprice.price_citizen }}/{{
-                                    "Tiket" | translate
-                                  }})</small
-                                ><small *ngIf="!secondFormGroup.value.citizen"
-                                  >(RM {{ ticketprice.price_noncitizen }}/{{
-                                    "Tiket" | translate
-                                  }})</small
-                                >
-                              </th>
-                              <td class="text-dark">
-                                <ngx-number-spinner
-                                  [value]="0"
-                                  (change)="calculateTotal()"
-                                  [min]="0"
-                                  [formControlName]="ticketprice.formcontrol"
-                                >
-                                </ngx-number-spinner>
-                              </td>
-                            </tr>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                            <tr>
-                              <th scope="row" class="text-dark">
-                                {{ "Jumlah" | translate }}
-                              </th>
-                              <td class="text-dark">
-                                RM {{ secondFormGroup.value.total | number }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <div class="row" *ngIf="totalticket > 2">
-                          <div class="col">
-                            <alert [type]="'danger'">
-                              <b>{{ "SpacePodStep3Note" | translate }}</b>
-                            </alert>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- <div class="row">
+          <!-- <div class="row">
                     <div class="col-6 mx-auto">
                       <div class="table-responsive">
                         <table class="table table-borderless">
@@ -284,102 +276,91 @@
                       </div>
                     </div>
                   </div> -->
-                  <div class="text-center">
-                    <button
-                      type="button"
-                      class="btn btn-warning"
-                      matStepperPrevious
-                    >
-                      {{ "Kembali" | translate }}
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-default"
-                      matStepperNext
-                      [disabled]="totalticket > 2 || totalticket == 0"
-                    >
-                      {{ "Seterusnya" | translate }}
-                    </button>
-                  </div>
-                </form>
-              </mat-step>
-              <mat-step>
-                <ng-template matStepLabel>{{
-                  "SpacePodStep4Label" | translate
-                }}</ng-template>
-                <div class="row">
-                  <div class="col-6 mx-auto">
-                    <div class="table-responsive">
-                      <table class="table table-borderless">
-                        <tbody>
-                          <tr>
-                            <th scope="row" class="text-dark">
-                              {{ "Tarikh" | translate }}
-                            </th>
-                            <td class="text-dark text-right">
-                              {{ firstFormGroup.value.date | date }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row" class="text-dark">
-                              {{ "Masa" | translate }}
-                            </th>
-                            <td class="text-dark text-right">
-                              <!-- betulkan yang ini -->
-                              {{ firstFormGroup.value.time.split("_", 1) }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row" class="text-dark">
-                              {{ "Jumlah" | translate }}
-                              {{ "Tiket" | translate }}
-                            </th>
-                            <td class="text-dark text-right">
-                              {{
-                                secondFormGroup.value.adult +
-                                  secondFormGroup.value.children
-                              }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row" class="text-dark">
-                              {{ "JumlahHargaTiket" | translate }}
-                            </th>
-                            <td class="text-dark text-right">
-                              RM {{ secondFormGroup.value.total }}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <alert [type]="'danger'">
-                          <b>{{ "SpacePodStep4Note" | translate }}</b>
-                        </alert>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button
-                    type="button"
-                    class="btn btn-warning"
-                    matStepperPrevious
-                  >
-                    {{ "Kembali" | translate }}
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-default"
-                    (click)="makePayment()"
-                    [disabled]="disableSubmit"
-                  >
-                    {{ "TambahKeTroli" | translate }}
-                  </button>
-                </div>
-              </mat-step>
-            </mat-horizontal-stepper>
+          <div class="text-center">
+            <button type="button" class="btn btn-warning" matStepperPrevious>
+              {{ "Kembali" | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              matStepperNext
+              [disabled]="totalticket > 2 || totalticket == 0"
+            >
+              {{ "Seterusnya" | translate }}
+            </button>
           </div>
-          <!-- <div class="col-md-2 col-sm-12"></div> -->
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel
+          >{{ "SpacePodStep4Label" | translate }}</ng-template
+        >
+        <div class="row">
+          <div class="col-6 mx-auto">
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row" class="text-dark">
+                      {{ "Tarikh" | translate }}
+                    </th>
+                    <td class="text-dark text-right">
+                      {{ firstFormGroup.value.date | date }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="text-dark">
+                      {{ "Masa" | translate }}
+                    </th>
+                    <td class="text-dark text-right">
+                      <!-- betulkan yang ini -->
+                      {{ firstFormGroup.value.time.split("_", 1) }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="text-dark">
+                      {{ "Jumlah" | translate }} {{ "Tiket" | translate }}
+                    </th>
+                    <td class="text-dark text-right">
+                      {{ secondFormGroup.value.adult +
+                      secondFormGroup.value.children }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="text-dark">
+                      {{ "JumlahHargaTiket" | translate }}
+                    </th>
+                    <td class="text-dark text-right">
+                      RM {{ secondFormGroup.value.total }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col">
+                <alert [type]="'danger'">
+                  <b>{{ "SpacePodStep4Note" | translate }}</b>
+                </alert>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-warning" matStepperPrevious>
+            {{ "Kembali" | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-default"
+            (click)="makePayment()"
+            [disabled]="disableSubmit"
+          >
+            {{ "TambahKeTroli" | translate }}
+          </button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+  <!-- <div class="col-md-2 col-sm-12"></div> -->
+</div>

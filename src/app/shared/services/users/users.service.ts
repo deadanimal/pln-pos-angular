@@ -39,6 +39,15 @@ export class UsersService {
     );
   }
 
+  getExtended(id: string): Observable<any> {
+    return this.http.get<any>(`${this.url}extended/?id=${id}`).pipe(
+      tap((res) => {
+        console.log("User: ", res);
+      })
+    );
+  }
+
+
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(this.url).pipe(
       tap((res) => {

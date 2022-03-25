@@ -49,9 +49,10 @@ export class LoginComponent implements OnInit {
         let currentUser = this.authService.decodedToken();
         this.userService.currentUser = currentUser;
 
-        this.userService.get(currentUser.user_id).subscribe(
+        this.userService.getExtended(currentUser.user_id).subscribe(
           (res) => {
-            if (res.user_type == "TC") { 
+            console.log("res", res);
+            if (res[0].role.code == "TC") { 
               this.router.navigate(["/app/home"]);
               window.open("#/customer-display", "_blank", 'toolbar=0,location=0,menubar=0,width=500,height=320,left=500,top=100');
             }
